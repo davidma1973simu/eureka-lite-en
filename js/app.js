@@ -198,6 +198,7 @@ class EurekaLite {
             </svg>
             ${user?.streak > 0 ? '<span class="notification-dot"></span>' : ''}
           </button>
+          <button class="home-lang-btn" id="langToggleBtn" onclick="window.I18N.toggleLang();window.location.reload();" style="background:transparent;border:1px solid rgba(255,255,255,0.35);color:#fff;border-radius:16px;padding:4px 12px;font-size:13px;cursor:pointer;margin-right:8px;">${typeof I18N !== 'undefined' ? I18N.t('home.lang.toggle.en','中文') : '中文'}</button>
           <div class="home-avatar" id="avatarBtn">${userName.charAt(0)}</div>
         </div>
       </header>
@@ -1446,6 +1447,10 @@ class EurekaLite {
    * @param {string} category - Category
    */
   rewriteToProfessional(text, category) {
+    // EN build: user input is already in English, do not rewrite into Chinese templates
+    if (typeof I18N !== 'undefined' && I18N.getLang() === 'en') {
+      return text;
+    }
     // Extract key elements
     const targetMatch = text.match(/(?:为|给|针对)(.+?)(?:设计|开发|提供|解决|验证|探索)/);
     const actionMatch = text.match(/(?:设计|开发|提供|解决|验证|探索)(.+?)(?:，|。|$)/);
@@ -1495,6 +1500,16 @@ class EurekaLite {
    * Get category display name
    */
   getCategoryName(category) {
+    if (typeof I18N !== 'undefined' && I18N.getLang() === 'en') {
+      const names = {
+        product: 'Product Innovation',
+        service: 'Service Experience',
+        problem: 'Complex Problem',
+        explore: 'Explore & Validate',
+        quick: 'Quick Start'
+      };
+      return names[category] || category;
+    }
     const names = {
       product: '产品创新',
       service: '服务体验',
