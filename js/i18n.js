@@ -1126,10 +1126,14 @@
   function getStoredLang() {
     try {
       var v = global.localStorage.getItem(STORAGE_KEY);
-      return (v === 'en' || v === 'zh') ? v : 'zh';
-    } catch (e) {
-      return 'zh';
-    }
+      if (v === 'en' || v === 'zh') return v;
+    } catch (e) {}
+    // Build-level default: English build sets window.__I18N_DEFAULT__='en'
+    // so the site opens in English without requiring a manual toggle.
+    try {
+      if (global.__I18N_DEFAULT__ === 'en') return 'en';
+    } catch (e) {}
+    return 'zh';
   }
 
   var current = getStoredLang();
