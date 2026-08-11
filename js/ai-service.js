@@ -295,7 +295,12 @@ const AIService = {
    */
   async complete(prompt, options = {}) {
     const messages = [];
-    if (options.system) messages.push({ role: 'system', content: options.system });
+    let system = options.system || '';
+    // Force English output when UI is in EN mode
+    if (typeof I18N !== 'undefined' && I18N.getLang && I18N.getLang() === 'en') {
+      system += (system ? '\n\n' : '') + 'You must respond in English only. Do not output Chinese characters unless the user explicitly provided Chinese text that needs to be quoted.';
+    }
+    if (system) messages.push({ role: 'system', content: system });
     messages.push({ role: 'user', content: prompt });
     return this.chat(messages, options);
   },

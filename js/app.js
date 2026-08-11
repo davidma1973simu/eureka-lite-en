@@ -160,9 +160,69 @@ class EurekaLite {
     } catch (e) {}
   }
 
+  /**
+   * AI 面板（首页 / 模块通用）。所有面向用户的文案均经 I18N.t 包裹，
+   * EN 模式返回英文、ZH 模式回退中文，避免 runtimeZh2en 局部匹配产生的残缺中文。
+   */
+  getAIPanelHTML(opts) {
+    opts = opts || {};
+    const dark = opts.dark ? ' ai-panel-dark' : '';
+    const prefillId = opts.prefillId || 'homePrefillBtn';
+    const T = (k, f) => I18N.t(k, f);
+    return `
+      <!-- AI Panel -->
+      <div class="ai-panel${dark}" id="aiPanel">
+        <div class="ai-panel-header">
+          <span class="ai-panel-title">💡 ${T('ai.assistant', 'AI 助手')}</span>
+          <div class="ai-panel-header-actions">
+            <button class="ai-settings-btn" id="aiSettingsBtn" title="${T('ai.settingsTitle', '配置 AI 模型')}">⚙</button>
+            <button class="ai-panel-close" id="aiPanelClose">✕</button>
+          </div>
+        </div>
+        <div class="ai-panel-body">
+          <div class="ai-panel-status" id="aiPanelStatus"></div>
+
+          <!-- Mode selection (vertical cards) -->
+          <div class="ai-mode-buttons" id="aiModeButtons">
+            <button class="ai-mode-btn ${this.currentAIMode === 'brainstorm' ? 'active' : ''}" data-action="brainstorm">
+              <span class="ai-mode-card-title">💭 ${T('ai.mode.brainstorm', '帮我想')}</span>
+              <span class="ai-mode-card-subtitle">${T('ai.mode.brainstormSub', '智能提问，补充思考维度')}</span>
+            </button>
+            <button class="ai-mode-btn ${this.currentAIMode === 'critique' ? 'active' : ''}" data-action="critique">
+              <span class="ai-mode-card-title">🔍 ${T('ai.mode.critique', '批判我')}</span>
+              <span class="ai-mode-card-subtitle">${T('ai.mode.critiqueSub', '识别盲点与潜在风险')}</span>
+            </button>
+            <button class="ai-mode-btn ${this.currentAIMode === 'research' ? 'active' : ''}" data-action="research">
+              <span class="ai-mode-card-title">🔎 ${T('ai.mode.research', '查一查')}</span>
+              <span class="ai-mode-card-subtitle">${T('ai.mode.researchSub', '补充事实依据与案例')}</span>
+            </button>
+          </div>
+
+          <!-- Mode chat area -->
+          <div class="ai-mode-chat ${this.currentAIMode ? 'active' : ''}" id="aiModeChat">
+            <div class="ai-mode-messages" id="aiModeMessages"></div>
+            <div class="ai-input-area">
+              <textarea id="aiModeInput" rows="1" placeholder="${T('ai.inputPlaceholder', '描述你的想法，我会帮你补充思考角度...')}"></textarea>
+              <button id="aiModeSendBtn">${T('ai.send', '发送')}</button>
+            </div>
+          </div>
+
+          <!-- Quick actions -->
+          <div class="ai-suggestion-section">
+            <div class="ai-suggestion-section-title">${T('ai.quickActions', '快捷操作')}</div>
+            <button class="ai-suggestion-btn" data-action="suggest">📝 ${T('ai.suggest', '给我填写建议')}</button>
+            <button class="ai-suggestion-btn" data-action="example">📚 ${T('ai.example', '参考案例')}</button>
+            <button class="ai-suggestion-btn" data-action="prefill" id="${prefillId}">✨ ${T('ai.prefill', '帮我预填')}</button>
+            <button class="ai-suggestion-btn" data-action="feedback">💬 ${T('ai.feedback', '给我反馈')}</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   getHomeTemplate(user, recentProjects) {
     const greeting = AppState.getGreeting();
-    const userName = user?.name || '朋友';
+    const userName = user?.name || I18N.t('user.friend', '朋友');
     const aiStatus = (window.AIService && window.AIService.status()) || { ready: false };
     const aiBanner = aiStatus.ready
       ? `<div class="ai-banner ai-banner-ok" id="aiBanner">
@@ -278,53 +338,7 @@ class EurekaLite {
         <span class="ai-fab-label">AI助手</span>
       </button>
 
-      <!-- AI Panel -->
-      <div class="ai-panel" id="aiPanel">
-        <div class="ai-panel-header">
-          <span class="ai-panel-title">💡 AI 助手</span>
-          <div class="ai-panel-header-actions">
-            <button class="ai-settings-btn" id="aiSettingsBtn" title="配置 AI 模型">⚙</button>
-            <button class="ai-panel-close" id="aiPanelClose">✕</button>
-          </div>
-        </div>
-        <div class="ai-panel-body">
-          <div class="ai-panel-status" id="aiPanelStatus"></div>
-
-          <!-- 模式选择（纵向卡片） -->
-          <div class="ai-mode-buttons" id="aiModeButtons">
-            <button class="ai-mode-btn ${this.currentAIMode === 'brainstorm' ? 'active' : ''}" data-action="brainstorm">
-              <span class="ai-mode-card-title">💭 帮我想</span>
-              <span class="ai-mode-card-subtitle">智能提问，补充思考维度</span>
-            </button>
-            <button class="ai-mode-btn ${this.currentAIMode === 'critique' ? 'active' : ''}" data-action="critique">
-              <span class="ai-mode-card-title">🔍 批判我</span>
-              <span class="ai-mode-card-subtitle">识别盲点与潜在风险</span>
-            </button>
-            <button class="ai-mode-btn ${this.currentAIMode === 'research' ? 'active' : ''}" data-action="research">
-              <span class="ai-mode-card-title">🔎 查一查</span>
-              <span class="ai-mode-card-subtitle">补充事实依据与案例</span>
-            </button>
-          </div>
-
-          <!-- 模式对话区 -->
-          <div class="ai-mode-chat ${this.currentAIMode ? 'active' : ''}" id="aiModeChat">
-            <div class="ai-mode-messages" id="aiModeMessages"></div>
-            <div class="ai-input-area">
-              <textarea id="aiModeInput" rows="1" placeholder="描述你的想法，我会帮你补充思考角度..."></textarea>
-              <button id="aiModeSendBtn">发送</button>
-            </div>
-          </div>
-
-          <!-- 快捷操作 -->
-          <div class="ai-suggestion-section">
-            <div class="ai-suggestion-section-title">快捷操作</div>
-            <button class="ai-suggestion-btn" data-action="suggest">📝 给我填写建议</button>
-            <button class="ai-suggestion-btn" data-action="example">📚 参考案例</button>
-            <button class="ai-suggestion-btn" data-action="prefill" id="homePrefillBtn">✨ 帮我预填</button>
-            <button class="ai-suggestion-btn" data-action="feedback">💬 给我反馈</button>
-          </div>
-        </div>
-      </div>
+      ${this.getAIPanelHTML({ dark: false, prefillId: 'homePrefillBtn' })}
 
       <!-- Drawer Overlay -->
       <div class="drawer-overlay" id="drawerOverlay"></div>
@@ -1522,12 +1536,12 @@ class EurekaLite {
 
   getCategoryActionLabel(category) {
     const labels = {
-      product: '设计一款产品',
-      service: '提供一种服务',
-      problem: '解决一个问题',
-      explore: '探索一个方向'
+      product: I18N.t('cat.product', '设计一款产品'),
+      service: I18N.t('cat.service', '提供一种服务'),
+      problem: I18N.t('cat.problem', '解决一个问题'),
+      explore: I18N.t('cat.explore', '探索一个方向')
     };
-    return labels[category] || '实现一个想法';
+    return labels[category] || I18N.t('cat.default', '实现一个想法');
   }
 
   /**
@@ -1632,7 +1646,7 @@ class EurekaLite {
 
   renderDrawer() {
     const user = AppState.user;
-    const userName = user?.name || '朋友';
+    const userName = user?.name || I18N.t('user.friend', '朋友');
 
     const drawerHTML = `
       <div class="drawer" id="drawer">
@@ -1868,17 +1882,18 @@ class EurekaLite {
    */
   refreshAiStatusUI() {
     const st = (window.AIService && window.AIService.status()) || { ready: false };
+    const T = (k, f) => I18N.t(k, f);
     // 首页横幅
     const banner = document.getElementById('aiBanner');
     if (banner) {
       if (st.ready) {
         banner.className = 'ai-banner ai-banner-ok';
-        banner.innerHTML = `<span>🟢 AI 已就绪：${st.providerLabel}${st.model ? ' · ' + st.model : ''}${st.fromUser ? '（你的 Key）' : ''}</span>
-          <button class="ai-banner-btn" id="aiBannerSettings">⚙ 更换</button>`;
+        banner.innerHTML = `<span>🟢 ${T('ai.status.ready', 'AI 已就绪')}${st.providerLabel}${st.model ? ' · ' + st.model : ''}${st.fromUser ? ' (' + T('ai.yours', '你的 Key') + ')' : ''}</span>
+          <button class="ai-banner-btn" id="aiBannerSettings">⚙ ${T('ai.change', '更换')}</button>`;
       } else {
         banner.className = 'ai-banner ai-banner-warn';
-        banner.innerHTML = `<span>⚠️ AI 尚未配置：所有「AI 帮我…」功能暂不可用</span>
-          <button class="ai-banner-btn" id="aiBannerSettings">去配置</button>`;
+        banner.innerHTML = `<span>⚠️ ${T('ai.status.notReady', 'AI 尚未配置：所有「AI 帮我…」功能暂不可用')}</span>
+          <button class="ai-banner-btn" id="aiBannerSettings">${T('ai.configure', '去配置')}</button>`;
       }
       banner.querySelector('#aiBannerSettings')?.addEventListener('click', () => this.showAIConfigModal());
     }
@@ -1886,10 +1901,10 @@ class EurekaLite {
     document.querySelectorAll('#aiPanelStatus').forEach(el => {
       if (st.ready) {
         el.className = 'ai-panel-status ok';
-        el.innerHTML = `🟢 已配置：${st.providerLabel}${st.model ? ' · ' + st.model : ''} · <a href="javascript:void(0)" id="panelAiSettings">更换</a>`;
+        el.innerHTML = `🟢 ${T('ai.status.configured', '已配置')}${st.providerLabel}${st.model ? ' · ' + st.model : ''} · <a href="javascript:void(0)" id="panelAiSettings">${T('ai.change', '更换')}</a>`;
       } else {
         el.className = 'ai-panel-status warn';
-        el.innerHTML = `⚠️ 未配置 Key · <a href="javascript:void(0)" id="panelAiSettings">去配置</a>`;
+        el.innerHTML = `⚠️ ${T('ai.status.keyNotSet', '未配置 Key')} · <a href="javascript:void(0)" id="panelAiSettings">${T('ai.configure', '去配置')}</a>`;
       }
       el.querySelector('#panelAiSettings')?.addEventListener('click', () => this.showAIConfigModal());
     });
@@ -2379,9 +2394,13 @@ class EurekaLite {
   }
 
   escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    // 标准 HTML 转义：必须转义引号，否则含 " 的内容注入 value="..." 属性会被截断
+    return String(text == null ? '' : text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 
   /**
@@ -2573,7 +2592,7 @@ class EurekaLite {
           <div class="progress-bar-fill" style="width: ${progress}%; background: ${stageInfo.color};"></div>
         </div>
         <div class="progress-indicator">
-          <span>第 ${currentScreen} / ${totalScreens} 屏</span>
+          <span>${window.I18N.getLang() === 'en' ? `Screen ${currentScreen} / ${totalScreens}` : `第 ${currentScreen} / ${totalScreens} 屏`}</span>
           <span>${Math.round(progress)}%</span>
         </div>
       </div>
@@ -2679,53 +2698,7 @@ class EurekaLite {
         <span class="ai-fab-label">AI助手</span>
       </button>
 
-      <!-- AI Panel -->
-      <div class="ai-panel ai-panel-dark" id="aiPanel">
-        <div class="ai-panel-header">
-          <span class="ai-panel-title">💡 AI 助手</span>
-          <div class="ai-panel-header-actions">
-            <button class="ai-settings-btn" id="aiSettingsBtn" title="配置 AI 模型">⚙</button>
-            <button class="ai-panel-close" id="aiPanelClose">✕</button>
-          </div>
-        </div>
-        <div class="ai-panel-body">
-          <div class="ai-panel-status" id="aiPanelStatus"></div>
-
-          <!-- 模式选择（纵向卡片） -->
-          <div class="ai-mode-buttons" id="aiModeButtons">
-            <button class="ai-mode-btn ${this.currentAIMode === 'brainstorm' ? 'active' : ''}" data-action="brainstorm">
-              <span class="ai-mode-card-title">💭 帮我想</span>
-              <span class="ai-mode-card-subtitle">智能提问，补充思考维度</span>
-            </button>
-            <button class="ai-mode-btn ${this.currentAIMode === 'critique' ? 'active' : ''}" data-action="critique">
-              <span class="ai-mode-card-title">🔍 批判我</span>
-              <span class="ai-mode-card-subtitle">识别盲点与潜在风险</span>
-            </button>
-            <button class="ai-mode-btn ${this.currentAIMode === 'research' ? 'active' : ''}" data-action="research">
-              <span class="ai-mode-card-title">🔎 查一查</span>
-              <span class="ai-mode-card-subtitle">补充事实依据与案例</span>
-            </button>
-          </div>
-
-          <!-- 模式对话区 -->
-          <div class="ai-mode-chat ${this.currentAIMode ? 'active' : ''}" id="aiModeChat">
-            <div class="ai-mode-messages" id="aiModeMessages"></div>
-            <div class="ai-input-area">
-              <textarea id="aiModeInput" rows="1" placeholder="描述你的想法，我会帮你补充思考角度..."></textarea>
-              <button id="aiModeSendBtn">发送</button>
-            </div>
-          </div>
-
-          <!-- 快捷操作 -->
-          <div class="ai-suggestion-section">
-            <div class="ai-suggestion-section-title">快捷操作</div>
-            <button class="ai-suggestion-btn" data-action="suggest">📝 给我填写建议</button>
-            <button class="ai-suggestion-btn" data-action="example">📚 参考案例</button>
-            <button class="ai-suggestion-btn" data-action="prefill" id="modulePrefillBtn">✨ 帮我预填</button>
-            <button class="ai-suggestion-btn" data-action="feedback">💬 给我反馈</button>
-          </div>
-        </div>
-      </div>
+      ${this.getAIPanelHTML({ dark: true, prefillId: 'modulePrefillBtn' })}
 
       <!-- Stage Brief Modal -->
       ${this.getStageBriefTemplate(stageInfo.name.toLowerCase())}
@@ -2739,7 +2712,7 @@ class EurekaLite {
     const stageBriefs = {
       reveal: {
         icon: '🔍',
-        name: 'Reveal 揭示',
+        name: 'Reveal',
         themeColor: 'var(--reveal-primary)',
         purpose: '深入挖掘用户真实需求，从表面现象中找到真正的创新机会。',
         tasks: [
@@ -2755,7 +2728,7 @@ class EurekaLite {
       },
       inspire: {
         icon: '💡',
-        name: 'Inspire 启发',
+        name: 'Inspire',
         themeColor: 'var(--inspire-primary)',
         purpose: '基于 Reveal 的洞察，激发多样化创意，找到突破性的解决方案。',
         tasks: [
@@ -2771,7 +2744,7 @@ class EurekaLite {
       },
       shape: {
         icon: '🎨',
-        name: 'Shape 架构',
+        name: 'Shape',
         themeColor: 'var(--shape-primary)',
         purpose: '将精选的创意转化为可执行的解决方案概念，定义产品功能和用户体验。',
         tasks: [
@@ -2787,7 +2760,7 @@ class EurekaLite {
       },
       exam: {
         icon: '✅',
-        name: 'Exam 验证',
+        name: 'Exam',
         themeColor: 'var(--exam-primary)',
         purpose: '通过结构化验证评估解决方案概念，收集反馈并决定下一步行动。',
         tasks: [
@@ -3122,20 +3095,20 @@ class EurekaLite {
 
     // Dialogue-style template for Reveal Screen 1
     if (screenData.dialogue) {
-      const projectTitle = this.escapeHtml(project?.title || project?.originalTitle || '你的项目');
+      const projectTitle = this.escapeHtml(project?.title || project?.originalTitle || I18N.t('project.yours', '你的项目'));
       const category = project?.category || 'product';
       const categoryLabel = this.getCategoryActionLabel(category);
       return `
         <div class="screen-content animate-fade-in-up">
           <div class="reveal-dialogue">
             <div class="dialogue-context">
-              <span class="dialogue-badge">项目</span>
+              <span class="dialogue-badge">${I18N.t('dialogue.badge', '项目')}</span>
               <span class="dialogue-project-title">${projectTitle}</span>
             </div>
 
             <div class="dialogue-question">
-              <h2 class="screen-title">R1 你期望「${categoryLabel}」，但你能告诉我...</h2>
-              <p class="screen-subtitle">目标用户是谁？他在什么场景下使用呢？</p>
+              <h2 class="screen-title">${I18N.t('r1.dialogue', 'R1 你期望「{category}」，但你能告诉我...').replace('{category}', categoryLabel)}</h2>
+              <p class="screen-subtitle">${I18N.t('r1.questionSub', '目标用户是谁？他在什么场景下使用呢？')}</p>
             </div>
 
             <div class="screen-hint">
@@ -3144,18 +3117,18 @@ class EurekaLite {
             </div>
 
             <div class="input-wrapper dialogue-input-wrapper">
-              <label class="input-label">👤 目标用户是谁？</label>
-              <input type="text" class="input" id="targetUserInput" placeholder="例如：25-35岁的上班族、大学生、新手妈妈..." />
+              <label class="input-label">${I18N.t('r1.targetUserLabel', '👤 目标用户是谁？')}</label>
+              <input type="text" class="input" id="targetUserInput" placeholder="${I18N.t('r1.targetUserPh', '例如：25-35岁的上班族、大学生、新手妈妈...')}" />
               <button class="ai-prefill-btn" id="aiPrefillTargetUser" data-field="targetUser">
-                <span>🧩 智能预填（本地）</span>
+                <span>${I18N.t('ai.quick.prefill', '🧩 智能预填（本地）')}</span>
               </button>
             </div>
 
             <div class="input-wrapper dialogue-input-wrapper" style="margin-top: var(--space-lg);">
-              <label class="input-label">📍 在什么场景下使用？</label>
-              <textarea class="input textarea" id="sceneDescInput" placeholder="例如：在通勤路上，用户经常因为忘记带水杯而口渴..." rows="3"></textarea>
+              <label class="input-label">${I18N.t('r1.sceneLabel', '📍 在什么场景下使用？')}</label>
+              <textarea class="input textarea" id="sceneDescInput" placeholder="${I18N.t('r1.scenePh', '例如：在通勤路上，用户经常因为忘记带水杯而口渴...')}" rows="3"></textarea>
               <button class="ai-prefill-btn" id="aiPrefillSceneDesc" data-field="sceneDesc">
-                <span>🧩 智能预填（本地）</span>
+                <span>${I18N.t('ai.quick.prefill', '🧩 智能预填（本地）')}</span>
               </button>
             </div>
           </div>
@@ -3400,42 +3373,42 @@ class EurekaLite {
       {
         key: 'fact',
         icon: '🔍',
-        title: 'F（事实）',
-        desc: 'FIND 逻辑链条的起点\n\n事实(Fact) = 从用户旅程中观察到的、可验证的具体现象。\n\n⚠️ 注意：请从上方标签页选择一个"关键发现"，将其作为你分析的事实基础。\n\n接下来 AI 会基于这个事实追问：为什么会这样？',
-        label: '描述你从用户旅程中发现的关键事实：',
-        placeholder: '例如：用户在寻找停车场时，花了15分钟才找到车位，期间查看了3个App...',
-        outputLabel: 'AI 解释建议 →',
-        btnText: '确认事实，生成解释(I) →'
+        title: I18N.t('find.fact.title', 'F（事实）'),
+        desc: I18N.t('find.fact.desc', 'FIND 逻辑链条的起点\n\n事实(Fact) = 从用户旅程中观察到的、可验证的具体现象。\n\n⚠️ 注意：请从上方标签页选择一个"关键发现"，将其作为你分析的事实基础。\n\n接下来 AI 会基于这个事实追问：为什么会这样？'),
+        label: I18N.t('find.fact.label', '描述你从用户旅程中发现的关键事实：'),
+        placeholder: I18N.t('find.fact.placeholder', '例如：用户在寻找停车场时，花了15分钟才找到车位，期间查看了3个App...'),
+        outputLabel: I18N.t('find.fact.outputLabel', 'AI 解释建议 →'),
+        btnText: I18N.t('find.fact.btnText', '确认事实，生成解释(I) →')
       },
       {
         key: 'interpret',
         icon: '💡',
-        title: 'I（解释）',
-        desc: 'Why：这个事实为什么会发生？\n\n解释(Interpretation) = 基于事实挖掘背后的系统性/结构性原因。\n\n📎 要点：不要归因于"用户操作不当"，要问"为什么系统让用户容易出错？"\n\n接下来 AI 会基于事实+解释追问：用户真正需要什么？',
-        label: '结合上方AI解释，补充你认为的根本原因：',
-        placeholder: '例如：因为现有的停车App信息更新不及时，且缺乏实时预测能力...',
-        outputLabel: 'AI 需求建议 →',
-        btnText: '确认解释，生成需求(N) →'
+        title: I18N.t('find.interpret.title', 'I（解释）'),
+        desc: I18N.t('find.interpret.desc', 'Why：这个事实为什么会发生？\n\n解释(Interpretation) = 基于事实挖掘背后的系统性/结构性原因。\n\n📎 要点：不要归因于"用户操作不当"，要问"为什么系统让用户容易出错？"\n\n接下来 AI 会基于事实+解释追问：用户真正需要什么？'),
+        label: I18N.t('find.interpret.label', '结合上方AI解释，补充你认为的根本原因：'),
+        placeholder: I18N.t('find.interpret.placeholder', '例如：因为现有的停车App信息更新不及时，且缺乏实时预测能力...'),
+        outputLabel: I18N.t('find.interpret.outputLabel', 'AI 需求建议 →'),
+        btnText: I18N.t('find.interpret.btnText', '确认解释，生成需求(N) →')
       },
       {
         key: 'need',
         icon: '❤️',
-        title: 'N（需求）',
-        desc: 'Why：用户潜意识里真正需要的是什么？\n\n需求(Need) = 从事实+解释推导出的核心痛点/渴望，不是用户说想要什么。\n\n📎 要点：区分"想要"(stated want)和"需要"(latent need)\n\n最后一步：凝练为一句洞察(POV)',
-        label: '基于事实+解释，提炼用户的真正需求：',
-        placeholder: '例如：用户需要的不是一个更好的停车App，而是"停车时的确定感和掌控感"...',
-        outputLabel: 'AI 洞察建议(POV) →',
-        btnText: '确认需求，生成洞察(D) →'
+        title: I18N.t('find.need.title', 'N（需求）'),
+        desc: I18N.t('find.need.desc', 'Why：用户潜意识里真正需要的是什么？\n\n需求(Need) = 从事实+解释推导出的核心痛点/渴望，不是用户说想要什么。\n\n📎 要点：区分"想要"(stated want)和"需要"(latent need)\n\n最后一步：凝练为一句洞察(POV)'),
+        label: I18N.t('find.need.label', '基于事实+解释，提炼用户的真正需求：'),
+        placeholder: I18N.t('find.need.placeholder', '例如：用户需要的不是一个更好的停车App，而是"停车时的确定感和掌控感"...'),
+        outputLabel: I18N.t('find.need.outputLabel', 'AI 洞察建议(POV) →'),
+        btnText: I18N.t('find.need.btnText', '确认需求，生成洞察(D) →')
       },
       {
         key: 'distill',
         icon: '✨',
-        title: 'D（凝练为洞察/POV）',
-        desc: 'So What：这意味着什么创新机会？\n\n将 Fact + Interpret + Need 凝练为一句话 POV 陈述。\n\n格式：「目标用户」+「核心需求」，因为「根本原因」。\n\n这就是你的创新北极星！',
-        label: '整合 F-I-N 三步，写出一句话洞察(POV)：',
-        placeholder: '例如：「25-35岁上班族」需要「在3分钟内找到确定可用的停车位」，因为「信息碎片化导致决策焦虑」...',
-        outputLabel: '',
-        btnText: '✅ 确认并保存 FIND 洞察'
+        title: I18N.t('find.distill.title', 'D（凝练为洞察/POV）'),
+        desc: I18N.t('find.distill.desc', 'So What：这意味着什么创新机会？\n\n将 Fact + Interpret + Need 凝练为一句话 POV 陈述。\n\n格式：「目标用户」+「核心需求」，因为「根本原因」。\n\n这就是你的创新北极星！'),
+        label: I18N.t('find.distill.label', '整合 F-I-N 三步，写出一句话洞察(POV)：'),
+        placeholder: I18N.t('find.distill.placeholder', '例如：「25-35岁上班族」需要「在3分钟内找到确定可用的停车位」，因为「信息碎片化导致决策焦虑」...'),
+        outputLabel: I18N.t('find.distill.outputLabel', ''),
+        btnText: I18N.t('find.distill.btnText', '✅ 确认并保存 FIND 洞察')
       }
     ];
 
@@ -3443,25 +3416,25 @@ class EurekaLite {
 
     return `
       <div class="screen-content animate-fade-in-up">
-        <h2 class="screen-title">R3 洞察用户痛点</h2>
-        <p class="screen-subtitle">用 FIND 框架从关键发现中挖掘深层需求</p>
+        <h2 class="screen-title">${I18N.t('r3.title', 'R3 洞察用户痛点')}</h2>
+        <p class="screen-subtitle">${I18N.t('r3.sub', '用 FIND 框架从关键发现中挖掘深层需求')}</p>
 
         <div class="screen-hint">
           <span class="hint-icon">💡</span>
-          <span>每个关键发现对应一套独立的 FIND 四步法，点击上方标签页切换</span>
+          <span>${I18N.t('r3.findHint', '每个关键发现对应一套独立的 FIND 四步法，点击上方标签页切换')}</span>
         </div>
 
         <!-- Key Findings Tabs -->
         ${findings.length > 0 ? `
         <div class="find-tabs" id="findTabs">
           <div class="find-tabs-header">
-            <span class="find-tabs-title">🔍 关键发现（${findings.length}）</span>
+            <span class="find-tabs-title">${I18N.t('r3.keyFindingsTitle', '🔍 关键发现（{n}）').replace('{n}', findings.length)}</span>
           </div>
           <div class="find-tabs-list" id="findTabsList">
             ${findings.map((f, i) => {
               const isCompleted = (f.completedSteps || []).length === 4;
               const stepCount = (f.completedSteps || []).length;
-              const tabTextRaw = (f.sourceFinding || f.fact || f.need || f.distill || `发现${i + 1}`).trim();
+              const tabTextRaw = (f.sourceFinding || f.fact || f.need || f.distill || I18N.t('find.tabFallback', '发现') + (i + 1)).trim();
               const tabText = this.escapeHtml(tabTextRaw.substring(0, 30));
               const showEllipsis = tabTextRaw.length > 30 ? '...' : '';
               return `
@@ -3476,7 +3449,7 @@ class EurekaLite {
         </div>
         ` : `
         <div class="find-empty">
-          <p>暂无关键发现。请先在「用户旅程地图」中勾选关键发现，或直接在此输入 Fact 事实。</p>
+          <p>${I18N.t('find.empty', '暂无关键发现。请先在「用户旅程地图」中勾选关键发现，或直接在此输入 Fact 事实。')}</p>
         </div>
         `}
 
@@ -3509,12 +3482,12 @@ class EurekaLite {
                     <span class="find-step-icon">${step.icon}</span>
                     ${step.title}
                   </span>
-                  ${isCompleted ? '<span class="find-step-status">✓ 已确认</span>' : ''}
+                  ${isCompleted ? '<span class="find-step-status">' + I18N.t('find.confirmed', '✓ 已确认') + '</span>' : ''}
                 </div>
 
                 <div class="find-step-body">
                   <div class="find-step-desc">
-                    <div class="find-step-desc-title">${step.key === 'fact' ? '🚀 FIND 逻辑链条起点' : step.key === 'interpret' ? 'Why：这个现象为什么会发生？' : step.key === 'need' ? 'Need：用户潜意识里真正需要的是什么？' : 'Distill：整合为一句结构化的 POV'}</div>
+                    <div class="find-step-desc-title">${step.key === 'fact' ? I18N.t('find.fact.descTitle', '🚀 FIND 逻辑链条起点') : step.key === 'interpret' ? I18N.t('find.interpret.descTitle', 'Why：这个现象为什么会发生？') : step.key === 'need' ? I18N.t('find.need.descTitle', 'Need：用户潜意识里真正需要的是什么？') : I18N.t('find.distill.descTitle', 'Distill：整合为一句结构化的 POV')}</div>
                     ${step.desc.replace(/\n/g, '<br>')}
                   </div>
 
@@ -3537,7 +3510,7 @@ class EurekaLite {
                   ` : ''}
 
                   <button class="find-step-btn" id="findBtn_${step.key}" data-step="${step.key}" ${isCompleted ? 'disabled' : ''}>
-                    ${isCompleted ? '✓ 已确认' : step.btnText}
+                    ${isCompleted ? I18N.t('find.confirmed', '✓ 已确认') : step.btnText}
                   </button>
                 </div>
 
@@ -3549,7 +3522,7 @@ class EurekaLite {
           }).join('')}
 
           <div class="find-complete-banner ${allCompleted ? 'show' : ''}" id="findCompleteBanner">
-            🎉 当前关键发现的 FIND 分析完成
+            ${I18N.t('find.complete', '🎉 当前关键发现的 FIND 分析完成')}
           </div>
         </div>
         ` : ''}
@@ -4155,13 +4128,13 @@ class EurekaLite {
         <div class="nco-section">
           <div class="nco-section-header">
             <span class="nco-section-title">⭐ 我的收藏</span>
-            <span class="nco-section-sub">已收藏 ${state.favorites.length} 张</span>
+            <span class="nco-section-sub">${I18N.t('nco.fav','已收藏 {n} 张').replace('{n}', state.favorites.length)}</span>
           </div>
           <div class="nco-grid" id="ncoFavGrid">${favHtml}</div>
         </div>
         ${customHtml ? `
         <div class="nco-section">
-          <div class="nco-section-header"><span class="nco-section-title">📝 自定义灵感</span><span class="nco-section-sub">${state.customCards.length} 张</span></div>
+          <div class="nco-section-header"><span class="nco-section-title">📝 自定义灵感</span><span class="nco-section-sub">${I18N.t('nco.custom','{n} 张').replace('{n}', state.customCards.length)}</span></div>
           <div class="nco-grid" id="ncoCustomGrid">${customHtml}</div>
         </div>` : ''}
       </div>`;
@@ -4808,7 +4781,7 @@ class EurekaLite {
           <div class="hmw-section-header">
             <span class="hmw-section-icon">💡</span>
             <span class="hmw-section-title">HMW 四维重构</span>
-            <span class="hmw-section-count" id="hmwTotalCount">已产出 ${totalCount} 条</span>
+            <span class="hmw-section-count" id="hmwTotalCount">${I18N.t('hmw.generated','已产出 {n} 条').replace('{n}', totalCount)}</span>
           </div>
           <div class="hmw-dimensions-hint">
             点击各维度展开，AI 生成建议或手动添加 HMW。目标：每个维度 1-2 条，总计 6-8 条。
@@ -4825,7 +4798,7 @@ class EurekaLite {
                       <div class="hmw-dimension-label">${cfg.label}</div>
                       <div class="hmw-dimension-desc">${cfg.desc}</div>
                     </div>
-                    <div class="hmw-dimension-count">${items.length} 条</div>
+                    <div class="hmw-dimension-count">${I18N.t('hmw.count','{n} 条').replace('{n}', items.length)}</div>
                     <div class="hmw-dimension-arrow">▼</div>
                   </div>
                   <div class="hmw-dimension-body">
@@ -6693,13 +6666,13 @@ class EurekaLite {
     if (!card) return;
     const count = card.querySelectorAll('.hmw-item').length;
     const countEl = card.querySelector('.hmw-dimension-count');
-    if (countEl) countEl.textContent = count + ' 条';
+    if (countEl) countEl.textContent = I18N.t('hmw.count','{n} 条').replace('{n}', count);
   }
 
   updateHmwTotalCount() {
     const total = document.querySelectorAll('.hmw-item').length;
     const el = document.getElementById('hmwTotalCount');
-    if (el) el.textContent = '已产出 ' + total + ' 条';
+    if (el) el.textContent = I18N.t('hmw.generated','已产出 {n} 条').replace('{n}', total);
   }
 
   saveHmwData(stage) {
@@ -7517,9 +7490,9 @@ class EurekaLite {
       <main class="profile-main" style="padding: 72px var(--space-md) var(--space-md);">
         <div class="profile-header">
           <div class="profile-avatar">
-            ${(user?.name || '朋友').charAt(0)}
+            ${(user?.name || I18N.t('user.friend', '朋友')).charAt(0)}
           </div>
-          <h2 class="profile-name">${user?.name || '朋友'}</h2>
+          <h2 class="profile-name">${user?.name || I18N.t('user.friend', '朋友')}</h2>
           <p class="profile-sub">Eureka Lite 用户</p>
         </div>
 
@@ -8386,7 +8359,7 @@ class EurekaLite {
 
   getExamElevatorTemplate(project) {
     const categories = ['阶段聚焦', '优先事项', '目标产出', '衡量成功', '学习收获'];
-    const phases = ['30 天', '60 天', '90 天'];
+    const phases = ['30 ' + I18N.t('unit.day','天'), '60 ' + I18N.t('unit.day','天'), '90 ' + I18N.t('unit.day','天')];
     let saved = this._readCardJSON('examElevator');
     let iteration = (saved && Array.isArray(saved.iteration)) ? saved.iteration : [];
     if (iteration.length === 0) {
