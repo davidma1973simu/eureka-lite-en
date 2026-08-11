@@ -2964,6 +2964,12 @@
       '「': '"',
       '」': '"',
       '…': '...',
+      '【': '[',
+      '】': ']',
+      '；': ';',
+      '，': ',',
+      '｜': '|',
+      '〇': '0',
   };
   // 合并运行时兜底字典（zh2en 覆盖屏幕内标签/示例/AI 模板，runtimeZh2en 覆盖弹窗/Toast）
   for (var _zk in zh2en) {
@@ -2971,7 +2977,8 @@
   }
   var rtKeys = Object.keys(runtimeZh2en).sort(function (a, b) { return b.length - a.length; });
 
-  function hasCJK(s) { return /[\u4e00-\u9fff]/.test(s); }
+  // 扩展范围：含 CJK 汉字、CJK 符号/标点（含 〇 U+3007）、全角字符，确保全角标点也能走翻译/归一化
+  function hasCJK(s) { return /[\u3000-\u303f\u4e00-\u9fff\uff00-\uffef]/.test(s); }
 
   function translateText(str) {
     if (current !== 'en' || typeof str !== 'string' || !str) return str;
