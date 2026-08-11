@@ -7175,89 +7175,89 @@ class EurekaLite {
     // Stage/screen specific output descriptions
     const outputMap = {
       'reveal-1': {
-        title: '已保存！产出：具象化的「用户画像」+ 完整的「用户任务(JTBD)」',
-        desc: '团队能够系统梳理探索获得的信息，准确输出一份具象化的「用户画像」，并清晰、完整地界定该用户在此场景下的核心「用户任务(JTBD)」。',
-        nextLabel: '下一步：探索用户旅程 →'
+        title: 'Saved! Output: a concrete "User Persona" + complete "Jobs-To-Be-Done (JTBD)"',
+        desc: 'Your team can systematically organize the insights from exploration and produce a concrete "User Persona", clearly and completely defining the user\'s core "Jobs-To-Be-Done (JTBD)" in this scenario.',
+        nextLabel: 'Next: Explore the user journey →'
       },
       'reveal-2': {
-        title: '已保存！产出：完整的「用户旅程地图」+ 关键触点发现',
-        desc: '从用户视角梳理了完整流程，标注了关键触点、情绪变化和体验断裂点，识别了值得深入的关键发现。',
-        nextLabel: '下一步：洞察用户痛点 →'
+        title: 'Saved! Output: a complete "User Journey Map" + key-touchpoint findings',
+        desc: 'From the user\'s perspective, you mapped the complete flow, marked key touchpoints, emotional shifts, and experience breakpoints, and identified key findings worth exploring further.',
+        nextLabel: 'Next: Uncover user pain points →'
       },
       'reveal-3': {
-        title: '已保存！产出：FIND 深度洞察',
-        desc: '通过 Fact → Interpret → Need → Distill 的框架，从用户旅程的关键发现中挖掘出了深层需求和痛点洞察。',
-        nextLabel: '下一步：对齐商业目标 →'
+        title: 'Saved! Output: FIND deep insights',
+        desc: 'Using the Fact → Interpret → Need → Distill framework, you uncovered deep needs and pain-point insights from the key findings in the user journey.',
+        nextLabel: 'Next: Align with business goals →'
       },
       'reveal-4': {
-        title: '已保存！产出：「商业价值假设」',
-        desc: '明确了利益相关方、商业价值假设，以及与业务目标的关联，为后续创意提供了商业约束和方向。',
-        nextLabel: '完成 Reveal →'
+        title: 'Saved! Output: "Business Value Hypothesis"',
+        desc: 'You clarified stakeholders, the business value hypothesis, and its link to business goals, providing commercial constraints and direction for later ideation.',
+        nextLabel: 'Finish Reveal →'
       },
       'inspire-1': {
-        title: '已保存！产出：清晰的「HMW 问题」',
-        desc: '用"我们如何帮助..."的格式，明确了目标用户、场景和期望的改变，为创意发散奠定了基础。',
-        nextLabel: '下一步：寻找灵感 →'
+        title: 'Saved! Output: a clear "How-Might-We (HMW) question"',
+        desc: 'Using the "How might we help..." format, you defined the target user, scenario, and desired change, laying the foundation for ideation.',
+        nextLabel: 'Next: Find inspiration →'
       },
       'inspire-2': {
-        title: '已保存！产出：多维度「灵感库」',
-        desc: '从 New / Cool / Outsider 三个维度收集了丰富的灵感来源，为创意生成提供了素材。',
-        nextLabel: '下一步：生成创意 →'
+        title: 'Saved! Output: a multi-dimensional "Inspiration Library"',
+        desc: 'You collected rich inspiration sources across three dimensions — New / Cool / Outsider — providing raw material for idea generation.',
+        nextLabel: 'Next: Generate ideas →'
       },
       'inspire-3': {
-        title: '已保存！产出：大量「创意点子」',
-        desc: '先求量再求质，产出了丰富的创意，允许疯狂的想法，为后续筛选提供了充足的选择。',
-        nextLabel: '下一步：筛选最佳创意 →'
+        title: 'Saved! Output: a large set of "Ideas"',
+        desc: 'Quantity before quality — you produced a wealth of ideas, allowing wild ones, giving plenty of options for later screening.',
+        nextLabel: 'Next: Screen for the best idea →'
       },
       'inspire-4': {
-        title: '已保存！产出：「最佳创意」及选择理由',
-        desc: '综合考虑可行性、用户价值和商业潜力，选出了最值得深入的创意，并给出了清晰的选择理由。',
-        nextLabel: '完成 Inspire →'
+        title: 'Saved! Output: the "Best Idea" and its rationale',
+        desc: 'Weighing feasibility, user value, and business potential, you picked the idea most worth pursuing and gave a clear rationale for the choice.',
+        nextLabel: 'Finish Inspire →'
       },
       'inspire-5': {
-        title: '已保存！产出：Inspire 阶段总结',
-        desc: '汇总了 POV、最佳 HMW 与最佳创意，形成可交付 Shape 阶段使用的启发成果。',
-        nextLabel: '进入 Shape →'
+        title: 'Saved! Output: Inspire stage summary',
+        desc: 'You consolidated the POV, best HMW, and best idea into deliverable inspiration outcomes for the Shape stage.',
+        nextLabel: 'Enter Shape →'
       },
       'shape-1': {
-        title: '已保存！产出：「四维拷问」分析',
-        desc: '从用户、商业、技术、生态四个维度对创意进行了诚实拷问，识别了潜在风险和机会。',
-        nextLabel: '下一步：定义 MVP →'
+        title: 'Saved! Output: "Four-Dimension Challenge" analysis',
+        desc: 'You honestly challenged the idea across four dimensions — user, business, technology, ecosystem — identifying potential risks and opportunities.',
+        nextLabel: 'Next: Define the MVP →'
       },
       'shape-2': {
-        title: '已保存！产出：「最小概念方案(MVP)」',
-        desc: '明确了核心功能和边界：包含什么，不包含什么，为快速验证提供了清晰的方向。',
-        nextLabel: '下一步：用户体验故事 →'
+        title: 'Saved! Output: "Minimum Concept (MVP)"',
+        desc: 'You defined the core features and boundaries — what is in and what is out — giving clear direction for rapid validation.',
+        nextLabel: 'Next: User experience story →'
       },
       'shape-3': {
-        title: '已保存！产出：「用户体验故事板」',
-        desc: '通过认识→尝试→使用→顿悟→成长→传播六个场景，讲完了用户与产品的完整故事。',
-        nextLabel: '完成 Shape →'
+        title: 'Saved! Output: "User Experience Storyboard"',
+        desc: 'Through six scenes — Aware → Try → Use → Aha → Grow → Share — you told the complete story of the user and the product.',
+        nextLabel: 'Finish Shape →'
       },
       'exam-1': {
-        title: '已保存！产出：「原型方案」',
-        desc: '设计了最简可用的原型，让用户能够快速体验核心价值，为测试做好了准备。',
-        nextLabel: '下一步：测试计划 →'
+        title: 'Saved! Output: "Prototype Plan"',
+        desc: 'You designed the simplest usable prototype so users can quickly experience the core value, preparing for testing.',
+        nextLabel: 'Next: Test plan →'
       },
       'exam-2': {
-        title: '已保存！产出：「测试执行计划」',
-        desc: '制定了找到目标用户、观察真实使用的详细计划，确保测试不引导、让用户自然探索。',
-        nextLabel: '下一步：测试报告 →'
+        title: 'Saved! Output: "Test Execution Plan"',
+        desc: 'You made a detailed plan to find target users and observe real usage, ensuring the test does not lead users but lets them explore naturally.',
+        nextLabel: 'Next: Test report →'
       },
       'exam-3': {
-        title: '已保存！产出：「测试报告」',
-        desc: '诚实记录了成功之处、失败点和意外发现，用事实和数据支撑了结论。',
-        nextLabel: '下一步：四维度评价 →'
+        title: 'Saved! Output: "Test Report"',
+        desc: 'You honestly recorded what worked, what failed, and unexpected findings, supporting conclusions with facts and data.',
+        nextLabel: 'Next: Four-dimension evaluation →'
       },
       'exam-4': {
-        title: '已保存！产出：「四维度评价」',
-        desc: '从用户、商业、技术、生态四个维度进行了系统评价，明确了创意的优势和短板。',
-        nextLabel: '下一步：电梯演讲 →'
+        title: 'Saved! Output: "Four-Dimension Evaluation"',
+        desc: 'You systematically evaluated the idea across four dimensions — user, business, technology, ecosystem — clarifying its strengths and gaps.',
+        nextLabel: 'Next: Elevator pitch →'
       },
       'exam-5': {
-        title: '已保存！产出：「电梯演讲」+ 「迭代计划」',
-        desc: '浓缩了项目精华，能在30秒内讲清价值，并制定了清晰的下一步行动清单。',
-        nextLabel: '完成项目 🎉'
+        title: 'Saved! Output: "Elevator Pitch" + "Iteration Plan"',
+        desc: 'You distilled the essence of the project into a value story clear in 30 seconds, and made a clear next-step action list.',
+        nextLabel: 'Finish the project 🎉'
       }
     };
 

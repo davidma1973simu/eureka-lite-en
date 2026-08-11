@@ -1775,6 +1775,7 @@
   // 仅含「完整短语」，绝不含短碎词，配合「残留即回退」规则，杜绝中英混排。
   var runtimeZh2en = {
     '绘制用户旅程地图': 'Draw the user journey map',
+    '用户旅程地图': 'User Journey Map',
     '0-30天': 'Days 0-30',
     '31-60天': 'Days 31-60',
     '61-90天': 'Days 61-90',
@@ -3054,6 +3055,31 @@
     if (document.readyState !== 'loading') translateDocument();
     else document.addEventListener('DOMContentLoaded', translateDocument);
   }
+
+  // EN 模式：拦截 input / textarea 的 value 赋值。
+  // 弹窗/面板里写入输入框的中文（prefill 改写、AI 建议、示例、语音等）原本绕过翻译层，
+  // 这里在 setter 里先过 translateText，确保「显示英文、应用后输入框也是英文」。
+  (function installValueShim() {
+    if (typeof window === 'undefined') return;
+    function install(proto) {
+      if (!proto) return;
+      var desc = Object.getOwnPropertyDescriptor(proto, 'value');
+      if (!desc || !desc.set) return;
+      var orig = desc.set;
+      Object.defineProperty(proto, 'value', {
+        get: desc.get,
+        set: function (v) {
+          if (typeof v === 'string' && current === 'en' && /[一-鿿]/.test(v)) {
+            v = translateText(v);
+          }
+          orig.call(this, v);
+        },
+        configurable: true
+      });
+    }
+    install(window.HTMLInputElement && window.HTMLInputElement.prototype);
+    install(window.HTMLTextAreaElement && window.HTMLTextAreaElement.prototype);
+  })();
 
   // EN 模式：把 html 中残留中文替换为英文（按长度降序，最长优先避免子串冲突）
   var zhKeys = Object.keys(zh2en).sort(function (a, b) { return b.length - a.length; });
