@@ -1731,17 +1731,17 @@ class EurekaLite {
    */
   showGlossaryModal() {
     const terms = [
-      { t: 'RISE', d: '产品创新的四阶段框架：Reveal(洞察) → Inspire(启发) → Shape(构建) → Exam(验证)，像海浪一样循环推进。' },
-      { t: 'Reveal 揭示', d: '第一阶段：深入挖掘用户真实需求，从表面现象找到真正的创新机会。' },
-      { t: 'Inspire 启发', d: '第二阶段：把洞察转化为大量创意点子，先求量再求质。' },
-      { t: 'Shape 构建', d: '第三阶段：把创意打磨成可验证的最小概念方案(MVP)与用户故事。' },
-      { t: 'Exam 验证', d: '第四阶段：用真实用户测试方案，收集反馈并决定迭代 / 转型 / 推进。' },
-      { t: 'FIND', d: '洞察四步法：Fact 事实 → Interpret 解释 → Need 需求 → Distill 凝练(POV)。从观察到本质。' },
-      { t: 'POV', d: 'Point of View 观点陈述：用「目标用户 + 需要 + 核心需求，因为 + 根本原因」一句话讲清创新机会。' },
-      { t: 'HMW', d: 'How Might We 我们如何能够：把洞察改写成可发散的提问句式，例如「我们如何帮助…」。' },
-      { t: 'NCO', d: '寻找灵感的三个视角：New(新) / Cool(酷) / Outsider(局外人)，打破思维定式。' },
-      { t: 'TAM/SAM/SOM', d: '市场规模三层：TAM 总市场 / SAM 可服务市场 / SOM 可获取市场，由大到小逐层收敛。' },
-      { t: 'MVP', d: 'Minimum Viable Product 最小可行产品：用最低成本验证核心假设的原型。' }
+      { t: 'RISE', d: 'A four-stage product innovation framework: Reveal (Insight) → Inspire (Ideation) → Shape (Build) → Exam (Validate), advancing in iterative waves.' },
+      { t: 'Reveal', d: 'Stage 1: Dig deep into real user needs and uncover genuine innovation opportunities beneath the surface.' },
+      { t: 'Inspire', d: 'Stage 2: Turn insights into a large quantity of creative ideas first, then refine for quality.' },
+      { t: 'Shape', d: 'Stage 3: Polish ideas into a minimum viable concept (MVP) and user stories that can be validated.' },
+      { t: 'Exam', d: 'Stage 4: Test solutions with real users, gather feedback, and decide whether to iterate, pivot, or proceed.' },
+      { t: 'FIND', d: 'A four-step insight method: Fact → Interpret → Need → Distill (POV). From observation to essence.' },
+      { t: 'POV', d: 'Point of View statement: a single sentence that clarifies the innovation opportunity using "target user + need + insight, because + root cause".' },
+      { t: 'HMW', d: 'How Might We: a reframing of insights into open, divergent questions, e.g. "How might we help…"' },
+      { t: 'NCO', d: 'Three lenses for inspiration: New, Cool, and Outsider. Use them to break fixed thinking patterns.' },
+      { t: 'TAM/SAM/SOM', d: 'Three market-size tiers: Total Available Market (TAM) → Serviceable Addressable Market (SAM) → Serviceable Obtainable Market (SOM), narrowing from large to reachable.' },
+      { t: 'MVP', d: 'Minimum Viable Product: the lowest-cost prototype used to validate the core hypothesis.' }
     ];
     const items = terms.map(x => `
       <div class="glossary-item">
@@ -1753,7 +1753,7 @@ class EurekaLite {
     modal.innerHTML = `
       <div class="modal glossary-modal">
         <div class="modal-header">
-          <span class="modal-title">📖 术语表</span>
+          <span class="modal-title">📖 Glossary</span>
           <button class="ai-panel-close" id="glossaryClose">✕</button>
         </div>
         <div class="modal-body glossary-body">${items}</div>
@@ -3558,26 +3558,26 @@ class EurekaLite {
 
     return `
       <div class="screen-content animate-fade-in-up">
-        <h2 class="screen-title">R4 对齐商业目标</h2>
-        <p class="screen-subtitle">探索利益相关方需求，生成可验证的商业假设</p>
+        <h2 class="screen-title">R4 · Align Business Goals</h2>
+        <p class="screen-subtitle">Explore stakeholder needs and generate testable business hypotheses</p>
 
         <div class="screen-hint">
           <span class="hint-icon">💡</span>
-          <span>先探索利益相关方需求，再基于洞察生成可验证的商业假设</span>
+          <span>Explore stakeholder needs first, then generate testable business hypotheses from your insights</span>
         </div>
 
-        <!-- Part 1: 利益相关方需求探索 -->
+        <!-- Part 1: Stakeholder needs exploration -->
         <div class="stakeholder-section" id="stakeholderSection">
           <div class="stakeholder-header">
-            <h3 class="stakeholder-title">🤝 利益相关方需求探索</h3>
-            <p class="stakeholder-desc">AI 将基于你的项目主题、目标用户和场景，自动识别关键利益相关方，帮你梳理各方需求和潜在冲突。</p>
+            <h3 class="stakeholder-title">🤝 Stakeholder Needs Exploration</h3>
+            <p class="stakeholder-desc">AI will identify key stakeholders based on your project theme, target users, and scenario, helping you map each party's needs and potential conflicts.</p>
           </div>
 
           <button class="btn btn-secondary" id="generateStakeholdersBtn" style="margin-bottom: var(--space-lg);">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
             </svg>
-            ⚡ AI 识别利益相关方
+            ⚡ AI Identify Stakeholders
           </button>
 
           <div class="stakeholder-cards" id="stakeholderCards">
@@ -3585,27 +3585,27 @@ class EurekaLite {
           </div>
 
           <div class="stakeholder-consensus" id="stakeholderConsensus" style="display: ${stakeholderData.consensus ? 'block' : 'none'};">
-            <div class="consensus-label">🤝 AI 共识建议</div>
+            <div class="consensus-label">🤝 AI Consensus Suggestion</div>
             <div class="consensus-content" id="consensusContent">${stakeholderData.consensus || ''}</div>
           </div>
 
           <button class="btn btn-primary" id="generateConsensusBtn" style="margin-top: var(--space-md); display: ${stakeholderData.stakeholders?.length > 1 ? 'inline-flex' : 'none'};">
-            🤝 达成共识
+            🤝 Reach Consensus
           </button>
         </div>
 
-        <!-- Part 2: 商业假设 -->
+        <!-- Part 2: Business hypotheses -->
         <div class="hypothesis-section" id="hypothesisSection" style="margin-top: var(--space-2xl);">
           <div class="hypothesis-header">
-            <h3 class="hypothesis-title">💡 商业假设</h3>
-            <p class="hypothesis-desc">基于 FIND 洞察和利益相关方需求，AI 将生成可验证的商业假设。假设格式：如果 [解决方案]，那么 [目标用户] 将 [行为]，因为 [洞察]。</p>
+            <h3 class="hypothesis-title">💡 Business Hypotheses</h3>
+            <p class="hypothesis-desc">Based on your FIND insights and stakeholder needs, AI will generate testable business hypotheses. Format: If [solution], then [target user] will [action], because [insight].</p>
           </div>
 
           <button class="btn btn-secondary" id="generateHypothesisBtn" style="margin-bottom: var(--space-lg);">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
             </svg>
-            ⚡ AI 生成商业假设
+            ⚡ AI Generate Business Hypotheses
           </button>
 
           <div class="hypothesis-cards" id="hypothesisCards">
@@ -3614,11 +3614,11 @@ class EurekaLite {
 
           <div class="hypothesis-confirmed" id="hypothesisConfirmed" style="display: ${hypothesisData.confirmed ? 'flex' : 'none'};">
             <span>✅</span>
-            <span>商业假设已确认，可进入下一阶段</span>
+            <span>Business hypotheses confirmed — you can proceed to the next stage</span>
           </div>
 
           <button class="btn btn-primary" id="confirmHypothesisBtn" style="margin-top: var(--space-md); display: ${hypothesisData.hypotheses?.length > 0 ? 'inline-flex' : 'none'};">
-            ✅ 确认并提交
+            ✅ Confirm & Submit
           </button>
         </div>
       </div>
@@ -3631,32 +3631,32 @@ class EurekaLite {
   getStakeholderCardsHTML(data) {
     const stakeholders = data.stakeholders || [];
     if (stakeholders.length === 0) {
-      return '<div class="stakeholder-empty">点击「AI 识别利益相关方」按钮，让 AI 帮你分析</div>';
+      return '<div class="stakeholder-empty">Click the "AI Identify Stakeholders" button to let AI analyze for you</div>';
     }
     return stakeholders.map((s, i) => {
       const totalScore = (s.needs || []).reduce((sum, n) => sum + (parseInt(n.score) || 0), 0);
       const needs = s.needs || [
-        { label: '需求1', score: 3 },
-        { label: '需求2', score: 3 },
-        { label: '需求3', score: 3 },
-        { label: '需求4', score: 3 }
+        { label: 'Need 1', score: 3 },
+        { label: 'Need 2', score: 3 },
+        { label: 'Need 3', score: 3 },
+        { label: 'Need 4', score: 3 }
       ];
       return `
       <div class="stakeholder-card" data-index="${i}">
         <div class="stakeholder-card-header">
           <span class="stakeholder-card-icon">${s.icon || '👤'}</span>
-          <input class="stakeholder-card-name" value="${this.escapeHtml(s.name || '')}" placeholder="利益相关方名称" data-field="name" />
+          <input class="stakeholder-card-name" value="${this.escapeHtml(s.name || '')}" placeholder="Stakeholder name" data-field="name" />
           <span class="stakeholder-score-badge ${totalScore === 12 ? 'complete' : 'incomplete'}">${totalScore}/12</span>
         </div>
         <div class="stakeholder-card-body">
           ${needs.map((need, ni) => `
             <div class="stakeholder-need-row" data-need-index="${ni}">
               <div class="stakeholder-need-label-wrapper">
-                <span class="stakeholder-need-index">需求 ${ni + 1}</span>
-                <input class="stakeholder-need-label" value="${this.escapeHtml(need.label || '')}" placeholder="需求描述..." data-field="need-label" data-need="${ni}" />
+                <span class="stakeholder-need-index">Need ${ni + 1}</span>
+                <input class="stakeholder-need-label" value="${this.escapeHtml(need.label || '')}" placeholder="Need description..." data-field="need-label" data-need="${ni}" />
               </div>
               <div class="stakeholder-score-control">
-                <span class="stakeholder-score-label">分数</span>
+                <span class="stakeholder-score-label">Score</span>
                 <button class="stakeholder-score-btn minus" data-action="minus" data-stakeholder="${i}" data-need="${ni}">−</button>
                 <input class="stakeholder-score-input" type="number" value="${need.score || 3}" min="0" max="12" data-field="need-score" data-stakeholder="${i}" data-need="${ni}" readonly />
                 <button class="stakeholder-score-btn plus" data-action="plus" data-stakeholder="${i}" data-need="${ni}">+</button>
@@ -3675,57 +3675,57 @@ class EurekaLite {
     const h = data || {};
     const hasContent = h.tam || h.sam || h.som || h.competitors || h.alignment;
     if (!hasContent) {
-      return '<div class="hypothesis-empty">点击「AI 生成商业假设」按钮，让 AI 帮你生成</div>';
+      return '<div class="hypothesis-empty">Click the "AI Generate Business Hypotheses" button to let AI generate for you</div>';
     }
     return `
       <div class="market-hypothesis-grid">
         <div class="market-hypothesis-card">
           <div class="market-hypothesis-header">
             <span class="market-hypothesis-icon">🌍</span>
-            <span class="market-hypothesis-title">TAM · 总可服务市场</span>
+            <span class="market-hypothesis-title">TAM · Total Addressable Market</span>
           </div>
-          <p class="market-hypothesis-desc">这类问题在全球/全国范围内，潜在用户或企业的总量是多少？（可用人数、企业数、金额估算）</p>
-          <textarea class="market-hypothesis-input" id="hypothesisTAM" placeholder="例如：全国每年200万购买车的用户" rows="3">${this.escapeHtml(h.tam || '')}</textarea>
+          <p class="market-hypothesis-desc">Globally or nationwide, how large is the total pool of potential users or enterprises for this problem? (headcount, company count, revenue estimate)</p>
+          <textarea class="market-hypothesis-input" id="hypothesisTAM" placeholder="e.g. 2 million people buy cars in the country each year" rows="3">${this.escapeHtml(h.tam || '')}</textarea>
         </div>
         <div class="market-hypothesis-card">
           <div class="market-hypothesis-header">
             <span class="market-hypothesis-icon">🎯</span>
-            <span class="market-hypothesis-title">SAM · 目标可触达市场</span>
+            <span class="market-hypothesis-title">SAM · Serviceable Addressable Market</span>
           </div>
-          <p class="market-hypothesis-desc">我们实际能服务到的细分市场有多大？（考虑地域、行业、规模等筛选条件）</p>
-          <textarea class="market-hypothesis-input" id="hypothesisSAM" placeholder="例如：城市购买30万元以上的SUV，大概20万人" rows="3">${this.escapeHtml(h.sam || '')}</textarea>
+          <p class="market-hypothesis-desc">How large is the segment we can actually serve? (consider region, industry, scale filters)</p>
+          <textarea class="market-hypothesis-input" id="hypothesisSAM" placeholder="e.g. city buyers of premium SUVs above $30k, roughly 200k people" rows="3">${this.escapeHtml(h.sam || '')}</textarea>
         </div>
         <div class="market-hypothesis-card">
           <div class="market-hypothesis-header">
             <span class="market-hypothesis-icon">💡</span>
-            <span class="market-hypothesis-title">SOM · 可实际获取市场</span>
+            <span class="market-hypothesis-title">SOM · Serviceable Obtainable Market</span>
           </div>
-          <p class="market-hypothesis-desc">第一阶段（1-2年内），我们实际能拿下多少份额？基于什么假设？</p>
-          <textarea class="market-hypothesis-input" id="hypothesisSOM" placeholder="例如：和SAM一致，占据超过30%份额" rows="3">${this.escapeHtml(h.som || '')}</textarea>
+          <p class="market-hypothesis-desc">In Phase 1 (1-2 years), what share can we realistically capture? What assumptions is this based on?</p>
+          <textarea class="market-hypothesis-input" id="hypothesisSOM" placeholder="e.g. aligned with SAM, capture >30% share" rows="3">${this.escapeHtml(h.som || '')}</textarea>
         </div>
         <div class="market-hypothesis-card">
           <div class="market-hypothesis-header">
             <span class="market-hypothesis-icon">🔍</span>
-            <span class="market-hypothesis-title">竞品 / 现有解决方案</span>
+            <span class="market-hypothesis-title">Competitors / Existing Solutions</span>
           </div>
-          <p class="market-hypothesis-desc">目前用户是如何解决这个问题的？有哪些主要竞争者？他们的优劣势是什么？</p>
-          <textarea class="market-hypothesis-input" id="hypothesisCompetitors" placeholder="例如：现有的产品更多是辅助驾驶，风险大，成本高" rows="3">${this.escapeHtml(h.competitors || '')}</textarea>
+          <p class="market-hypothesis-desc">How do users currently solve this problem? Who are the main competitors? What are their strengths and weaknesses?</p>
+          <textarea class="market-hypothesis-input" id="hypothesisCompetitors" placeholder="e.g. existing products mostly assist driving with high risk and cost" rows="3">${this.escapeHtml(h.competitors || '')}</textarea>
         </div>
       </div>
       <div class="market-hypothesis-card full-width" style="margin-top: var(--space-md);">
         <div class="market-hypothesis-header">
           <span class="market-hypothesis-icon">🏢</span>
-          <span class="market-hypothesis-title">战略一致性</span>
+          <span class="market-hypothesis-title">Strategic Alignment</span>
         </div>
-        <p class="market-hypothesis-desc">这个方向与我们团队/组织的战略目标是否一致？是否有内部支持？有哪些潜在阻力？</p>
-        <textarea class="market-hypothesis-input" id="hypothesisAlignment" placeholder="例如：和公司的智能化和用户导向战略完全一致。" rows="3">${this.escapeHtml(h.alignment || '')}</textarea>
+        <p class="market-hypothesis-desc">Does this direction align with our team/organization's strategic goals? Is there internal support? What resistance might appear?</p>
+        <textarea class="market-hypothesis-input" id="hypothesisAlignment" placeholder="e.g. fully aligned with the company's intelligence and user-centric strategy" rows="3">${this.escapeHtml(h.alignment || '')}</textarea>
       </div>
       <div class="market-hypothesis-card full-width" style="margin-top: var(--space-md);">
         <div class="market-hypothesis-header">
           <span class="market-hypothesis-icon">📝</span>
-          <span class="market-hypothesis-title">市场备注（可选）</span>
+          <span class="market-hypothesis-title">Market Notes (optional)</span>
         </div>
-        <textarea class="market-hypothesis-input" id="hypothesisNotes" placeholder="补充信息..." rows="2">${this.escapeHtml(h.notes || '')}</textarea>
+        <textarea class="market-hypothesis-input" id="hypothesisNotes" placeholder="Additional information..." rows="2">${this.escapeHtml(h.notes || '')}</textarea>
       </div>
     `;
   }
@@ -3946,17 +3946,17 @@ class EurekaLite {
                 <div class="briefing-market-cell"><strong>TAM</strong><textarea id="briefingTAM" rows="2" placeholder="TAM...">${this.escapeHtml(hypothesis.tam || '')}</textarea></div>
                 <div class="briefing-market-cell"><strong>SAM</strong><textarea id="briefingSAM" rows="2" placeholder="SAM...">${this.escapeHtml(hypothesis.sam || '')}</textarea></div>
                 <div class="briefing-market-cell"><strong>SOM</strong><textarea id="briefingSOM" rows="2" placeholder="SOM...">${this.escapeHtml(hypothesis.som || '')}</textarea></div>
-                <div class="briefing-market-cell"><strong>竞品</strong><textarea id="briefingCompetitors" rows="2" placeholder="竞品分析...">${this.escapeHtml(hypothesis.competitors || '')}</textarea></div>
+                <div class="briefing-market-cell"><strong>Competitors</strong><textarea id="briefingCompetitors" rows="2" placeholder="Competitor analysis...">${this.escapeHtml(hypothesis.competitors || '')}</textarea></div>
               </div>
               <div class="briefing-market-cell full" style="margin-top: var(--space-sm);">
-                <strong>战略一致性</strong>
-                <textarea id="briefingAlignment" rows="2" placeholder="战略一致性...">${this.escapeHtml(hypothesis.alignment || '')}</textarea>
+                <strong>Strategic Alignment</strong>
+                <textarea id="briefingAlignment" rows="2" placeholder="Strategic alignment...">${this.escapeHtml(hypothesis.alignment || '')}</textarea>
               </div>
               <div class="briefing-market-cell full" style="margin-top: var(--space-xs);">
-                <strong>备注</strong>
-                <textarea id="briefingNotes" rows="2" placeholder="备注...">${this.escapeHtml(hypothesis.notes || '')}</textarea>
+                <strong>Notes</strong>
+                <textarea id="briefingNotes" rows="2" placeholder="Notes...">${this.escapeHtml(hypothesis.notes || '')}</textarea>
               </div>
-              ` : '<div class="briefing-empty">暂无商业假设</div>'}
+              ` : '<div class="briefing-empty">No business hypotheses yet</div>'}
             </div>
           </div>
         </div>

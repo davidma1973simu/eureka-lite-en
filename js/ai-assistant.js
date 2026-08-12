@@ -982,12 +982,12 @@ ${(userInput || '').trim()}
     // Generate contextual stakeholder needs based on project topic
     const generateNeeds = (role) => {
       const baseNeeds = {
-        '业务领导': ['战略一致性', '投入产出比', '执行可行性', '速度和结果'],
-        '技术专家': ['技术可行性', '系统整合度', '扩展性', '维护成本'],
-        '合作伙伴': ['共同价值', '资源投入', '风险分担', '合作条件'],
-        '用户代表': ['解决真实痛点', '使用便捷性', '学习成本', '可见价值']
+        'Business Leader': ['Strategic alignment', 'Input-output ratio', 'Execution feasibility', 'Speed and results'],
+        'Technology Expert': ['Technical feasibility', 'System integration', 'Scalability', 'Maintenance cost'],
+        'Partner': ['Shared value', 'Resource commitment', 'Risk sharing', 'Cooperation terms'],
+        'User Representative': ['Solves real pain points', 'Ease of use', 'Learning cost', 'Visible value']
       };
-      return baseNeeds[role] || ['核心诉求1', '核心诉求2', '核心诉求3', '核心诉求4'];
+      return baseNeeds[role] || ['Core need 1', 'Core need 2', 'Core need 3', 'Core need 4'];
     };
 
     // Contextual stakeholder generation based on project type
@@ -995,24 +995,24 @@ ${(userInput || '').trim()}
 
     if (category === 'product' || category === 'service') {
       stakeholderConfigs = [
-        { icon: '👔', name: '业务领导', defaultScores: [4, 3, 3, 2] },
-        { icon: '🔧', name: '技术专家', defaultScores: [3, 4, 3, 2] },
-        { icon: '🤝', name: '合作伙伴', defaultScores: [3, 3, 3, 3] },
-        { icon: '👤', name: '用户代表', defaultScores: [4, 3, 2, 3] }
+        { icon: '👔', name: 'Business Leader', defaultScores: [4, 3, 3, 2] },
+        { icon: '🔧', name: 'Technology Expert', defaultScores: [3, 4, 3, 2] },
+        { icon: '🤝', name: 'Partner', defaultScores: [3, 3, 3, 3] },
+        { icon: '👤', name: 'User Representative', defaultScores: [4, 3, 2, 3] }
       ];
     } else if (category === 'problem') {
       stakeholderConfigs = [
-        { icon: '😟', name: '问题承担者', defaultScores: [4, 3, 3, 2] },
-        { icon: '💰', name: '决策/资源方', defaultScores: [4, 3, 3, 2] },
-        { icon: '🧠', name: '执行团队', defaultScores: [3, 3, 3, 3] },
-        { icon: '📊', name: '受影响方', defaultScores: [3, 3, 3, 3] }
+        { icon: '😟', name: 'Problem Bearer', defaultScores: [4, 3, 3, 2] },
+        { icon: '💰', name: 'Decision/Resource Owner', defaultScores: [4, 3, 3, 2] },
+        { icon: '🧠', name: 'Execution Team', defaultScores: [3, 3, 3, 3] },
+        { icon: '📊', name: 'Affected Party', defaultScores: [3, 3, 3, 3] }
       ];
     } else {
       stakeholderConfigs = [
-        { icon: '🔍', name: '探索者', defaultScores: [4, 3, 3, 2] },
-        { icon: '💰', name: '资助方', defaultScores: [4, 3, 3, 2] },
-        { icon: '📊', name: '潜在用户', defaultScores: [3, 3, 3, 3] },
-        { icon: '🏢', name: '执行团队', defaultScores: [3, 3, 3, 3] }
+        { icon: '🔍', name: 'Explorer', defaultScores: [4, 3, 3, 2] },
+        { icon: '💰', name: 'Funder', defaultScores: [4, 3, 3, 2] },
+        { icon: '📊', name: 'Potential User', defaultScores: [3, 3, 3, 3] },
+        { icon: '🏢', name: 'Execution Team', defaultScores: [3, 3, 3, 3] }
       ];
     }
 
@@ -1069,17 +1069,17 @@ ${(userInput || '').trim()}
     await new Promise(resolve => setTimeout(resolve, 800));
 
     const stakeholders = data.stakeholders || [];
-    if (stakeholders.length === 0) return '请先添加利益相关方';
+    if (stakeholders.length === 0) return 'Please add stakeholders first';
 
-    const names = stakeholders.map(s => s.name).join('、');
-    return `基于${names}的需求分析，建议从以下方向寻求共识：
+    const names = stakeholders.map(s => s.name).join(', ');
+    return `Based on the needs of ${names}, seek consensus in the following directions:
 
-1. **共同目标**：找到各方都关心的核心指标（如用户体验提升、运营成本降低、收入增长）
-2. **优先级排序**：先解决"共赢"问题，再处理"零和"冲突
-3. **资源分配**：明确各方投入和收益的比例关系
-4. **沟通机制**：建立定期同步机制，避免信息不对称
+1. **Shared Goals**: Identify core metrics everyone cares about (e.g. user experience improvement, operating-cost reduction, revenue growth)
+2. **Priority Ordering**: Solve win-win issues first, then address zero-sum conflicts
+3. **Resource Allocation**: Clarify each party's input and expected return
+4. **Communication Cadence**: Set up regular syncs to avoid information asymmetry
 
-💡 建议下一步：将共识转化为可验证的商业假设，明确"如果...那么..."的逻辑链条。`;
+💡 Suggested next step: Turn consensus into testable business hypotheses using clear "if...then..." logic.`;
   },
 
   /**
@@ -1116,15 +1116,15 @@ ${(userInput || '').trim()}
       const prompt =
 `${ctxParts.join('\n')}
 
-基于以上**真实的项目信息**，生成商业假设。要求：
-1. **绝对紧扣项目主题和场景**，不要生成与项目无关的领域/产品形态
-2. 如果项目是"智能跑鞋"，就围绕智能跑鞋写商业假设，不要写成健康管理App或通用运动平台
-3. TAM/SAM/SOM 的用户群定义必须与目标用户一致
+Based on the **real project information** above, generate business hypotheses. Requirements:
+1. Stay tightly aligned with the project theme and scenario; do not generate unrelated domains or product forms.
+2. If the project is "smart running shoes", write hypotheses around smart running shoes, not a general health-management app or generic sports platform.
+3. TAM/SAM/SOM user definitions must be consistent with the target user.
 
-以 JSON 返回：
-{"tam":"总潜在市场（具体数字+人群定义）","sam":"可服务市场（更精准的人群+规模）","som":"可获得市场（首期目标+时间线）","competitors":"现有竞品及差距（必须相关）","alignment":"战略一致性（结合项目实际）","notes":"待验证的关键假设"}
+Return JSON:
+{"tam":"Total addressable market (specific numbers + user definition)","sam":"Serviceable addressable market (more precise users + scale)","som":"Serviceable obtainable market (first-phase target + timeline)","competitors":"Existing competitors and gaps (must be relevant)","alignment":"Strategic alignment (tied to the actual project)","notes":"Key assumptions to validate"}
 
-直接返回 JSON，不要 markdown 代码块。`;
+Return JSON directly, no markdown code blocks.`;
 
       try {
         const raw = await window.AIService.complete(prompt, {
@@ -1138,7 +1138,7 @@ ${(userInput || '').trim()}
             return {
               tam: obj.tam || '', sam: obj.sam || '', som: obj.som || '',
               competitors: obj.competitors || '', alignment: obj.alignment || '',
-              notes: obj.notes || '以上为 AI 生成的初步商业假设，建议通过用户调研和竞品分析验证关键假设。'
+              notes: obj.notes || 'These are preliminary AI-generated business hypotheses. Validate key assumptions through user research and competitor analysis.'
             };
           }
         }
@@ -1174,21 +1174,21 @@ ${(userInput || '').trim()}
     let tam2, sam2, som2, competitors2, alignment2, notes2;
 
     if (fact2 || insight2 || scene2) {
-      const pd = coreProblem2 || '核心痛点';
+      const pd = coreProblem2 || 'core pain point';
       const ib = insight2 ? insight2.slice(0, 60) + (insight2.length > 60 ? '...' : '') : '';
-      tam2 = `基于「${projectName2}」的定位，面向${targetUser2}的潜在市场。全国范围内具有${pd}的人群规模达数千万至数亿级别，市场需求持续增长。`;
-      sam2 = `精准聚焦${targetUser2}中${scene2 ? '在「' + scene2.slice(0, 30) + '」场景下' : ''}对${pd}有强痛点的细分人群，具备明确付费意愿或决策影响力，规模约数百万至千万级别。`;
-      som2 = `首阶段通过MVP验证核心假设——${ib ? '基于"' + ib + '"的洞察' : '解决' + pd}，目标在1年内获取首批种子用户（1-10万），建立标杆案例后逐步规模化。`;
-      competitors2 = `现有解决方案多为传统方式或通用工具，未能精准解决${targetUser2}在${pd}上的深层痛点；市场分散，尚无绝对领先者，存在创新切入点。`;
-      alignment2 = `${ib ? '基于FIND洞察——' + ib + '——' : ''}该方向与创新目标高度一致，具备清晰的验证路径和可量化的成功指标。`;
-      notes2 = `⚠️ 此为基于当前项目信息的初步商业假设。建议完成 FIND 四步法获得深度洞察后再生成更精准版本。待验证：1) TAM/SAM 准确性；2) 用户付费意愿；3) 竞品壁垒。`;
+      tam2 = `Based on the positioning of "${projectName2}" and the target users ${targetUser2}. Nationwide, the population with ${pd} reaches tens of millions to hundreds of millions, and market demand keeps growing.`;
+      sam2 = `Precisely focus on the segment of ${targetUser2}${scene2 ? ' in the "' + scene2.slice(0, 30) + '" scenario' : ''} that has a strong pain point around ${pd}, with clear willingness to pay or decision-making influence, totaling millions to tens of millions.`;
+      som2 = `In the first phase, validate the core hypothesis through an MVP${ib ? ' based on the insight "' + ib + '"' : ' solving ' + pd}, aiming to acquire the first batch of seed users (10k-100k) within one year, then scale after building benchmark cases.`;
+      competitors2 = `Existing solutions are mostly traditional methods or generic tools that fail to precisely address the deep pain point of ${targetUser2} around ${pd}; the market is fragmented with no clear leader, leaving room for innovation.`;
+      alignment2 = `${ib ? 'Based on the FIND insight — ' + ib + ' — ' : ''}This direction is highly aligned with the innovation goal and has a clear validation path plus measurable success metrics.`;
+      notes2 = `⚠️ These are preliminary business hypotheses based on current project information. Complete the FIND four-step method for deeper insights before generating a more precise version. To validate: 1) TAM/SAM accuracy; 2) user willingness to pay; 3) competitor barriers.`;
     } else {
-      tam2 = '⚠️ 暂无足够信息。请先完成用户旅程 → 标记关键发现 → 完成 FIND 洞察后再生成的商业假设。';
-      sam2 = '⚠️ 需要先定义目标用户和服务场景才能估算可服务市场。';
-      som2 = '⚠️ 建议先用 MVP 验证核心假设，再规划可获得市场。';
-      competitors2 = '⚠️ 需要先明确产品定位和目标场景后才能分析竞品格局。';
-      alignment2 = '⚠️ 请先完成 Reveal 阶段的用户研究和 FIND 洞察，确保商业假设建立在真实需求基础上。';
-      notes2 = '📌 商业假设必须基于真实的 FIND 洞察才有意义。请返回上一步完成 FIND 分析。';
+      tam2 = '⚠️ Not enough information yet. Please complete User Journey → Mark Key Findings → FIND insights before generating business hypotheses.';
+      sam2 = '⚠️ Define the target users and service scenario first to estimate the serviceable market.';
+      som2 = '⚠️ Validate the core hypothesis with an MVP first, then plan the obtainable market.';
+      competitors2 = '⚠️ Clarify product positioning and target scenario before analyzing the competitive landscape.';
+      alignment2 = '⚠️ Complete Reveal-stage user research and FIND insights first to ensure business hypotheses are grounded in real needs.';
+      notes2 = '📌 Business hypotheses only matter when based on real FIND insights. Please go back and complete FIND analysis.';
     }
 
     return { tam: tam2, sam: sam2, som: som2, competitors: competitors2, alignment: alignment2, notes: notes2 };
@@ -1206,13 +1206,13 @@ ${(userInput || '').trim()}
   /** 系统人设：Eureka RISE 创新教练 */
   _systemPersona() {
     return [
-      '你是 Eureka Lite 的 AI 创新教练，精通 RISE 创新方法论（Reveal 洞察 → Inspire 启发 → Shape 架构 → Exam 验证）。',
-      '你的任务是帮助用户在每个阶段产出结构清晰、可落地、可编辑的创新草稿。',
-      '要求：',
-      '1) 紧扣用户已填写的项目上下文，绝不脱离主题写通用套话；',
-      '2) 语言简洁、专业、可执行，中文输出；',
-      '3) 严格按要求的结构和字数输出，方便用户直接采用后再修订；',
-      '4) 不要写"作为AI"之类的话，直接给内容。'
+      'You are an Eureka Lite AI innovation coach, proficient in the RISE methodology (Reveal → Inspire → Shape → Exam).',
+      'Your task is to help users produce structured, actionable, and editable innovation drafts at each stage.',
+      'Requirements:',
+      '1) Stay tightly aligned with the project context the user has provided; never drift into generic filler.',
+      '2) Keep language concise, professional, and actionable; output in English.',
+      '3) Strictly follow the requested structure and length so users can adopt and refine directly.',
+      '4) Do not say "as an AI" or similar; provide content directly.'
     ].join('\n');
   },
 
