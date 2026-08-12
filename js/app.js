@@ -1769,10 +1769,10 @@ class EurekaLite {
    */
   showIntroModal() {
     const flow = [
-      { key: 'reveal', icon: '🔍', name: 'Reveal', tag: '洞察', tip: '为谁 / 什么场景 / 什么痛点', color: '#E07A2F' },
-      { key: 'inspire', icon: '💡', name: 'Inspire', tag: '启发', tip: '提出 HMW，发散并筛选创意', color: '#7F77DD' },
-      { key: 'shape', icon: '🛠️', name: 'Shape', tag: '构建', tip: '打磨 MVP 与用户体验故事板', color: '#0F6E56' },
-      { key: 'exam', icon: '✅', name: 'Exam', tag: '验证', tip: '真实测试、四维评价、电梯演讲', color: '#64748B' }
+      { key: 'reveal', icon: '🔍', name: 'Reveal', tag: 'Reveal', tip: 'Who / What scenario / What pain point', color: '#E07A2F' },
+      { key: 'inspire', icon: '💡', name: 'Inspire', tag: 'Inspire', tip: 'Frame HMWs, diverge and select ideas', color: '#7F77DD' },
+      { key: 'shape', icon: '🛠️', name: 'Shape', tag: 'Shape', tip: 'Shape MVP and user storyboard', color: '#0F6E56' },
+      { key: 'exam', icon: '✅', name: 'Exam', tag: 'Exam', tip: 'Real testing, four-dimension evaluation, elevator pitch', color: '#64748B' }
     ];
     const nodes = flow.map((s, i) => `
       <div class="intro-flow-node" style="--node-color:${s.color}">
@@ -1786,14 +1786,14 @@ class EurekaLite {
     modal.innerHTML = `
       <div class="modal intro-modal">
         <div class="modal-header">
-          <span class="modal-title">👋 一张图看懂 Eureka</span>
+          <span class="modal-title">👋 Eureka at a Glance</span>
           <button class="ai-panel-close" id="introClose">✕</button>
         </div>
         <div class="modal-body">
-          <p class="ai-config-tip" style="text-align:center;margin-bottom:18px">Eureka 用 <b>RISE 四步</b> 把一个模糊想法变成可验证方案。<br>跟着顶部指引，一步一步走就行。</p>
+          <p class="ai-config-tip" style="text-align:center;margin-bottom:18px">Eureka uses the <b>RISE four-step</b> framework to turn a fuzzy idea into a testable solution.<br>Follow the top navigation, one step at a time.</p>
           <div class="intro-flow">${nodes}</div>
-          <p class="ai-config-tip" style="margin-top:18px;text-align:center">提示：右下角 🤖 唤出 AI 助手；首次进入每个阶段会有阶段指引。AI 需在 ⚙ 配置 Key。</p>
-          <div style="text-align:center;margin-top:22px"><button class="btn btn-primary" id="introGot" style="background:#E07A2F !important;color:#fff !important;border:none;box-shadow:0 2px 8px rgba(224,122,47,0.35)">开始我的创新 →</button></div>
+          <p class="ai-config-tip" style="margin-top:18px;text-align:center">Tip: click 🤖 at the bottom-right to open the AI assistant. Each stage shows a guide on first entry. AI requires a Key in ⚙ settings.</p>
+          <div style="text-align:center;margin-top:22px"><button class="btn btn-primary" id="introGot" style="background:#E07A2F !important;color:#fff !important;border:none;box-shadow:0 2px 8px rgba(224,122,47,0.35)">Start my innovation →</button></div>
         </div>
       </div>`;
     document.body.appendChild(modal);
@@ -2610,8 +2610,8 @@ class EurekaLite {
               ${guide ? `
               <div class="example-step-guide">
                 <div class="example-step-guide-row"><span class="example-step-guide-label">🎯 做什么</span><span>${guide.action}</span></div>
-                <div class="example-step-guide-row"><span class="example-step-guide-label">📥 输入什么</span><span>${guide.input}</span></div>
-                <div class="example-step-guide-row"><span class="example-step-guide-label">📤 产出什么</span><span>${guide.output}</span></div>
+                <div class="example-step-guide-row"><span class="example-step-guide-label">📥 Input什么</span><span>${guide.input}</span></div>
+                <div class="example-step-guide-row"><span class="example-step-guide-label">📤 Output什么</span><span>${guide.output}</span></div>
                 <div class="example-step-guide-row"><span class="example-step-guide-label">❓ 为什么</span><span>${guide.reason}</span></div>
               </div>` : ''}
             `;
@@ -2782,28 +2782,28 @@ class EurekaLite {
     return `
       <div class="stage-brief-overlay" id="stageBriefOverlay">
         <div class="stage-brief-modal">
-          <button class="stage-brief-close" id="stageBriefClose" title="关闭">✕</button>
+          <button class="stage-brief-close" id="stageBriefClose" title="Close">✕</button>
           <div class="stage-brief-header" style="border-bottom: 3px solid ${brief.themeColor};">
             <div class="stage-brief-icon">${brief.icon}</div>
             <div>
-              <h2 class="stage-brief-title">${brief.name} 阶段指引</h2>
+              <h2 class="stage-brief-title">${brief.name} Stage Guide</h2>
               <p class="stage-brief-purpose">${brief.purpose}</p>
             </div>
           </div>
           <div class="stage-brief-body">
             <div class="stage-brief-section">
-              <h3 class="stage-brief-section-title">📋 本阶段任务</h3>
+              <h3 class="stage-brief-section-title">📋 Tasks in this stage</h3>
               <ul class="stage-brief-tasks">
                 ${brief.tasks.map(t => `<li>${t}</li>`).join('')}
               </ul>
             </div>
             <div class="stage-brief-io">
               <div class="stage-brief-input">
-                <span class="stage-brief-io-label">📥 输入</span>
+                <span class="stage-brief-io-label">📥 Input</span>
                 <p>${brief.input}</p>
               </div>
               <div class="stage-brief-output">
-                <span class="stage-brief-io-label">📤 产出</span>
+                <span class="stage-brief-io-label">📤 Output</span>
                 <p>${brief.output}</p>
               </div>
             </div>
@@ -2812,10 +2812,10 @@ class EurekaLite {
           <div class="stage-brief-footer">
             <label class="stage-brief-dont-show">
               <input type="checkbox" id="dontShowBrief" />
-              <span>不再显示此指引</span>
+              <span>Don't show this guide again</span>
             </label>
             <button class="btn btn-primary stage-brief-start-btn" id="startStageBtn" style="background: ${brief.themeColor};">
-              开始 ${brief.name}
+              Start ${brief.name}
             </button>
           </div>
         </div>
@@ -2860,7 +2860,14 @@ class EurekaLite {
     if (capsule) capsule.style.display = 'none';
     if (fab) fab.style.display = 'none';
 
+    const saveDismissalIfChecked = () => {
+      const dontShow = document.getElementById('dontShowBrief');
+      if (dontShow && dontShow.checked) {
+        localStorage.setItem(`stage_brief_dismissed_${stage}`, 'true');
+      }
+    };
     const closeBrief = () => {
+      saveDismissalIfChecked();
       overlay.style.display = 'none';
       if (capsule) capsule.style.display = '';
       if (fab) fab.style.display = '';
@@ -2868,22 +2875,19 @@ class EurekaLite {
     };
     const briefEsc = (e) => { if (e.key === 'Escape') closeBrief(); };
 
-    // 关闭按钮（X）
+    // Close button (X)
     const closeBtn = document.getElementById('stageBriefClose');
     if (closeBtn) closeBtn.onclick = closeBrief;
-    // 点击遮罩空白区域关闭
+    // Click overlay background to close
     overlay.onclick = (e) => { if (e.target === overlay) closeBrief(); };
-    // ESC 关闭
+    // ESC to close
     document.addEventListener('keydown', briefEsc);
 
     // Bind start button
     const startBtn = document.getElementById('startStageBtn');
     if (startBtn) {
       startBtn.onclick = () => {
-        const dontShow = document.getElementById('dontShowBrief');
-        if (dontShow?.checked) {
-          localStorage.setItem(`stage_brief_dismissed_${stage}`, 'true');
-        }
+        saveDismissalIfChecked();
         closeBrief();
       };
     }
@@ -6213,14 +6217,14 @@ class EurekaLite {
           const stepKey = btn.dataset.step;
           const input = document.getElementById(`findInput_${stepKey}`);
           if (!input || !input.value.trim()) {
-            this.showToast('请先填写内容');
+            this.showToast(I18N.t('find.emptyInput', 'Please fill in the content first'));
             return;
           }
 
           // Show loading state
           btn.classList.add('loading');
           const originalText = btn.textContent;
-          btn.textContent = 'AI 思考中...';
+          btn.textContent = 'AI thinking...';
 
           // Collect context from previous steps of the CURRENT finding + project context
           const findings = this.getFindFindings();
@@ -6373,7 +6377,7 @@ class EurekaLite {
     document.getElementById('generateStakeholdersBtn')?.addEventListener('click', async () => {
       const btn = document.getElementById('generateStakeholdersBtn');
       btn.classList.add('loading');
-      btn.innerHTML = '<span>AI 思考中...</span>';
+      btn.innerHTML = '<span>AI thinking...</span>';
 
       let result;
       try {
@@ -6388,7 +6392,7 @@ class EurekaLite {
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
         </svg>
-        ⚡ AI 识别利益相关方
+        ⚡ AI identify stakeholders
       `;
 
       if (result && result.stakeholders) {
@@ -6407,7 +6411,7 @@ class EurekaLite {
     document.getElementById('generateHypothesisBtn')?.addEventListener('click', async () => {
       const btn = document.getElementById('generateHypothesisBtn');
       btn.classList.add('loading');
-      btn.innerHTML = '<span>AI 思考中...</span>';
+      btn.innerHTML = '<span>AI thinking...</span>';
 
       let result;
       try {
@@ -6424,7 +6428,7 @@ class EurekaLite {
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
         </svg>
-        ⚡ AI 生成商业假设
+        ⚡ AI generate business hypothesis
       `;
 
       if (result && (result.tam || result.sam || result.competitors)) {
@@ -6524,7 +6528,7 @@ class EurekaLite {
         btn.classList.add('loading');
         btn.disabled = true;
         const originalText = btn.innerHTML;
-        btn.innerHTML = '<span>⏳</span> AI 思考中...';
+        btn.innerHTML = '<span>⏳</span> AI thinking...';
 
         try {
           const suggestions = await AIAssistant.generateHmwSuggestions(dimKey, pov);

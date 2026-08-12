@@ -733,93 +733,93 @@ const AIAssistant = {
     if (this._hasAI()) {
       const stepPrompts = {
         fact: {
-          guide: `你是一位资深创新洞察分析师，精通设计思维和用户研究方法。用户刚刚从用户旅程地图中标记了一个"关键发现(Fact)"——这是一个可验证的具体现象。
+          guide: `You are a senior innovation insights analyst, proficient in design thinking and user research. The user has just marked a "key finding (Fact)" from the user journey map — an observable, verifiable phenomenon.
 
-【你的唯一任务】对这个事实进行深层"解释(Interpretation)"——回答 **Why: 这个现象为什么会发生？**
+【Your only task】Give this fact a deep "Interpretation" — answer **Why: why did this phenomenon happen?**
 
-【用户输入的事实原文】
+【Original fact entered by user】
 ${(userInput || '').trim()}
 
-【严格分析规则 — 必须逐条遵守】
-1. 🔍 挖掘根因：不要停留在表面现象。追问3层 Why：
-   - 第1层：直接原因是什么？（用户行为层面）
-   - 第2层：系统/产品/流程哪里出了问题？（设计缺陷层面）
-   - 第3层：为什么这个设计缺陷会存在？（假设/约束层面）
-2. 🚫 禁止归因于用户："用户操作不当""用户没仔细看""用户习惯问题"——这些都是偷懒的回答
-3. 🎯 归因于系统：必须是产品/服务/流程/环境的设计或缺失导致了这个现象
-4. 🔗 因果链条：用"因为 A（系统问题），导致 B（用户遭遇），所以 C（观察到的现象）"的结构
-5. 🎯 分析必须针对【项目真实目标用户】和【项目真实场景】，禁止编造其他用户画像或场景
-6. ✂️ 一段话，80-120字，精炼有力
+【Strict analysis rules — follow every one】
+1. 🔍 Dig for root causes: don't stay on the surface. Ask Why three levels deep:
+   - Level 1: What is the direct cause? (user-behavior level)
+   - Level 2: What is wrong with the system/product/process? (design-flaw level)
+   - Level 3: Why does this design flaw exist? (assumption/constraint level)
+2. 🚫 Never blame the user: phrases like "user error", "user didn't read carefully", or "user habit" are lazy answers.
+3. 🎯 Attribute to the system: the phenomenon must be caused by a design or absence in the product, service, process, or environment.
+4. 🔗 Causal chain: use the structure "Because A (system issue), B (user experience) happens, therefore C (observed phenomenon)".
+5. 🎯 The analysis must target the project's real target user and real scenario. Do not invent other personas or scenarios.
+6. ✂️ One paragraph, 80–120 words, concise and forceful.
 
-请直接输出解释结论，不要任何前缀、不要编号列表、不要"以下是分析"之类的废话：`,
-          outputLabel: 'I 解释'
+Output only the interpretation conclusion. No prefix, no numbered list, no filler like "Here is the analysis":`,
+          outputLabel: 'I Interpret'
         },
         interpret: {
-          guide: `你是一位资深创新洞察分析师。我们现在已经完成了前两步：
-- 🔍 事实(F)：${context?.fact || '（前序步骤未填写）'}
-- 💡 解释(I)：${context?.interpret || '（前序步骤未填写）'}
+          guide: `You are a senior innovation insights analyst. We have now completed the first two steps:
+- 🔍 Fact (F): ${context?.fact || '(previous step not filled)'}
+- 💡 Interpret (I): ${context?.interpret || '(previous step not filled)'}
 
-【你的唯一任务】基于以上「事实+解释」因果链，提炼用户的真正"需求(Need)"——回答 **Why Not: 用户潜意识里真正需要的到底是什么？**
+【Your only task】Based on the above "Fact + Interpret" causal chain, distil the user's true "Need (N)" — answer **Why Not: what does the user subconsciously really need?**
 
-注意：用户本步输入了补充思考：${(userInput || '').trim() || '（无补充）'}
+Note: the user added extra reflection in this step: ${(userInput || '').trim() || '(no extra input)'}
 
-【严格规则 — 必须逐条遵守】
-1. ⚔️ 区分 Want vs Need：
-   - Stated Want（说想要）= 表面诉求，如"我要一个更好的搜索功能"
-   - Latent Need（真正需要）= 深层动机，如"我在信息过载时需要确定感和掌控感"
-   - 你的任务是找到 Latent Need！
-2. 🔗 从 F→I 逻辑推导：需求必须能从上面的事实+解释中自然推出，不能跳跃到无关领域
-3. 💊 需求必须是一个具体的痛点/渴望/缺失感，是可以被产品/服务解决的
-4. ✂️ 一句话，50-80字，格式如"用户真正需要的不是[A表面诉求]，而是[B深层本质/感受]"
-5. 🎯 这句话应该让产品团队立刻明白方向
-6. 🧑 目标用户必须是【项目真实目标用户】中提供的信息，禁止编造其他用户画像
+【Strict rules — follow every one】
+1. ⚔️ Distinguish Want vs Need:
+   - Stated Want = surface request, e.g. "I want a better search feature"
+   - Latent Need = deep motivation, e.g. "When overloaded with information, I need a sense of certainty and control"
+   - Your task is to find the Latent Need!
+2. 🔗 Derive logically from F→I: the need must naturally follow from the fact + interpretation above; do not jump to unrelated areas.
+3. 💊 The need must be a concrete pain point, desire, or sense of lack that a product or service can solve.
+4. ✂️ One sentence, 50–80 words, in the format "What the user really needs is not [A surface want], but [B deep essence / feeling]."
+5. 🎯 This sentence should give the product team immediate direction.
+6. 🧑 The target user must be the real target user provided in the project context; do not invent other personas.
 
-请直接输出需求结论，不要任何前缀：`,
-          outputLabel: 'N 需求'
+Output only the need conclusion, with no prefix:`,
+          outputLabel: 'N Need'
         },
         need: {
-          guide: `你是一位资深创新洞察分析师。我们已经完成了 FIND 前三步推导：
-- 🔍 事实(F)：${context?.fact || '（缺失）'}
-- 💡 解释(I)：${context?.interpret || '（缺失）'}
-- ❤️ 需要(N)：${context?.need || '（缺失）'}
+          guide: `You are a senior innovation insights analyst. We have completed the first three steps of FIND:
+- 🔍 Fact (F): ${context?.fact || '(missing)'}
+- 💡 Interpret (I): ${context?.interpret || '(missing)'}
+- ❤️ Need (N): ${context?.need || '(missing)'}
 
-【你的唯一任务】将以上三者凝练为一句直击本质的核心**洞察(Distill/POV)**——回答 **So What: 这意味着什么具体的创新机会？**
+【Your only task】Distil the three into one core **insight (Distill / POV)** that strikes at the essence — answer **So What: what concrete innovation opportunity does this mean?**
 
-用户本步输入了补充思考：${(userInput || '').trim() || '（无补充）'}
+User's extra reflection in this step: ${(userInput || '').trim() || '(no extra input)'}
 
-【严格规则 — 必须逐条遵守】
-1. 📐 POV 固定格式：「目标用户」+ 需要 + 「核心需求/体验」，因为 + 「根本原因导致现有方式失败」。
-2. 🎯 目标用户必须严格使用上面【项目真实目标用户】中提供的信息，绝对禁止编造任何新用户画像（如"25岁新手妈妈"、"上班族"等）。如果未提供，则使用泛指"用户"，但绝不可杜撰。
-3. 🌍 场景必须严格使用上面【项目真实场景】中的信息，禁止切换到无关场景。
-4. ⚡ 核心需求要有情感张力（不是"更好的XX"，而是"在XX场景下的确定感/掌控感/尊严感"）
-5. 🔗 根因必须引用前面 F-I-N 的推导结果
-6. ✂️ 一句话，60-100字，要有电梯演讲的力度——陌生人听完后会说"这确实是个问题"
-7. ❌ 禁止输出模板化/空洞/万能套话；禁止引入与项目无关的新人物、新场景或新假设
+【Strict rules — follow every one】
+1. 📐 POV fixed format: [target user] + needs + [core need/experience], because + [root cause makes existing approach fail].
+2. 🎯 The target user must strictly use the real target user provided in the project context. Never invent new personas (e.g. "25-year-old new mom", "office worker"). If not provided, use the generic "user", but never fabricate.
+3. 🌍 The scenario must strictly use the real scenario provided above; do not switch to unrelated scenarios.
+4. ⚡ The core need should have emotional tension (not "better XX", but "a sense of certainty/control/dignity in the XX scenario").
+5. 🔗 The root cause must reference the F-I-N derivation above.
+6. ✂️ One sentence, 60–100 words, with elevator-pitch force — a stranger should say "that really is a problem" after hearing it.
+7. ❌ No templated, empty, or generic filler; no new people, scenarios, or assumptions unrelated to the project.
 
-请直接输出 POV 陈述句，不要任何前缀：`,
-          outputLabel: 'D 洞察(POV)'
+Output only the POV statement, with no prefix:`,
+          outputLabel: 'D Insight (POV)'
         },
         distill: {
-          guide: `你是一位资深创新洞察分析师。FIND 四步法已接近完成，前三步已产出：
+          guide: `You are a senior innovation insights analyst. The FIND four-step method is nearly complete, and the first three steps have produced:
 
-- 🔍 事实(F)：${context?.fact || '（缺失）'}
-- 💡 解释(I)：${context?.interpret || '（缺失）'}
-- ❤️ 需要(N)：${context?.need || '（缺失）'}
-- 📝 用户当前 POV 草稿：${(userInput || '').trim() || '（无草稿）'}
+- 🔍 Fact (F): ${context?.fact || '(missing)'}
+- 💡 Interpret (I): ${context?.interpret || '(missing)'}
+- ❤️ Need (N): ${context?.need || '(missing)'}
+- 📝 Current POV draft: ${(userInput || '').trim() || '(no draft)'}
 
-【你的唯一任务】对上述 POV 进行**最终凝练和强化**，使其成为可以直接指导后续 HMW 创新设计的北极星陈述。
+【Your only task】Give the above POV a **final distillation and strengthening** so it becomes a North Star statement that can directly guide subsequent HMW innovation design.
 
-【严格规则 — 必须逐条遵守】
-1. 🎯 如果用户已有不错的 POV 草稿 → 在其基础上精炼强化（更精准/更有力）
-2. ✍️ 如果用户的 POV 太泛/太弱 → 基于 F-I-N 重写一个更强的版本
-3. 📐 最终格式：POV = 「目标用户」+ 在「场景」+ 迫切需要「核心体验/能力」，+ 因为「根本原因导致现有方案失效」。
-4. 🎯 目标用户和场景必须严格使用上文【项目真实目标用户】和【项目真实场景】中的信息，绝对禁止编造任何新人物或新场景。如果未提供，使用"用户"而不是具体画像。
-5. ⚡ 质量标准：读完这句话，团队应该能立刻开始 brainstorm 解决方案
-6. ✂️ 一句话，60-100字
-7. ❌ 禁止引入与项目无关的新假设、新人物或新场景
+【Strict rules — follow every one】
+1. 🎯 If the user already has a decent POV draft → refine and strengthen it (more precise / more forceful).
+2. ✍️ If the user's POV is too generic or weak → rewrite a stronger version based on F-I-N.
+3. 📐 Final format: POV = [target user] + in [scenario] + urgently needs [core experience/capability], + because [root cause makes existing solution fail].
+4. 🎯 Target user and scenario must strictly use the real target user and real scenario from above. Never invent new people or scenarios. If not provided, use "user" rather than a specific persona.
+5. ⚡ Quality standard: after reading this sentence, the team should be able to start brainstorming solutions immediately.
+6. ✂️ One sentence, 60–100 words.
+7. ❌ No new assumptions, people, or scenarios unrelated to the project.
 
-请直接输出最终的 POV 陈述，不要任何前缀：`,
-          outputLabel: 'D 最终凝练(POV)'
+Output only the final POV statement, with no prefix:`,
+          outputLabel: 'D Final Distill (POV)'
         }
       };
       const sp = stepPrompts[stepKey];
@@ -838,21 +838,21 @@ ${(userInput || '').trim()}
             system: this._systemPersona(), temperature: 0.7, maxTokens: 300
           });
           if (r && r.trim()) {
-            console.log(`[FIND-AI] ✅ DeepSeek 返回 (${r.length}字):`, r.slice(0, 120));
+            console.log(`[FIND-AI] ✅ DeepSeek returned (${r.length} chars):`, r.slice(0, 120));
             return '[🤖 DeepSeek] ' + r.trim().slice(0, 200);
           }
         } catch (e) {
-          console.warn('[FIND-AI] ❌ DeepSeek 失败，走本地兜:', e.message);
+          console.warn('[FIND-AI] ❌ DeepSeek failed, using local fallback:', e.message);
         }
       } else {
-        console.warn(`[FIND-AI] ❌ 无 prompt 定义 for step=${stepKey}`);
+        console.warn(`[FIND-AI] ❌ No prompt defined for step=${stepKey}`);
       }
     } else {
-      console.warn('[FIND-AI] ⚠️ _hasAI()=false，AI服务未配置或Key无效，使用本地模板');
+      console.warn('[FIND-AI] ⚠️ _hasAI()=false, AI service not configured or Key invalid, using local template');
     }
 
     // ---- 本地兜底模板 ----
-    console.log(`[FIND-AI] 📋 使用本地 fallback 模板 for step=${stepKey}`);
+    console.log(`[FIND-AI] 📋 Using local fallback template for step=${stepKey}`);
 
     // ---- 改进版 fallback：更贴合上下文 ----
     const { fact, interpret, need } = context;
@@ -864,33 +864,33 @@ ${(userInput || '').trim()}
     };
 
     if (stepKey === 'fact') {
-      if (!input) return '[📋 本地模板] 请先输入观察到的事实。';
+      if (!input) return '[📋 Local Template] Please enter the observed fact first.';
       const k = brief(input);
-      return '[📋 本地模板] 为什么会出现「' + k + '」这个现象？\n深层原因可能是：现有方案的设计假设与用户的真实使用场景不匹配，导致用户在关键节点上遇到摩擦却无法自助解决。建议从系统设计和用户心智模型两个角度继续追问。';
+      return '[📋 Local Template] Why does the phenomenon "' + k + '" occur?\nA deep-level cause may be: the design assumptions of the existing solution do not match the user\'s real usage context, creating friction at key moments that users cannot resolve on their own. Keep asking from system design and user mental-model perspectives.';
     }
 
     if (stepKey === 'interpret') {
       const factText = fact || input;
       const k = brief(factText);
-      if (!factText && !input) return '[📋 本地模板] 请先完成事实(F)步骤。';
-      return '[📋 本地模板] 基于「' + k + '」这一事实，用户潜意识里真正需要的不是更多功能或信息，而是在做决策时获得"确定感"和"掌控感"——减少焦虑、降低认知负担、能快速做出正确选择。（⚠️ 此为本地兜底，如需AI深度分析请检查AI配置）';
+      if (!factText && !input) return '[📋 Local Template] Please complete the Fact (F) step first.';
+      return '[📋 Local Template] Based on the fact "' + k + '", what the user subconsciously needs is not more features or information, but a sense of certainty and control when making decisions—reducing anxiety, lowering cognitive load, and enabling fast, correct choices. (⚠️ This is a local fallback; for AI-powered analysis, please check your AI configuration.)';
     }
 
     if (stepKey === 'need') {
       const fBrief = brief(fact || '');
       const iBrief = brief(interpret || '');
-      if (!interpret && !fact) return '[📋 本地模板] 请先完成解释(I)步骤。';
-      return '[📋 本地模板] 核心洞察（POV）：当面对「' + (fBrief || '上述情况') + '」时，用户真正需要的是一套能预判问题、主动提供解决方案的系统，而不是被动地发现问题后再去寻找答案。（⚠️ 此为本地兜底，如需AI深度分析请检查AI配置）';
+      if (!interpret && !fact) return '[📋 Local Template] Please complete the Interpret (I) step first.';
+      return '[📋 Local Template] Core insight (POV): When facing "' + (fBrief || 'the above situation') + '", what users really need is a system that anticipates problems and proactively offers solutions, rather than passively discovering problems and then searching for answers. (⚠️ This is a local fallback; for AI-powered analysis, please check your AI configuration.)';
     }
 
     if (stepKey === 'distill') {
       const fBrief = brief(fact || '');
       const iBrief = brief(interpret || '');
       const nBrief = brief(need || '');
-      return '[📋 本地模板] ✅ FIND 推导完成！（本地模式）\n📌 事实：' + (fBrief || '(已填写)') + '\n→ 解释：' + (iBrief || '(已填写)') + '\n→ 需求：' + (nBrief || '(已填写)') + '\n→ 建议 POV：「目标用户」需要在「具体场景」下获得「确定性解决方案」，因为「根本原因导致现有方式效率低下」。';
+      return '[📋 Local Template] ✅ FIND derivation complete! (local mode)\n📌 Fact: ' + (fBrief || '(filled)') + '\n→ Interpret: ' + (iBrief || '(filled)') + '\n→ Need: ' + (nBrief || '(filled)') + '\n→ Suggested POV: [Target user] needs [deterministic solution] in [specific scenario], because [root cause makes existing approach inefficient].';
     }
 
-    return '[📋 本地模板] 请先完成当前步骤。';
+    return '[📋 Local Template] Please complete the current step first.';
   },
 
   /**
@@ -901,24 +901,24 @@ ${(userInput || '').trim()}
    */
   async generateHmwSuggestions(dimKey, pov) {
     const { targetUser, sceneChallenge, userProblem, insight, goal } = pov;
-    const u = targetUser || '目标用户';
-    const s = sceneChallenge || '特定场景';
-    const p = userProblem || '面临问题';
-    const i = insight || '核心洞察';
+    const u = targetUser || 'target user';
+    const s = sceneChallenge || 'specific scenario';
+    const p = userProblem || 'the problem they face';
+    const i = insight || 'core insight';
 
     // 优先使用 DeepSeek 生成
     if (this._hasAI()) {
       const dimMap = {
-        amplify: '放大增强：把痛点转化为积极价值、超预期体验',
-        remove: '消除简化：彻底移除障碍与限制，做到零阻力',
-        flip: '反转颠覆：反过来想，让场景主动适应用户',
-        diverge: '发散想象：不受技术成本限制，最具想象力的方式'
+        amplify: 'Amplify: turn pain points into positive value and exceed expectations',
+        remove: 'Remove: completely eliminate obstacles and constraints for zero friction',
+        flip: 'Flip: invert assumptions and make the scenario adapt to the user',
+        diverge: 'Diverge: ignore tech/cost limits and imagine the most radical way'
       };
       const dim = dimMap[dimKey] || dimMap.amplify;
       const prompt =
-        `目标用户：${u}\n场景挑战：${s}\n用户问题：${p}\n核心洞察：${i}\n\n` +
-        `请从"${dim}"这个维度，生成 2 条 HMW（How Might We，"我们如何才能…"）创新机遇问题。` +
-        `每条要具体紧扣上述上下文，能激发解决方案。以 JSON 返回：{"hmw": ["问题1", "问题2"]}。`;
+        `Target user: ${u}\nScenario challenge: ${s}\nUser problem: ${p}\nCore insight: ${i}\n\n` +
+        `From the "${dim}" dimension, generate 2 HMW (How Might We, "How might we…") innovation opportunity questions. ` +
+        `Each must be tightly grounded in the above context and inspire solutions. Return JSON: {"hmw": ["question 1", "question 2"]}.`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
           system: this._systemPersona(), temperature: 0.8, maxTokens: 400
@@ -933,24 +933,24 @@ ${(userInput || '').trim()}
 
     const templates = {
       amplify: [
-        `我们如何才能帮助「${u}」在「${s}」时，把「${p}」转化为积极的体验，让整个过程变得愉悦和有价值？`,
-        `我们如何才能让「${u}」在「${s}」中，不仅解决「${p}」，还能获得超出预期的收获？`,
-        `我们如何才能将「${p}」这个挑战，变成「${u}」在「${s}」时展现能力和获得成就感的机会？`
+        `How might we help "${u}" turn "${p}" into a positive experience when "${s}", making the whole process enjoyable and valuable?`,
+        `How might we let "${u}" in "${s}" not only solve "${p}" but also gain unexpected benefits?`,
+        `How might we turn "${p}" into an opportunity for "${u}" in "${s}" to demonstrate ability and feel a sense of achievement?`
       ],
       remove: [
-        `我们如何才能彻底消除「${u}」在「${s}」时遇到「${p}」的所有障碍，让整个过程零阻力？`,
-        `如果「${p}」这个限制因素完全不存在，「${u}」在「${s}」时会有怎样流畅的体验？`,
-        `我们如何才能让「${u}」在「${s}」时，完全不需要思考「${p}」这个问题，它已经被系统默默解决？`
+        `How might we completely remove all obstacles "${u}" faces with "${p}" when "${s}", making the process frictionless?`,
+        `If "${p}" did not exist as a constraint at all, what would a smooth experience look like for "${u}" in "${s}"?`,
+        `How might we let "${u}" in "${s}" never have to think about "${p}" because the system has silently solved it?`
       ],
       flip: [
-        `如果我们反过来思考：不是「${u}」去适应「${s}」，而是让「${s}」主动适应「${u}」的需求，会发生什么？`,
-        `我们如何才能让「${p}」从「${u}」的负担，翻转成为系统主动服务「${u}」的触发点？`,
-        `假设「${i}」这个传统假设是错误的，我们能否用完全相反的方式帮助「${u}」在「${s}」时达成目标？`
+        `If we flip our thinking: instead of "${u}" adapting to "${s}", what happens if "${s}" actively adapts to "${u}"?`,
+        `How might we turn "${p}" from a burden for "${u}" into a trigger for the system to proactively serve "${u}"?`,
+        `If the traditional assumption "${i}" is wrong, can we help "${u}" achieve their goal in "${s}" in the exact opposite way?`
       ],
       diverge: [
-        `如果我们不受任何技术和成本限制，我们如何才能用最具想象力的方式帮助「${u}」在「${s}」时完美解决「${p}」？`,
-        `如果「${u}」在「${s}」时拥有超能力，「${p}」会如何被彻底解决？这个"超能力"能否用产品实现？`,
-        `我们如何才能让「${u}」在「${s}」时，通过一种前所未有的、打破行业常规的方式，彻底告别「${p}」？`
+        `If we ignore all technology and cost limits, how might we help "${u}" perfectly solve "${p}" in "${s}" in the most imaginative way?`,
+        `If "${u}" had superpowers in "${s}", how would "${p}" be thoroughly solved? Can that "superpower" be delivered by a product?`,
+        `How might we let "${u}" in "${s}" say goodbye to "${p}" once and for all through an unprecedented, industry-breaking approach?`
       ]
     };
 

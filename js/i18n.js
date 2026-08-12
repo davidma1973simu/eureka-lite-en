@@ -990,6 +990,14 @@
       'find.distill.title': 'D (Distill into Insight / POV)',
       'find.distill.label': 'Combine F-I-N into one-line insight (POV):',
       'find.distill.btn': '✅ Confirm & save FIND insight',
+      'find.fact.btnText': 'Confirm fact, generate Interpretation (I) →',
+      'find.fact.descTitle': '🚀 FIND chain starting point',
+      'find.interpret.btnText': 'Confirm interpretation, generate Need (N) →',
+      'find.interpret.descTitle': 'Why: why did this fact happen?',
+      'find.need.btnText': 'Confirm need, generate Insight (D) →',
+      'find.need.descTitle': 'Need: what does the user subconsciously really need?',
+      'find.distill.btnText': '✅ Confirm & save FIND insight',
+      'find.distill.descTitle': 'Distill: integrate into a structured POV',
 
       // ===== Y. NCO 完整标签 =====
       'nco.new.full': 'New · Breakthrough approach',
