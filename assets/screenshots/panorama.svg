@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#eef2f7"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="720" rx="16" fill="url(#bg)"/>
+
+  <!-- top bar -->
+  <rect x="0" y="0" width="1200" height="80" rx="16" fill="#ffffff"/>
+  <text x="40" y="48" font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="24" font-weight="700" fill="#1f2937">Eureka Lite</text>
+  <text x="600" y="48" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="600" fill="#475569">Project Panorama — Smart Hydration Bottle</text>
+
+  <!-- column 1: Reveal -->
+  <g transform="translate(40, 110)">
+    <rect x="0" y="0" width="260" height="46" rx="10" fill="#3b82f6"/>
+    <text x="130" y="29" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff">REVEAL</text>
+
+    <rect x="0" y="66" width="260" height="90" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="95" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#3b82f6">User Scenario</text>
+    <text x="20" y="120" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">Busy professionals forget</text>
+    <text x="20" y="140" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">to drink water during work.</text>
+
+    <rect x="0" y="176" width="260" height="90" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="205" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#3b82f6">Journey Insight</text>
+    <text x="20" y="230" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">Reminders feel intrusive;</text>
+    <text x="20" y="250" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">users ignore them by noon.</text>
+
+    <rect x="0" y="286" width="260" height="90" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="315" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#3b82f6">FIND Analysis</text>
+    <text x="20" y="340" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">Fact: 67% drink less than</text>
+    <text x="20" y="360" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">half the recommended amount.</text>
+
+    <rect x="0" y="396" width="260" height="70" rx="12" fill="#e0f2fe"/>
+    <text x="20" y="425" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#0369a1">Project Brief</text>
+    <text x="20" y="448" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#0ea5e9">Insight validated → ready</text>
+  </g>
+
+  <!-- column 2: Inspire -->
+  <g transform="translate(320, 110)">
+    <rect x="0" y="0" width="260" height="46" rx="10" fill="#8b5cf6"/>
+    <text x="130" y="29" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff">INSPIRE</text>
+
+    <rect x="0" y="66" width="260" height="80" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="95" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#8b5cf6">POV Statement</text>
+    <text x="20" y="120" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">Busy desk worker needs a</text>
+    <text x="20" y="138" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">gentle hydration nudge.</text>
+
+    <rect x="0" y="166" width="260" height="80" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="195" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#8b5cf6">HMW Question</text>
+    <text x="20" y="220" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">How might we make hydration</text>
+    <text x="20" y="238" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">feel rewarding, not annoying?</text>
+
+    <rect x="0" y="266" width="260" height="80" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="295" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#8b5cf6">NCO Idea Card</text>
+    <text x="20" y="320" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">Gamified bottle + app that</text>
+    <text x="20" y="338" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">grows a plant as you drink.</text>
+
+    <rect x="0" y="366" width="260" height="70" rx="12" fill="#ede9fe"/>
+    <text x="20" y="395" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#6d28d9">Top Idea Score</text>
+    <text x="20" y="418" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#7c3aed">Feasibility 8 · Desirability 9</text>
+  </g>
+
+  <!-- column 3: Shape -->
+  <g transform="translate(600, 110)">
+    <rect x="0" y="0" width="260" height="46" rx="10" fill="#14b8a6"/>
+    <text x="130" y="29" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff">SHAPE</text>
+
+    <rect x="0" y="66" width="260" height="90" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="95" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#14b8a6">4D Interrogation</text>
+    <text x="20" y="120" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">User ✓ · Business ✓</text>
+    <text x="20" y="140" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">Tech ✓ · Ecosystem ✓</text>
+
+    <rect x="0" y="176" width="260" height="90" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="205" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#14b8a6">Minimum Concept</text>
+    <text x="20" y="230" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">Smart lid + companion app</text>
+    <text x="20" y="250" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">with light reminders.</text>
+
+    <rect x="0" y="286" width="260" height="90" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="315" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#14b8a6">Storyboard</text>
+    <text x="20" y="340" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">6-scene narrative from</text>
+    <text x="20" y="360" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">unboxing to daily habit.</text>
+
+    <rect x="0" y="396" width="260" height="70" rx="12" fill="#ccfbf1"/>
+    <text x="20" y="425" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#0f766e">Shape Summary</text>
+    <text x="20" y="448" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#0d9488">Concept locked → build MVP.</text>
+  </g>
+
+  <!-- column 4: Exam -->
+  <g transform="translate(880, 110)">
+    <rect x="0" y="0" width="260" height="46" rx="10" fill="#f59e0b"/>
+    <text x="130" y="29" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff">EXAM</text>
+
+    <rect x="0" y="66" width="260" height="80" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="95" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#f59e0b">Test Plan</text>
+    <text x="20" y="120" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">2-week diary study with</text>
+    <text x="20" y="138" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">12 remote knowledge workers.</text>
+
+    <rect x="0" y="166" width="260" height="80" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="195" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#f59e0b">Test Report</text>
+    <text x="20" y="220" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">Adherence +23%, perceived</text>
+    <text x="20" y="238" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">intrusion -18% vs. baseline.</text>
+
+    <rect x="0" y="266" width="260" height="80" rx="12" fill="#ffffff" filter="url(#shadow)"/>
+    <text x="20" y="295" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#f59e0b">Elevator Pitch</text>
+    <text x="20" y="320" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">MOMOS helps busy people</text>
+    <text x="20" y="338" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b">build hydration habits gently.</text>
+
+    <rect x="0" y="366" width="260" height="70" rx="12" fill="#fef3c7"/>
+    <text x="20" y="395" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="#92400e">4D Evaluation</text>
+    <text x="20" y="418" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#b45309">Avg. score 8.4 / 10 — GO</text>
+  </g>
+
+  <!-- connecting flow arrows -->
+  <g fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6 4">
+    <path d="M300 180 L320 180"/>
+    <path d="M580 220 L600 220"/>
+    <path d="M860 250 L880 250"/>
+  </g>
+</svg>
