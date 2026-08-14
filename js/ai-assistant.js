@@ -1917,16 +1917,43 @@ Return JSON directly, no markdown code blocks.`;
   },
 
   /**
-   * 电梯演讲：基于概念方案+测试目的生成 pitch。
+   * Build a rich text context from the structured E4 context object.
+   */
+  _buildElevatorContextText(context) {
+    const c = context || {};
+    const lines = [];
+    if (c.targetUser) lines.push(`Target user: ${c.targetUser}`);
+    if (c.sceneChallenge) lines.push(`Scenario: ${c.sceneChallenge}`);
+    if (c.userProblem) lines.push(`Problem: ${c.userProblem}`);
+    if (c.insight) lines.push(`Core insight: ${c.insight}`);
+    if (c.goal) lines.push(`Goal: ${c.goal}`);
+    if (c.conceptOneLiner) lines.push(`Concept: ${c.conceptOneLiner}`);
+    if (c.conceptFeatures) lines.push(`Features: ${c.conceptFeatures}`);
+    if (c.conceptCharacteristics) lines.push(`Characteristics: ${c.conceptCharacteristics}`);
+    if (c.conceptBoundaries) lines.push(`Boundaries: ${c.conceptBoundaries}`);
+    if (c.storyboard) lines.push(`Storyboard:\n${c.storyboard}`);
+    if (c.testPurpose) lines.push(`Test purpose: ${c.testPurpose}`);
+    if (c.testReport) lines.push(`Test findings:\n${c.testReport}`);
+    if (c.fourDim) lines.push(`Four-dimension evaluation:\n${c.fourDim}`);
+    return lines.join('\n').slice(0, 1800) || '(no context yet)';
+  },
+
+  /**
+   * Elevator pitch: generate a 30-second English pitch from the full project context.
+   * @param {Object} context - Structured project context
    * @returns {Promise<{pitch:string}>}
    */
-  async generateElevatorPitch(contextText) {
-    const ctx = (contextText || '').slice(0, 1200) || '(no context yet)';
+  async generateElevatorPitch(context) {
+    const ctx = this._buildElevatorContextText(context);
     if (this._hasAI()) {
       const prompt =
-        `[Context] ${ctx}\n\n写一段 30 秒电梯演讲，套用结构：` +
-        `We provide [solution] for [target user], solving [problem] and delivering [value].\n` +
-        `以 JSON 返回：{"pitch":""}`;
+        `Based on the following innovation project context, write a compelling 30-second elevator pitch in English.\n\n` +
+        `Context:\n${ctx}\n\n` +
+        `Requirements:\n` +
+        `- One sentence, 60-80 words, with a strong hook.\n` +
+        `- Follow this structure: We provide [solution] for [target users], solving [problem] and delivering [value].\n` +
+        `- Be specific, avoid generic buzzwords, and ground the value in the insights, concept, storyboard, and test findings.\n` +
+        `- Return JSON only: {"pitch":""}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
           system: this._systemPersona(), temperature: 0.7, maxTokens: 400
@@ -1936,7 +1963,43 @@ Return JSON directly, no markdown code blocks.`;
         console.warn('[AI] generateElevatorPitch fallback:', e.message);
       }
     }
-    return { pitch: 'We provide [solution] for [target user], solving [problem] and delivering [value].' };
+    const c = context || {};
+    return { pitch: `We provide ${c.conceptOneLiner || '[solution]'} for ${c.targetUser || '[target users]'}, solving ${c.userProblem || '[problem]'} and delivering ${c.goal || '[value]'}.` };
+  },
+
+  /**
+   * 30-60-90 iteration plan: generate a structured plan from the full project context.
+   * @param {Object} context - Structured project context
+   * @returns {Promise<{iteration:Array<{category:string,actions:string[]}>}>}
+   */
+  async generateIterationPlan(context) {
+    const ctx = this._buildElevatorContextText(context);
+    const defaultCategories = ['Stage Focus', 'Priorities', 'Target Output', 'Measure Success', 'Learning Takeaways'];
+    if (this._hasAI()) {
+      const prompt =
+        `Based on the following innovation project context, create a 30-60-90 day iteration plan.\n\n` +
+        `Context:\n${ctx}\n\n` +
+        `Return JSON only with this exact structure:\n` +
+        `{"iteration":[{"category":"Stage Focus","actions":["30-day action","60-day action","90-day action"]},{"category":"Priorities","actions":["...","...","..."]},{"category":"Target Output","actions":["...","...","..."]},{"category":"Measure Success","actions":["...","...","..."]},{"category":"Learning Takeaways","actions":["...","...","..."]}]}\n\n` +
+        `Each action must be concrete, measurable, and aligned with the concept and test findings. Keep each cell to 1-2 sentences.`;
+      try {
+        const obj = await window.AIService.completeJSON(prompt, {
+          system: this._systemPersona(), temperature: 0.7, maxTokens: 1000
+        });
+        if (obj && Array.isArray(obj.iteration)) {
+          const normalized = obj.iteration.map((r, i) => ({
+            category: r.category || defaultCategories[i] || 'Custom',
+            actions: (Array.isArray(r.actions) ? r.actions : [])
+              .map(a => String(a || ''))
+              .concat(['', '', '']).slice(0, 3)
+          }));
+          if (normalized.length === 5) return { iteration: normalized };
+        }
+      } catch (e) {
+        console.warn('[AI] generateIterationPlan fallback:', e.message);
+      }
+    }
+    return { iteration: defaultCategories.map(cat => ({ category: cat, actions: ['', '', ''] })) };
   },
 
   async generateExamFourDimEval(contextText) {

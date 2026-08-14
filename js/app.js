@@ -3001,10 +3001,10 @@ class EurekaLite {
           hint: '用事实和数据支撑每个维度的评分'
         },
         {
-          title: 'E4 电梯演讲 & 迭代计划',
-          subtitle: '30秒讲清价值，规划下一步',
+          title: 'E4 Elevator Pitch & Iteration Plan',
+          subtitle: 'Explain value in 30 seconds, plan next steps',
           type: 'examElevator',
-          hint: '用模板或 AI 生成电梯演讲，制定 30-60-90 天迭代计划'
+          hint: 'Use the template or AI to generate the elevator pitch and 30-60-90 day iteration plan'
         },
         {
           title: 'E5 Exam 整合确认',
@@ -8438,17 +8438,55 @@ class EurekaLite {
 
   // ========== EXAM 屏4：电梯演讲 & 迭代计划 ==========
 
+  _buildExamElevatorContext(project) {
+    const pov = this.extractPovFromProject(project);
+    const minConcept = this._readCardJSON('shapeMinConcept') || {};
+    const concept = minConcept.concept || {};
+    const storyboard = this._readCardJSON('shapeStoryboard') || {};
+    const storyCards = (storyboard.cards || []).filter(c => c && (c.desc || c.title));
+    const storyboardText = storyCards.map((c, i) => `${i + 1}. ${c.title || ''}: ${c.desc || ''}`).join('\n');
+    const tp = this._readCardJSON('examTestPlan') || {};
+    const tr = this._readCardJSON('examTestReport') || {};
+    const fd = this._readCardJSON('examFourDimEval') || {};
+    const testReportText = [
+      tr.effectiveValue && `Validated value: ${tr.effectiveValue}`,
+      tr.invalidValue && `Invalidated hypothesis: ${tr.invalidValue}`,
+      tr.newProblems && `New problems: ${tr.newProblems}`,
+      tr.newOpportunities && `New opportunities: ${tr.newOpportunities}`
+    ].filter(Boolean).join('\n');
+    const fourDimText = fd?.scores ? [
+      `User value ${fd.scores.userValue}/5 — ${fd.reasons?.userValue || ''}`,
+      `Business value ${fd.scores.businessValue}/5 — ${fd.reasons?.businessValue || ''}`,
+      `Feasibility ${fd.scores.feasibility}/5 — ${fd.reasons?.feasibility || ''}`,
+      `Innovation ${fd.scores.innovation}/5 — ${fd.reasons?.innovation || ''}`
+    ].filter(Boolean).join('\n') : '';
+    return {
+      targetUser: pov.targetUser,
+      sceneChallenge: pov.sceneChallenge,
+      userProblem: pov.userProblem,
+      insight: pov.insight,
+      goal: pov.goal,
+      conceptOneLiner: concept.oneLiner || '',
+      conceptFeatures: (concept.features || []).filter(Boolean).join('; '),
+      conceptCharacteristics: (concept.characteristics || []).filter(Boolean).join('; '),
+      conceptBoundaries: (concept.boundaries || []).filter(Boolean).join('; '),
+      storyboard: storyboardText,
+      testPurpose: tp.purpose || '',
+      testReport: testReportText,
+      fourDim: fourDimText
+    };
+  }
+
   getExamElevatorTemplate(project) {
-    const categories = ['阶段聚焦', '优先事项', '目标产出', '衡量成功', '学习收获'];
-    const phases = ['30 ' + I18N.t('unit.day','天'), '60 ' + I18N.t('unit.day','天'), '90 ' + I18N.t('unit.day','天')];
+    const categories = ['Stage Focus', 'Priorities', 'Target Output', 'Measure Success', 'Learning Takeaways'];
+    const phases = ['30 days', '60 days', '90 days'];
     let saved = this._readCardJSON('examElevator');
     let iteration = (saved && Array.isArray(saved.iteration)) ? saved.iteration : [];
     if (iteration.length === 0) {
-      // 默认 5 行固定维度，呼应 30-60-90 迭代规划参考图
       iteration = categories.map(cat => ({ category: cat, actions: ['', '', ''] }));
     } else {
       iteration = iteration.map((r, i) => ({
-        category: r.category || categories[i] || ('阶段 ' + (i + 1)),
+        category: r.category || categories[i] || ('Dimension ' + (i + 1)),
         actions: ((Array.isArray(r.actions) ? r.actions : [])).map(a => a || '')
           .concat(['', '', '']).slice(0, 3)
       }));
@@ -8457,35 +8495,38 @@ class EurekaLite {
 
     const rowsHtml = iteration.map((row, ri) => `
       <div class="iter-row" data-ri="${ri}">
-        <input class="input iter-cat" data-ri="${ri}" value="${this.escapeHtml(row.category)}" placeholder="维度..." />
+        <input class="input iter-cat" data-ri="${ri}" value="${this.escapeHtml(row.category)}" placeholder="Dimension..." />
         ${phases.map((p, ci) => `<textarea class="input textarea iter-cell" data-ri="${ri}" data-ci="${ci}" rows="2" placeholder="${p}...">${this.escapeHtml((row.actions && row.actions[ci]) || '')}</textarea>`).join('')}
-        <button class="iter-del" data-ri="${ri}" title="删除该行">✕</button>
+        <button class="iter-del" data-ri="${ri}" title="Delete row">✕</button>
       </div>`).join('');
 
     return `
       <div class="screen-content animate-fade-in-up">
-        <h2 class="screen-title">E4 电梯演讲 & 迭代计划</h2>
-        <p class="screen-subtitle">30 秒讲清价值，规划下一步</p>
-        <div class="screen-hint"><span class="hint-icon">💡</span><span>用模板或「✨ AI 生成电梯演讲」；下方按「阶段聚焦 / 优先事项 / 目标产出 / 衡量成功 / 学习收获」五类填写 30-60-90 天迭代计划。</span></div>
+        <h2 class="screen-title">E4 Elevator Pitch & Iteration Plan</h2>
+        <p class="screen-subtitle">Explain value in 30 seconds, plan next steps</p>
+        <div class="screen-hint"><span class="hint-icon">💡</span><span>Use the template or ✨ AI below to generate the elevator pitch; then fill out the 30-60-90 day iteration plan by Stage Focus / Priorities / Target Output / Measure Success / Learning Takeaways.</span></div>
         <div class="exam-field">
-          <label class="input-label">电梯演讲模板</label>
-          <div class="elevator-template">我们为【目标用户】提供了【方案】，解决了【问题】，带来【价值】。</div>
+          <label class="input-label">Elevator pitch template</label>
+          <div class="elevator-template">We provide [solution] for [target users], solving [problem] and delivering [value].</div>
         </div>
-        <button class="btn btn-ai" id="genPitchBtn">✨ AI 生成电梯演讲</button>
-        <div class="exam-field"><label class="input-label">电梯演讲（pitch）</label><textarea class="input textarea" id="el_pitch" rows="3" placeholder="我们为...">${this.escapeHtml(pitch)}</textarea></div>
+        <div class="exam-actions-row" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+          <button class="btn btn-ai" id="genPitchBtn">✨ AI Generate Elevator Pitch</button>
+          <button class="btn btn-ai" id="genIterBtn">✨ AI Generate Iteration Plan</button>
+        </div>
+        <div class="exam-field"><label class="input-label">Elevator Pitch (pitch)</label><textarea class="input textarea" id="el_pitch" rows="3" placeholder="We provide...">${this.escapeHtml(pitch)}</textarea></div>
         <div class="exam-field">
-          <label class="input-label">30-60-90 天迭代计划</label>
+          <label class="input-label">30-60-90 Day Iteration Plan</label>
           <div class="iter-table">
             <div class="iter-head">
-              <span class="iter-cat-head">维度 ＼ 阶段</span>
+              <span class="iter-cat-head">Dimension ＼ Phase</span>
               ${phases.map(p => `<span class="iter-phase">${p}</span>`).join('')}
               <span class="iter-del-head"></span>
             </div>
             <div id="iterBody">${rowsHtml}</div>
           </div>
-          <button class="btn-add" id="iterAddRow">➕ 添加一行</button>
+          <button class="btn-add" id="iterAddRow">➕ Add row</button>
         </div>
-        <button class="btn btn-secondary" id="saveElevatorBtn">保存</button>
+        <button class="btn btn-secondary" id="saveElevatorBtn">Save</button>
       </div>`;
   }
 
@@ -8512,11 +8553,11 @@ class EurekaLite {
       row.className = 'iter-row';
       row.dataset.ri = ri;
       row.innerHTML = `
-        <input class="input iter-cat" data-ri="${ri}" value="自定义维度" placeholder="维度..." />
-        <textarea class="input textarea iter-cell" data-ri="${ri}" data-ci="0" rows="2" placeholder="30 天行动..."></textarea>
-        <textarea class="input textarea iter-cell" data-ri="${ri}" data-ci="1" rows="2" placeholder="60 天行动..."></textarea>
-        <textarea class="input textarea iter-cell" data-ri="${ri}" data-ci="2" rows="2" placeholder="90 天行动..."></textarea>
-        <button class="iter-del" data-ri="${ri}" title="删除该行">✕</button>`;
+        <input class="input iter-cat" data-ri="${ri}" value="Custom dimension" placeholder="Dimension..." />
+        <textarea class="input textarea iter-cell" data-ri="${ri}" data-ci="0" rows="2" placeholder="30-day action..."></textarea>
+        <textarea class="input textarea iter-cell" data-ri="${ri}" data-ci="1" rows="2" placeholder="60-day action..."></textarea>
+        <textarea class="input textarea iter-cell" data-ri="${ri}" data-ci="2" rows="2" placeholder="90-day action..."></textarea>
+        <button class="iter-del" data-ri="${ri}" title="Delete row">✕</button>`;
       body.appendChild(row);
       bindCells();
       this.saveExamElevatorData(project);
@@ -8524,25 +8565,56 @@ class EurekaLite {
 
     const genBtn = document.getElementById('genPitchBtn');
     genBtn?.addEventListener('click', async () => {
-      const summary = this._readCardJSON('shapeSummary') || {};
-      const tp = this._readCardJSON('examTestPlan') || {};
-      const ctx = `概念方案：${summary.concept ? JSON.stringify(summary.concept) : ''}\n测试目的：${tp.purpose || ''}`.slice(0, 1200);
-      genBtn.disabled = true; genBtn.textContent = 'AI generating...';
+      const ctx = this._buildExamElevatorContext(project);
+      genBtn.disabled = true;
+      const originalText = genBtn.textContent;
+      genBtn.textContent = 'AI generating...';
       try {
         const obj = await AIAssistant.generateElevatorPitch(ctx);
         if (obj.pitch) document.getElementById('el_pitch').value = obj.pitch;
         this.saveExamElevatorData(project);
-        this.showToast('✨ 已生成电梯演讲');
+        this.showToast('✨ Elevator pitch generated');
       } catch (err) {
-        this.showToast('生成失败：' + (err.message || '未知错误'));
+        this.showToast('Generation failed: ' + (err.message || 'Unknown error'));
       } finally {
-        genBtn.disabled = false; genBtn.textContent = '✨ AI 生成电梯演讲';
+        genBtn.disabled = false; genBtn.textContent = originalText;
+      }
+    });
+
+    const genIterBtn = document.getElementById('genIterBtn');
+    genIterBtn?.addEventListener('click', async () => {
+      const ctx = this._buildExamElevatorContext(project);
+      genIterBtn.disabled = true;
+      const originalText = genIterBtn.textContent;
+      genIterBtn.textContent = 'AI generating...';
+      try {
+        const obj = await AIAssistant.generateIterationPlan(ctx);
+        if (obj.iteration && Array.isArray(obj.iteration)) {
+          const body = document.getElementById('iterBody');
+          const rows = Array.from(body.querySelectorAll('.iter-row'));
+          obj.iteration.forEach((item, idx) => {
+            const row = rows[idx];
+            if (!row) return;
+            const catInput = row.querySelector('.iter-cat');
+            if (catInput && item.category) catInput.value = item.category;
+            const cells = row.querySelectorAll('.iter-cell');
+            (item.actions || []).forEach((a, ci) => {
+              if (cells[ci]) cells[ci].value = a || '';
+            });
+          });
+        }
+        this.saveExamElevatorData(project);
+        this.showToast('✨ Iteration plan generated');
+      } catch (err) {
+        this.showToast('Generation failed: ' + (err.message || 'Unknown error'));
+      } finally {
+        genIterBtn.disabled = false; genIterBtn.textContent = originalText;
       }
     });
 
     document.getElementById('saveElevatorBtn')?.addEventListener('click', () => {
       this.saveExamElevatorData(project);
-      this.showToast('已保存');
+      this.showToast('Saved');
     });
   }
 
