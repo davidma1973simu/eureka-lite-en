@@ -5281,7 +5281,7 @@ class EurekaLite {
       const aiOn = !!(window.AIService && window.AIService.isReady());
       const originalText = btn.textContent;
       btn.disabled = true;
-      btn.textContent = aiOn ? '🤖 DeepSeek 生成中...' : 'AI 生成中...';
+      btn.textContent = aiOn ? 'DeepSeek generating...' : 'AI generating...';
       try {
         const originalInput = this.getCurrentScreenUserInput();
         const prefill = await AIAssistant.generatePrefillContentAI(
@@ -7746,7 +7746,7 @@ class EurekaLite {
       const briefing = this.getProjectBriefing(project);
       const briefText = briefing ? JSON.stringify(briefing).slice(0, 1200) : (project?.title || '');
       const bestIdea = bestIdeas[0] || { title: bestTitle, description: '' };
-      genBtn.disabled = true; genBtn.textContent = '🤖 AI 生成中...';
+      genBtn.disabled = true; genBtn.textContent = 'AI generating...';
       try {
         const obj = await AIAssistant.generateShapeQuestions(bestIdea, pov.userProblem, briefText);
         if (container) {
@@ -7819,32 +7819,52 @@ class EurekaLite {
 
     return `
       <div class="screen-content animate-fade-in-up">
-        <h2 class="screen-title">S2 最小概念方案</h2>
-        <p class="screen-subtitle">基于前面所有内容，定义你的概念方案</p>
+        <h2 class="screen-title">S2 Minimum concept</h2>
+        <p class="screen-subtitle">Define your concept from everything above</p>
         <details class="shape-example" open>
-          <summary>📐 范例 / 前面内容汇总（点此收起）</summary>
+          <summary>Example / summary of what's above (click to collapse)</summary>
           <div class="shape-example-body">${this.escapeHtml(example).replace(/\n/g, '<br>')}</div>
         </details>
-        <div class="screen-hint"><span class="hint-icon">💡</span><span>参考上方汇总，用「✨ AI 生成概念方案」获得初稿，再自由编辑。</span></div>
-        <button class="btn btn-ai" id="genConceptBtn">✨ AI 生成概念方案</button>
+        <div class="screen-hint"><span class="hint-icon">💡</span><span>Reference the summary above, then use "Generate concept with AI" to get a draft and edit freely.</span></div>
+        <button class="btn btn-ai" id="genConceptBtn">✨ Generate concept with AI</button>
         <div class="concept-field">
-          <label class="input-label">一句话定义（oneLiner）</label>
-          <textarea class="input textarea" id="mcOneLiner" rows="2" placeholder="例如：一个让上班族 3 分钟找到可靠停车位的应用">${this.escapeHtml(concept.oneLiner || '')}</textarea>
+          <label class="input-label">One-liner (define in one sentence)</label>
+          <textarea class="input textarea" id="mcOneLiner" rows="2" placeholder="e.g. An app that helps commuters find a reliable parking spot in 3 minutes">${this.escapeHtml(concept.oneLiner || '')}</textarea>
         </div>
-        <div class="concept-field">
-          <label class="input-label">功能与特性（features）</label>
-          <div class="concept-list" id="mcFeatures">${concept.features.map(f => this.conceptRowHTML('features', f)).join('')}</div>
-          <button class="btn-add concept-add" data-list="features">➕ 添加</button>
-        </div>
-        <div class="concept-field">
-          <label class="input-label">产品特性（characteristics）</label>
-          <div class="concept-list" id="mcCharacteristics">${concept.characteristics.map(f => this.conceptRowHTML('characteristics', f)).join('')}</div>
-          <button class="btn-add concept-add" data-list="characteristics">➕ 添加</button>
-        </div>
-        <div class="concept-field">
-          <label class="input-label">边界 / 不做什么（boundaries）</label>
-          <div class="concept-list" id="mcBoundaries">${concept.boundaries.map(f => this.conceptRowHTML('boundaries', f)).join('')}</div>
-          <button class="btn-add concept-add" data-list="boundaries">➕ 添加</button>
+        <div class="concept-cards">
+          <div class="concept-card">
+            <div class="concept-card-head">
+              <label class="concept-card-label">Features &amp; characteristics</label>
+              <span class="concept-count" id="mcFeaturesCount"></span>
+            </div>
+            <textarea class="input textarea concept-card-text" id="mcFeatures" rows="6" placeholder="AI-generated features and characteristics, one per line">${concept.features.map(f => '• ' + f).join('\n')}</textarea>
+            <div class="concept-card-actions">
+              <button type="button" class="btn-mini concept-add-line" data-target="mcFeatures">+ add line</button>
+              <button type="button" class="btn-mini concept-clear" data-target="mcFeatures">clear</button>
+            </div>
+          </div>
+          <div class="concept-card">
+            <div class="concept-card-head">
+              <label class="concept-card-label">Product features</label>
+              <span class="concept-count" id="mcCharacteristicsCount"></span>
+            </div>
+            <textarea class="input textarea concept-card-text" id="mcCharacteristics" rows="6" placeholder="AI-generated product features, one per line">${concept.characteristics.map(f => '• ' + f).join('\n')}</textarea>
+            <div class="concept-card-actions">
+              <button type="button" class="btn-mini concept-add-line" data-target="mcCharacteristics">+ add line</button>
+              <button type="button" class="btn-mini concept-clear" data-target="mcCharacteristics">clear</button>
+            </div>
+          </div>
+          <div class="concept-card concept-card-full">
+            <div class="concept-card-head">
+              <label class="concept-card-label">Boundary / not now</label>
+              <span class="concept-count" id="mcBoundariesCount"></span>
+            </div>
+            <textarea class="input textarea concept-card-text" id="mcBoundaries" rows="5" placeholder="What this concept explicitly will NOT do yet, one per line">${concept.boundaries.map(f => '• ' + f).join('\n')}</textarea>
+            <div class="concept-card-actions">
+              <button type="button" class="btn-mini concept-add-line" data-target="mcBoundaries">+ add line</button>
+              <button type="button" class="btn-mini concept-clear" data-target="mcBoundaries">clear</button>
+            </div>
+          </div>
         </div>
         <button class="btn btn-secondary" id="saveConceptBtn">保存概念方案</button>
       </div>`;
@@ -7861,26 +7881,36 @@ class EurekaLite {
       saveTimer = setTimeout(() => this.saveShapeMinConceptData(project), 600);
     };
 
-    const bindList = (list) => {
-      const container = document.getElementById('mc' + list.charAt(0).toUpperCase() + list.slice(1));
-      container?.querySelectorAll('.concept-item').forEach(ta => ta.addEventListener('input', onInput));
-      container?.querySelectorAll('.concept-del').forEach(b => b.addEventListener('click', () => {
-        b.closest('.concept-row')?.remove();
-        this.saveShapeMinConceptData(project);
-      }));
+    const updateCounts = () => {
+      ['mcFeatures', 'mcCharacteristics', 'mcBoundaries'].forEach(id => {
+        const el = document.getElementById(id);
+        const n = el ? el.value.split('\n').map(s => s.trim()).filter(Boolean).length : 0;
+        const badge = document.getElementById(id + 'Count');
+        if (badge) badge.textContent = n ? n + (n === 1 ? ' item' : ' items') : '';
+      });
     };
-    ['features', 'characteristics', 'boundaries'].forEach(bindList);
-    oneLinerEl?.addEventListener('input', onInput);
+    ['mcFeatures', 'mcCharacteristics', 'mcBoundaries', 'mcOneLiner'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', () => { onInput(); updateCounts(); });
+    });
+    updateCounts();
 
-    document.querySelectorAll('.concept-add').forEach(btn => {
+    document.querySelectorAll('.concept-add-line').forEach(btn => {
       btn.addEventListener('click', () => {
-        const list = btn.dataset.list;
-        const container = document.getElementById('mc' + list.charAt(0).toUpperCase() + list.slice(1));
-        if (container) {
-          container.insertAdjacentHTML('beforeend', this.conceptRowHTML(list, ''));
-          bindList(list);
-          this.saveShapeMinConceptData(project);
+        const el = document.getElementById(btn.dataset.target);
+        if (el) {
+          el.value = el.value.replace(/\s*$/, '') + '\n\n';
+          el.focus();
         }
+        updateCounts();
+        this.saveShapeMinConceptData(project);
+      });
+    });
+    document.querySelectorAll('.concept-clear').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const el = document.getElementById(btn.dataset.target);
+        if (el) { el.value = ''; el.focus(); }
+        updateCounts();
+        this.saveShapeMinConceptData(project);
       });
     });
 
@@ -7890,27 +7920,32 @@ class EurekaLite {
       const fdText = fd && fd.result ? fd.result : '';
       const bestIdeas = this.getBestIdeas(project);
       const bestIdea = bestIdeas[0] || { title: '', description: '' };
-      genBtn.disabled = true; genBtn.textContent = '🤖 AI 生成中...';
+      genBtn.disabled = true; genBtn.textContent = 'AI generating...';
       try {
         const obj = await AIAssistant.generateMinConcept(
-          `用户问题：${pov.userProblem || ''}\n最佳创意：${bestIdea.title || ''} ${bestIdea.description || ''}\n四维拷问：${fdText}`.slice(0, 1500)
+          `User problem: ${pov.userProblem || ''}\nBest idea: ${bestIdea.title || ''} ${bestIdea.description || ''}\nFour-dimension interrogation: ${fdText}`.slice(0, 1500)
         );
+        const fillCard = (id, arr) => {
+          const el = document.getElementById(id);
+          if (el && Array.isArray(arr)) el.value = arr.map(x => '• ' + x).join('\n');
+        };
         if (oneLinerEl && obj.oneLiner) oneLinerEl.value = obj.oneLiner;
-        if (Array.isArray(obj.features)) this.refreshConceptList(project, 'features', obj.features);
-        if (Array.isArray(obj.characteristics)) this.refreshConceptList(project, 'characteristics', obj.characteristics);
-        if (Array.isArray(obj.boundaries)) this.refreshConceptList(project, 'boundaries', obj.boundaries);
+        fillCard('mcFeatures', obj.features);
+        fillCard('mcCharacteristics', obj.characteristics);
+        fillCard('mcBoundaries', obj.boundaries);
+        updateCounts();
         this.saveShapeMinConceptData(project);
-        this.showToast('✨ 已生成概念方案初稿，可继续编辑');
+        this.showToast('Concept draft generated — keep editing');
       } catch (err) {
-        this.showToast('生成失败：' + (err.message || '未知错误'));
+        this.showToast('Generation failed: ' + (err.message || 'unknown error'));
       } finally {
-        genBtn.disabled = false; genBtn.textContent = '✨ AI 生成概念方案';
+        genBtn.disabled = false; genBtn.textContent = '✨ Generate concept with AI';
       }
     });
 
     saveBtn?.addEventListener('click', () => {
       this.saveShapeMinConceptData(project);
-      this.showToast('已保存概念方案');
+      this.showToast('Concept saved');
     });
   }
 
@@ -7928,17 +7963,18 @@ class EurekaLite {
 
   saveShapeMinConceptData(project) {
     if (!AppState.currentProjectId) return;
-    const readList = (list) => {
-      const container = document.getElementById('mc' + list.charAt(0).toUpperCase() + list.slice(1));
-      if (!container) return [];
-      return Array.from(container.querySelectorAll('.concept-item')).map(ta => (ta.value || '').trim()).filter(Boolean);
+    const readCard = (id) => {
+      const el = document.getElementById(id);
+      if (!el) return [];
+      return el.value.split('\n').map(s => s.trim()).filter(Boolean)
+        .map(s => s.replace(/^[•·\-*–]\s*/, ''));
     };
     const oneLiner = document.getElementById('mcOneLiner')?.value?.trim() || '';
     const concept = {
       oneLiner,
-      features: readList('features'),
-      characteristics: readList('characteristics'),
-      boundaries: readList('boundaries')
+      features: readCard('mcFeatures'),
+      characteristics: readCard('mcCharacteristics'),
+      boundaries: readCard('mcBoundaries')
     };
     const example = this.getShapeContextSummary(project);
     if (!oneLiner && !concept.features.length && !concept.characteristics.length && !concept.boundaries.length) return;
@@ -7993,7 +8029,7 @@ class EurekaLite {
     genBtn?.addEventListener('click', async () => {
       const mc = this._readCardJSON('shapeMinConcept');
       const conceptText = mc && mc.concept ? JSON.stringify(mc.concept) : (project?.title || '');
-      genBtn.disabled = true; genBtn.textContent = '🤖 AI 生成中...';
+      genBtn.disabled = true; genBtn.textContent = 'AI generating...';
       try {
         const obj = await AIAssistant.generateStoryboard(conceptText.slice(0, 1500));
         const cards = (obj && Array.isArray(obj.cards)) ? obj.cards : [];
@@ -8122,7 +8158,7 @@ class EurekaLite {
       const mc = this._readCardJSON('shapeMinConcept');
       const sb = this._readCardJSON('shapeStoryboard');
       const ctx = `概念方案：${mc && mc.concept ? JSON.stringify(mc.concept) : ''}\n故事板：${sb && Array.isArray(sb.cards) ? JSON.stringify(sb.cards.map(c => c.desc)) : ''}`.slice(0, 1500);
-      genBtn.disabled = true; genBtn.textContent = '🤖 AI 生成中...';
+      genBtn.disabled = true; genBtn.textContent = 'AI generating...';
       try {
         const obj = await AIAssistant.generateExamTestPlan(ctx);
         if (obj.purpose) document.getElementById('tp_purpose').value = obj.purpose;
@@ -8197,7 +8233,7 @@ class EurekaLite {
     genBtn?.addEventListener('click', async () => {
       const tp = this._readCardJSON('examTestPlan');
       const ctx = `测试计划：${tp ? JSON.stringify(tp) : ''}`.slice(0, 1500);
-      genBtn.disabled = true; genBtn.textContent = '🤖 AI 生成中...';
+      genBtn.disabled = true; genBtn.textContent = 'AI generating...';
       try {
         const obj = await AIAssistant.generateExamTestReport(ctx);
         if (obj.effectiveValue) document.getElementById('tr_effectiveValue').value = obj.effectiveValue;
@@ -8466,7 +8502,7 @@ class EurekaLite {
       const summary = this._readCardJSON('shapeSummary') || {};
       const tp = this._readCardJSON('examTestPlan') || {};
       const ctx = `概念方案：${summary.concept ? JSON.stringify(summary.concept) : ''}\n测试目的：${tp.purpose || ''}`.slice(0, 1200);
-      genBtn.disabled = true; genBtn.textContent = '🤖 AI 生成中...';
+      genBtn.disabled = true; genBtn.textContent = 'AI generating...';
       try {
         const obj = await AIAssistant.generateElevatorPitch(ctx);
         if (obj.pitch) document.getElementById('el_pitch').value = obj.pitch;

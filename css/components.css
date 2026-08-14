@@ -4641,3 +4641,69 @@
   .shape-screen .input-label { border-left-color: var(--shape-primary); }
   .exam-screen .input-label  { border-left-color: var(--exam-primary); }
 }
+
+/* ========== S2 Minimum concept summary cards ========== */
+.concept-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md, 16px);
+  margin-top: var(--space-md, 16px);
+}
+.concept-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--color-background-primary, #fff);
+  border: 0.5px solid var(--color-border-tertiary, #e5e7eb);
+  border-radius: var(--border-radius-lg, 12px);
+  padding: 1rem 1.1rem;
+}
+.concept-card-full { grid-column: 1 / -1; }
+.concept-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.concept-card-label {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--color-text-primary, #1f2937);
+}
+.concept-count {
+  font-size: 11px;
+  color: var(--color-text-tertiary, #9ca3af);
+  background: var(--color-background-secondary, #f9fafb);
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.concept-card-text {
+  width: 100%;
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+.concept-card-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.btn-mini {
+  font-size: 12px;
+  padding: 4px 10px;
+  border: 0.5px solid var(--color-border-tertiary, #e5e7eb);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text-secondary, #6b7280);
+  cursor: pointer;
+}
+.btn-mini:hover { border-color: var(--color-border-secondary, #cbd5e1); }
+.concept-clear {
+  color: var(--color-text-danger, #b91c1c);
+  border-color: transparent;
+  background: var(--color-background-danger, #fef2f2);
+}
+@media (max-width: 640px) {
+  .concept-cards { grid-template-columns: 1fr; }
+}
