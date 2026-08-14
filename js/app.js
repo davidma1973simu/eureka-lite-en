@@ -3007,10 +3007,10 @@ class EurekaLite {
           hint: 'Use the template or AI to generate the elevator pitch and 30-60-90 day iteration plan'
         },
         {
-          title: 'E5 Exam 整合确认',
-          subtitle: '确认你的验证成果',
+          title: 'E5 Exam Summary',
+          subtitle: 'Confirm your validation results',
           type: 'examSummary',
-          hint: '核对测试产出与呈现计划，确认完成项目'
+          hint: 'Review test outputs, pitch, and iteration plan, then complete the project'
         }
       ]
     };
@@ -8639,54 +8639,54 @@ class EurekaLite {
     const tr = this._readCardJSON('examTestReport');
     const el = this._readCardJSON('examElevator');
     const fd = this._readCardJSON('examFourDimEval');
-    const purpose = tp?.purpose || '（尚未填写测试计划）';
+    const purpose = tp?.purpose || 'Test plan not yet filled';
     const fourDimHtml = fd ? (() => {
-      const labels = { userValue: '用户价值', businessValue: '商业价值', feasibility: '技术可行性', innovation: '创新程度' };
+      const labels = { userValue: 'User Value', businessValue: 'Business Value', feasibility: 'Feasibility', innovation: 'Innovation' };
       const order = ['userValue', 'businessValue', 'feasibility', 'innovation'];
       const total = order.reduce((s, k) => s + (Number(fd.scores?.[k]) || 0), 0);
       const rows = order.map(k => `
         <div class="summary-row"><span class="summary-key">${labels[k]}</span><span>${Number(fd.scores?.[k]) || 0}/5${fd.reasons?.[k] ? ' — ' + this.escapeHtml(fd.reasons[k]) : ''}</span></div>`).join('');
-      return `<div class="summary-row"><span class="summary-key">综合得分</span><span><b>${total}</b>/20</span></div>${rows}`;
-    })() : '<div class="summary-empty">尚未完成四维度评价</div>';
+      return `<div class="summary-row"><span class="summary-key">Total Score</span><span><b>${total}</b>/20</span></div>${rows}`;
+    })() : '<div class="summary-empty">Four-dimension evaluation not yet completed</div>';
     const reportHtml = tr ? `
-      <div class="summary-row"><span class="summary-key">验证的有效价值</span><span>${this.escapeHtml(tr.effectiveValue || '—')}</span></div>
-      <div class="summary-row"><span class="summary-key">无效 / 错误价值</span><span>${this.escapeHtml(tr.invalidValue || '—')}</span></div>
-      <div class="summary-row"><span class="summary-key">新发现的问题</span><span>${this.escapeHtml(tr.newProblems || '—')}</span></div>
-      <div class="summary-row"><span class="summary-key">新机会 / 信息</span><span>${this.escapeHtml(tr.newOpportunities || '—')}</span></div>
-    ` : '<div class="summary-empty">尚未生成测试报告</div>';
-    const pitch = el?.pitch || '（尚未生成电梯演讲）';
+      <div class="summary-row"><span class="summary-key">Validated Value</span><span>${this.escapeHtml(tr.effectiveValue || '—')}</span></div>
+      <div class="summary-row"><span class="summary-key">Invalid / Falsified Value</span><span>${this.escapeHtml(tr.invalidValue || '—')}</span></div>
+      <div class="summary-row"><span class="summary-key">New Problems</span><span>${this.escapeHtml(tr.newProblems || '—')}</span></div>
+      <div class="summary-row"><span class="summary-key">New Opportunities</span><span>${this.escapeHtml(tr.newOpportunities || '—')}</span></div>
+    ` : '<div class="summary-empty">Test report not yet generated</div>';
+    const pitch = el?.pitch || 'Elevator pitch not yet generated';
     const iterRows = (el && Array.isArray(el.iteration)) ? el.iteration : [];
     const iterHtml = iterRows.length ? iterRows.map(r => {
       const acts = (r.actions || []).map(a => a.trim()).filter(Boolean);
-      const cat = r.category ? `<strong>${this.escapeHtml(r.category)}：</strong>` : '';
-      return acts.length ? `<div class="summary-idea-item">${cat}${acts.map(a => '· ' + this.escapeHtml(a)).join('；')}</div>` : '';
-    }).join('') : '<div class="summary-empty">暂无迭代计划</div>';
+      const cat = r.category ? `<strong>${this.escapeHtml(r.category)}: </strong>` : '';
+      return acts.length ? `<div class="summary-idea-item">${cat}${acts.map(a => '• ' + this.escapeHtml(a)).join('; ')}</div>` : '';
+    }).join('') : '<div class="summary-empty">No iteration plan yet</div>';
 
     return `
       <div class="screen-content animate-fade-in-up">
-        <h2 class="screen-title">E5 Exam 整合确认卡</h2>
-        <p class="screen-subtitle">确认你的验证成果，准备完成项目</p>
+        <h2 class="screen-title">E5 Exam Summary</h2>
+        <p class="screen-subtitle">Confirm your validation results and complete the project</p>
         <div class="inspire-summary-card">
-          <div class="summary-block-title">🧪 测试目的</div>
-          <div class="summary-row"><span class="summary-key">目的</span><span>${this.escapeHtml(purpose)}</span></div>
+          <div class="summary-block-title">🧪 Test Purpose</div>
+          <div class="summary-row"><span class="summary-key">Purpose</span><span>${this.escapeHtml(purpose)}</span></div>
         </div>
         <div class="inspire-summary-card">
-          <div class="summary-block-title">📊 测试产出</div>
+          <div class="summary-block-title">📊 Test Output</div>
           ${reportHtml}
         </div>
         <div class="inspire-summary-card">
-          <div class="summary-block-title">📐 四维度评价</div>
+          <div class="summary-block-title">📐 Four-Dimension Evaluation</div>
           ${fourDimHtml}
         </div>
         <div class="inspire-summary-card">
-          <div class="summary-block-title">🎤 呈现计划</div>
-          <div class="summary-row"><span class="summary-key">电梯演讲</span><span>${this.escapeHtml(pitch)}</span></div>
-          <div class="summary-block-sub">30-60-90 迭代</div>
+          <div class="summary-block-title">🎤 Pitch & Iteration Plan</div>
+          <div class="summary-row"><span class="summary-key">Elevator Pitch</span><span>${this.escapeHtml(pitch)}</span></div>
+          <div class="summary-block-sub">30-60-90 Iteration</div>
           ${iterHtml}
         </div>
         <div class="confirm-actions">
-          <button class="btn btn-secondary" id="summaryBackBtn">返回修改</button>
-          <button class="btn btn-confirm-primary" id="summaryConfirmBtn">确认完成，查看全景图</button>
+          <button class="btn btn-secondary" id="summaryBackBtn">Back to Edit</button>
+          <button class="btn btn-confirm-primary" id="summaryConfirmBtn">Confirm & View Panorama</button>
         </div>
       </div>`;
   }
@@ -8750,16 +8750,16 @@ class EurekaLite {
 
     const fdEval = safe(() => this._readCardJSON('examFourDimEval', project), null);
     const fdHtml = fdEval && fdEval.scores ? (() => {
-      const labels = { userValue: '用户价值', businessValue: '商业价值', feasibility: '技术可行性', innovation: '创新程度' };
+      const labels = { userValue: 'User Value', businessValue: 'Business Value', feasibility: 'Feasibility', innovation: 'Innovation' };
       const order = ['userValue', 'businessValue', 'feasibility', 'innovation'];
       const total = order.reduce((s, k) => s + (Number(fdEval.scores[k]) || 0), 0);
-      const rows = order.map(k => `<li>${labels[k]}：${Number(fdEval.scores[k]) || 0}/5${fdEval.reasons && fdEval.reasons[k] ? ' — ' + this.escapeHtml(fdEval.reasons[k]) : ''}</li>`).join('');
-      return `<div class="panorama-sub">四维评价（综合 ${total}/20）</div><ul class="panorama-list">${rows}</ul>`;
+      const rows = order.map(k => `<li>${labels[k]}: ${Number(fdEval.scores[k]) || 0}/5${fdEval.reasons && fdEval.reasons[k] ? ' — ' + this.escapeHtml(fdEval.reasons[k]) : ''}</li>`).join('');
+      return `<div class="panorama-sub">Four-Dimension Evaluation (Total ${total}/20)</div><ul class="panorama-list">${rows}</ul>`;
     })() : '';
 
-    // 30-60-90 天迭代计划
+    // 30-60-90 day iteration plan
     const iteration = Array.isArray(elevator.iteration) ? elevator.iteration : [];
-    const stages = ['0-30天', '31-60天', '61-90天'];
+    const stages = ['0-30 days', '31-60 days', '61-90 days'];
     const iterationHtml = iteration.length ? (() => {
       const rows = iteration.map(row => {
         const acts = Array.isArray(row.actions) ? row.actions : [];
@@ -8767,9 +8767,9 @@ class EurekaLite {
         return `<tr><th>${this.escapeHtml(row.category || '—')}</th>${cells}</tr>`;
       }).join('');
       return `
-        <div class="panorama-sub">30-60-90 天迭代计划</div>
+        <div class="panorama-sub">30-60-90 Day Iteration Plan</div>
         <table class="panorama-iter-table">
-          <thead><tr><th>维度</th>${stages.map(s => `<th>${s}</th>`).join('')}</tr></thead>
+          <thead><tr><th>Dimension</th>${stages.map(s => `<th>${s}</th>`).join('')}</tr></thead>
           <tbody>${rows}</tbody>
         </table>`;
     })() : '';
@@ -8780,54 +8780,54 @@ class EurekaLite {
 
     const revealBlock = `
       <div class="panorama-block reveal-block">
-        <div class="panorama-block-head"><span class="panorama-icon">🔍</span><h3>揭示了什么（Reveal）</h3></div>
-        <div class="panorama-row"><span class="panorama-key">目标用户</span><span>${this.escapeHtml(pov.targetUser || briefing.targetUser || '—')}</span></div>
-        <div class="panorama-row"><span class="panorama-key">场景</span><span>${this.escapeHtml(pov.sceneChallenge || briefing.scene || '—')}</span></div>
-        <div class="panorama-row"><span class="panorama-key">核心洞察</span><span>${this.escapeHtml(pov.insight || '—')}</span></div>
-        <div class="panorama-row"><span class="panorama-key">商业假设</span><span>${this.escapeHtml(businessGoal.goal || businessGoal.consensus || '—')}</span></div>
+        <div class="panorama-block-head"><span class="panorama-icon">🔍</span><h3>What We Revealed</h3></div>
+        <div class="panorama-row"><span class="panorama-key">Target User</span><span>${this.escapeHtml(pov.targetUser || briefing.targetUser || '—')}</span></div>
+        <div class="panorama-row"><span class="panorama-key">Scenario</span><span>${this.escapeHtml(pov.sceneChallenge || briefing.scene || '—')}</span></div>
+        <div class="panorama-row"><span class="panorama-key">Core Insight</span><span>${this.escapeHtml(pov.insight || '—')}</span></div>
+        <div class="panorama-row"><span class="panorama-key">Business Hypothesis</span><span>${this.escapeHtml(businessGoal.goal || businessGoal.consensus || '—')}</span></div>
       </div>`;
 
     const inspireBlock = `
       <div class="panorama-block inspire-block">
-        <div class="panorama-block-head"><span class="panorama-icon">💡</span><h3>启发了什么（Inspire）</h3></div>
-        <div class="panorama-sub">最佳 HMW</div>
+        <div class="panorama-block-head"><span class="panorama-icon">💡</span><h3>What We Inspired</h3></div>
+        <div class="panorama-sub">Top HMWs</div>
         <ul class="panorama-list">${listHtml(hmws)}</ul>
-        <div class="panorama-sub">最佳创意</div>
+        <div class="panorama-sub">Top Ideas</div>
         <ul class="panorama-list">${listHtml(bestIdeas.map(i => i.title))}</ul>
       </div>`;
 
     const shapeBlock = `
       <div class="panorama-block shape-block">
-        <div class="panorama-block-head"><span class="panorama-icon">🎯</span><h3>构建了什么（Shape）</h3></div>
-        <div class="panorama-row"><span class="panorama-key">概念方案</span><span>${this.escapeHtml(concept.oneLiner || '—')}</span></div>
-        <div class="panorama-sub">功能与特性</div>
+        <div class="panorama-block-head"><span class="panorama-icon">🎯</span><h3>What We Shaped</h3></div>
+        <div class="panorama-row"><span class="panorama-key">Concept</span><span>${this.escapeHtml(concept.oneLiner || '—')}</span></div>
+        <div class="panorama-sub">Features</div>
         <ul class="panorama-list">${listHtml(concept.features)}</ul>
-        <div class="panorama-sub">用户故事（6 卡）</div>
-        <ul class="panorama-list">${listHtml(storyCards.map(c => c.title + (c.desc ? '：' + c.desc : '')))}</ul>
+        <div class="panorama-sub">User Storyboard (6 cards)</div>
+        <ul class="panorama-list">${listHtml(storyCards.map(c => c.title + (c.desc ? ': ' + c.desc : '')))}</ul>
       </div>`;
 
     const examBlock = `
       <div class="panorama-block exam-block">
-        <div class="panorama-block-head"><span class="panorama-icon">📋</span><h3>验证了什么（Exam）</h3></div>
-        <div class="panorama-row"><span class="panorama-key">测试目的</span><span>${this.escapeHtml(testPlan.purpose || '—')}</span></div>
-        <div class="panorama-sub">测试产出</div>
+        <div class="panorama-block-head"><span class="panorama-icon">📋</span><h3>What We Examined</h3></div>
+        <div class="panorama-row"><span class="panorama-key">Test Purpose</span><span>${this.escapeHtml(testPlan.purpose || '—')}</span></div>
+        <div class="panorama-sub">Test Output</div>
         <ul class="panorama-list">
-          <li>有效价值：${this.escapeHtml(testReport.effectiveValue || '—')}</li>
-          <li>无效价值：${this.escapeHtml(testReport.invalidValue || '—')}</li>
-          <li>新问题：${this.escapeHtml(testReport.newProblems || '—')}</li>
-          <li>新机会：${this.escapeHtml(testReport.newOpportunities || '—')}</li>
+          <li>Validated value: ${this.escapeHtml(testReport.effectiveValue || '—')}</li>
+          <li>Invalidated value: ${this.escapeHtml(testReport.invalidValue || '—')}</li>
+          <li>New problems: ${this.escapeHtml(testReport.newProblems || '—')}</li>
+          <li>New opportunities: ${this.escapeHtml(testReport.newOpportunities || '—')}</li>
         </ul>
         ${fdHtml}
         ${iterationHtml}
-        <div class="panorama-sub">电梯演讲</div>
+        <div class="panorama-sub">Elevator Pitch</div>
         <div class="panorama-pitch">${this.escapeHtml(elevator.pitch || '—')}</div>
       </div>`;
 
     this.setContent(`
       <div class="panorama-view" id="panoramaView">
         <header class="panorama-header">
-          <h1 class="panorama-title">🎉 项目全景图</h1>
-          <p class="panorama-subtitle">${this.escapeHtml(project.title || '未命名项目')} · 完整 RISE 创新旅程</p>
+          <h1 class="panorama-title">🎉 Project Panorama</h1>
+          <p class="panorama-subtitle">${this.escapeHtml(project.title || 'Untitled Project')} · Complete RISE Innovation Journey</p>
         </header>
         <div class="panorama-grid" id="panoramaGrid">
           ${revealBlock}
@@ -8836,10 +8836,10 @@ class EurekaLite {
           ${examBlock}
         </div>
         <div class="panorama-toolbar no-print">
-          <button class="btn btn-secondary" id="panoramaImgBtn">🖼️ 保存为图片</button>
-          <button class="btn btn-secondary" id="panoramaDownloadBtn">📥 下载 HTML</button>
-          <button class="btn btn-secondary" id="panoramaPrintBtn">🖨️ 打印 / PDF</button>
-          <button class="btn btn-primary" id="panoramaHomeBtn" style="background: var(--exam-primary);">返回首页</button>
+          <button class="btn btn-secondary" id="panoramaImgBtn">🖼️ Save as Image</button>
+          <button class="btn btn-secondary" id="panoramaDownloadBtn">📥 Download HTML</button>
+          <button class="btn btn-secondary" id="panoramaPrintBtn">🖨️ Print / PDF</button>
+          <button class="btn btn-primary" id="panoramaHomeBtn" style="background: var(--exam-primary);">Back to Home</button>
         </div>
       </div>
     `);
