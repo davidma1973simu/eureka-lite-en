@@ -7987,12 +7987,12 @@ class EurekaLite {
 
   getShapeStoryboardTemplate(project) {
     const themes = [
-      { key: 'problem', title: '用户面对的问题' },
-      { key: 'opportunity', title: '我们的创新机遇' },
-      { key: 'contact', title: '用户接触新的概念方案' },
-      { key: 'usage', title: '用户使用新方案解决问题' },
-      { key: 'outcome', title: '用户得到的结果' },
-      { key: 'feeling', title: '用户的感受和表达' }
+      { key: 'problem', title: 'The problem users face' },
+      { key: 'opportunity', title: 'Our innovation opportunity' },
+      { key: 'contact', title: 'Users encounter the new concept plan' },
+      { key: 'usage', title: 'Users apply the new solution' },
+      { key: 'outcome', title: 'The result users get' },
+      { key: 'feeling', title: 'Users’ feelings & expression' }
     ];
     let cards = [];
     const saved = this._readCardJSON('shapeStoryboard');
@@ -8001,37 +8001,39 @@ class EurekaLite {
 
     return `
       <div class="screen-content animate-fade-in-up">
-        <h2 class="screen-title">S3 用户体验故事板</h2>
-        <p class="screen-subtitle">基于最小概念方案，用 6 个场景讲完用户故事</p>
-        <div class="screen-hint"><span class="hint-icon">💡</span><span>点击「✨ AI 生成故事板」自动生成 6 卡描述，可自由编辑；图片占位区后续接入 AI 生图。</span></div>
-        <button class="btn btn-ai" id="genStoryboardBtn">✨ AI 生成故事板</button>
+        <h2 class="screen-title">S3 User Experience Storyboard</h2>
+        <p class="screen-subtitle">Based on the minimal concept plan, use 6 scenes to tell the user’s story</p>
+        <div class="screen-hint"><span class="hint-icon">💡</span><span>Click “✨ AI Generate Storyboard” to auto-create 6 scene descriptions. You can edit them freely. Paste an image URL from your <a href="https://concept-canvas-go.base44.app" target="_blank" rel="noopener">Base44 canvas</a> below each card.</span></div>
+        <button class="btn btn-ai" id="genStoryboardBtn">✨ AI Generate Storyboard</button>
         <div class="storyboard-grid">
           ${cards.map((c, i) => `
             <div class="storyboard-card" data-key="${c.key}">
               <div class="storyboard-card-head"><span class="storyboard-num">${i + 1}</span><span class="storyboard-title">${this.escapeHtml(c.title)}</span></div>
-              <textarea class="input textarea storyboard-desc" data-key="${c.key}" rows="3" placeholder="描述这一刻的用户经历...">${this.escapeHtml(c.desc || '')}</textarea>
-              <div class="storyboard-img-placeholder" title="图片生成功能开发中">🖼️ 图片生成功能开发中（敬请期待）</div>
+              <textarea class="input textarea storyboard-desc" data-key="${c.key}" rows="3" placeholder="Describe what the user experiences at this moment...">${this.escapeHtml(c.desc || '')}</textarea>
+              ${c.image ? `<img class="storyboard-img-preview" src="${this.escapeHtml(c.image)}" alt="Scene ${i + 1}" />` : '<div class="storyboard-img-placeholder">🖼️ Image placeholder</div>'}
+              <input type="text" class="input storyboard-img-url" data-key="${c.key}" placeholder="Image URL (optional, e.g. from Base44)" value="${this.escapeHtml(c.image || '')}" />
             </div>`).join('')}
         </div>
-        <button class="btn btn-secondary" id="saveStoryboardBtn">保存故事板</button>
+        <button class="btn btn-secondary" id="saveStoryboardBtn">Save Storyboard</button>
       </div>`;
   }
 
   attachShapeStoryboardEvents(project) {
     let saveTimer = null;
-    const genBtn = document.getElementById('genStoryboardBtn');
-    const saveBtn = document.getElementById('saveStoryboardBtn');
-    document.querySelectorAll('.storyboard-desc').forEach(ta => ta.addEventListener('input', () => {
+    const onChange = () => {
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => this.saveShapeStoryboardData(project), 600);
-    }));
+    };
+    const genBtn = document.getElementById('genStoryboardBtn');
+    const saveBtn = document.getElementById('saveStoryboardBtn');
+    document.querySelectorAll('.storyboard-desc').forEach(ta => ta.addEventListener('input', onChange));
+    document.querySelectorAll('.storyboard-img-url').forEach(inp => inp.addEventListener('input', onChange));
 
     genBtn?.addEventListener('click', async () => {
-      const mc = this._readCardJSON('shapeMinConcept');
-      const conceptText = mc && mc.concept ? JSON.stringify(mc.concept) : (project?.title || '');
-      genBtn.disabled = true; genBtn.textContent = 'AI generating...';
+      const context = this._buildStoryboardContext(project);
+      genBtn.disabled = true; genBtn.textContent = '🤖 AI generating...';
       try {
-        const obj = await AIAssistant.generateStoryboard(conceptText.slice(0, 1500));
+        const obj = await AIAssistant.generateStoryboard(context);
         const cards = (obj && Array.isArray(obj.cards)) ? obj.cards : [];
         document.querySelectorAll('.storyboard-card').forEach(cardEl => {
           const key = cardEl.dataset.key;
@@ -8040,18 +8042,41 @@ class EurekaLite {
           if (c && c.desc && ta) ta.value = c.desc;
         });
         this.saveShapeStoryboardData(project);
-        this.showToast('✨ 已生成 6 卡故事板描述');
+        this.showToast('✨ 6 scene descriptions generated');
       } catch (err) {
-        this.showToast('生成失败：' + (err.message || '未知错误'));
+        this.showToast('Generation failed: ' + (err.message || 'Unknown error'));
       } finally {
-        genBtn.disabled = false; genBtn.textContent = '✨ AI 生成故事板';
+        genBtn.disabled = false; genBtn.textContent = '✨ AI Generate Storyboard';
       }
     });
 
     saveBtn?.addEventListener('click', () => {
       this.saveShapeStoryboardData(project);
-      this.showToast('已保存故事板');
+      this.showToast('Storyboard saved');
     });
+  }
+
+  _buildStoryboardContext(project) {
+    const pov = this.extractPovFromProject(project);
+    const bestIdeas = this.getBestIdeas(project);
+    const bestIdea = bestIdeas[0];
+    const fd = this._readCardJSON('shapeFourDim');
+    const mc = this._readCardJSON('shapeMinConcept');
+    const concept = mc && mc.concept ? mc.concept : {};
+    return {
+      targetUser: pov.targetUser || '',
+      userProblem: pov.userProblem || '',
+      insight: pov.insight || '',
+      goal: pov.goal || '',
+      bestIdeaTitle: bestIdea ? bestIdea.title : '',
+      bestIdeaDescription: bestIdea ? (bestIdea.description || '') : '',
+      fourDimResult: fd && fd.result ? fd.result : '',
+      conceptOneLiner: concept.oneLiner || '',
+      conceptFeatures: Array.isArray(concept.features) ? concept.features : [],
+      conceptCharacteristics: Array.isArray(concept.characteristics) ? concept.characteristics : [],
+      conceptBoundaries: Array.isArray(concept.boundaries) ? concept.boundaries : [],
+      conceptText: concept.oneLiner || project?.title || ''
+    };
   }
 
   saveShapeStoryboardData(project) {
@@ -8060,7 +8085,7 @@ class EurekaLite {
       key: cardEl.dataset.key,
       title: cardEl.querySelector('.storyboard-title')?.textContent || '',
       desc: (cardEl.querySelector('.storyboard-desc')?.value || '').trim(),
-      image: ''
+      image: (cardEl.querySelector('.storyboard-img-url')?.value || '').trim()
     }));
     if (!cards.length) return;
     window.EurekaStorage.updateCard(AppState.currentProjectId, 'shapeStoryboard', {

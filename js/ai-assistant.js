@@ -1756,11 +1756,12 @@ Return JSON directly, no markdown code blocks.`;
   },
 
   /**
-   * User experience storyboard：基于概念方案生成 6 卡描述。
+   * User experience storyboard: generate 6 scene descriptions from the confirmed concept plan.
+   * @param {object|string} context - structured project context or legacy concept text
    * @returns {Promise<{cards:Array<{key,title,desc}>}>}
    */
-  async generateStoryboard(conceptText) {
-    const ctx = (conceptText || '').slice(0, 1500) || '(no concept yet)';
+  async generateStoryboard(context) {
+    const ctx = (typeof context === 'object' && context !== null) ? context : { conceptText: String(context || '') };
     const themes = [
       { key: 'problem', title: 'The user’s problem' },
       { key: 'opportunity', title: 'Our innovation opportunity' },
@@ -1769,11 +1770,13 @@ Return JSON directly, no markdown code blocks.`;
       { key: 'outcome', title: 'The result the user gets' },
       { key: 'feeling', title: 'The user’s feeling & expression' }
     ];
+    const ctxText = this._buildStoryboardContextText(ctx);
     if (this._hasAI()) {
       const prompt =
-        `[Concept] ${ctx}\n\nTell the user story in 6 fixed scenes, in this fixed order and titles: ` +
+        `[Project context]\n${ctxText}\n\n` +
+        `Tell the user story in 6 fixed scenes, in this fixed order and titles: ` +
         themes.map(t => t.title).join(' / ') + `\n` +
-        `Write 1-2 user-perspective sentences per scene.\n` +
+        `Write 1-2 user-perspective sentences per scene. Use the provided project context.\n` +
         `Return JSON: {"cards":[{"key":"problem","title":"The user’s problem","desc":""}, ... exactly 6, key and title must match exactly]}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
@@ -1794,12 +1797,55 @@ Return JSON directly, no markdown code blocks.`;
       }
     }
     return {
-      cards: themes.map(t => ({
+      cards: themes.map((t, i) => ({
         key: t.key,
         title: t.title,
-        desc: `(Describe the user’s experience at this moment: ${t.title})`
+        desc: this._localStoryboardDescription(ctx, t.key, i)
       }))
     };
+  },
+
+  _buildStoryboardContextText(ctx) {
+    const lines = [];
+    if (ctx.targetUser) lines.push(`Target user: ${ctx.targetUser}`);
+    if (ctx.userProblem) lines.push(`User problem: ${ctx.userProblem}`);
+    if (ctx.insight) lines.push(`Insight: ${ctx.insight}`);
+    if (ctx.goal) lines.push(`Goal: ${ctx.goal}`);
+    if (ctx.bestIdeaTitle) lines.push(`Best idea: ${ctx.bestIdeaTitle}${ctx.bestIdeaDescription ? ' — ' + ctx.bestIdeaDescription : ''}`);
+    if (ctx.fourDimResult) lines.push(`Four-dimension interrogation: ${ctx.fourDimResult}`);
+    if (ctx.conceptOneLiner) lines.push(`Concept one-liner: ${ctx.conceptOneLiner}`);
+    if (Array.isArray(ctx.conceptFeatures) && ctx.conceptFeatures.length) lines.push(`Features: ${ctx.conceptFeatures.join('; ')}`);
+    if (Array.isArray(ctx.conceptCharacteristics) && ctx.conceptCharacteristics.length) lines.push(`Characteristics: ${ctx.conceptCharacteristics.join('; ')}`);
+    if (Array.isArray(ctx.conceptBoundaries) && ctx.conceptBoundaries.length) lines.push(`Boundaries / not now: ${ctx.conceptBoundaries.join('; ')}`);
+    if (ctx.conceptText) lines.push(`Additional context: ${ctx.conceptText}`);
+    return lines.length ? lines.join('\n') : '(no project context yet)';
+  },
+
+  _localStoryboardDescription(ctx, key, idx) {
+    const user = ctx.targetUser || 'The user';
+    const problem = ctx.userProblem || 'the problem they keep running into';
+    const insight = ctx.insight || '';
+    const oneLiner = ctx.conceptOneLiner || ctx.bestIdeaTitle || 'the new solution';
+    const features = Array.isArray(ctx.conceptFeatures) && ctx.conceptFeatures.length
+      ? ctx.conceptFeatures.join(', ')
+      : (Array.isArray(ctx.conceptCharacteristics) && ctx.conceptCharacteristics.length ? ctx.conceptCharacteristics.join(', ') : 'a simpler way forward');
+    const goal = ctx.goal || 'the problem is finally under control';
+    switch (key) {
+      case 'problem':
+        return `${user} keeps facing ${problem}.${insight ? ` The real friction is that ${insight.toLowerCase().replace(/\.$/, '')}.` : ' There has to be a better way.'}`;
+      case 'opportunity':
+        return `This is a chance to give ${user} a new approach that removes the usual friction and makes progress feel easy.`;
+      case 'contact':
+        return `${user} first learns about "${oneLiner}". It promises ${features}, which sounds like exactly what they need.`;
+      case 'usage':
+        return `They try it out: ${oneLiner} lets them ${features} in a single, intuitive flow.`;
+      case 'outcome':
+        return `After using it, ${user} saves time and avoids hassle — ${goal.toLowerCase().replace(/\.$/, '')}.`;
+      case 'feeling':
+        return `They feel relieved and confident, and tell a friend: "This is exactly what I needed."`;
+      default:
+        return `(Scene ${idx + 1}: describe the user’s experience here.)`;
+    }
   },
 
   /**
