@@ -19,15 +19,15 @@ Use these posts with the assets in `assets/screenshots/`.
 >
 > Built around the **RISE methodology** — Reveal, Inspire, Shape, Exam — it guides teams from raw user insight all the way to a validated concept, with an AI assistant that brainstorms, critiques, and researches alongside you.
 >
-> Why it matters:
-> ✅ Methodology-first, not template-first
-> ✅ AI embedded into every stage
-> ✅ One-page Project Panorama for easy stakeholder updates
+> Why it matters:  
+> ✅ Methodology-first, not template-first  
+> ✅ AI embedded into every stage  
+> ✅ One-page Project Panorama for easy stakeholder updates  
 > ✅ No signup, local-first storage
 >
 > Perfect for founders validating ideas, PMs running discovery, educators teaching design thinking, or consultants facilitating remote sprints.
 >
-> Try it free: https://davidma1973simu.github.io/eureka-lite-en/
+> Try it free: <https://davidma1973simu.github.io/eureka-lite-en/>
 >
 > #Innovation #ProductManagement #DesignThinking #Startup #AI #EurekaLite
 
@@ -45,7 +45,7 @@ Use these posts with the assets in `assets/screenshots/`.
 >
 > No signup. Runs in your browser.
 >
-> Try it: https://davidma1973simu.github.io/eureka-lite-en/
+> Try it: <https://davidma1973simu.github.io/eureka-lite-en/>
 >
 > #buildinpublic #productmanagement #innovation #AI
 
@@ -53,13 +53,13 @@ Use these posts with the assets in `assets/screenshots/`.
 
 > Founders & PMs: stop drowning in sticky notes.
 >
-> Eureka Lite gives you a structured RISE workflow + AI teammate to:
-> • Reveal real user pain
-> • Inspire better ideas
-> • Shape testable concepts
+> Eureka Lite gives you a structured RISE workflow + AI teammate to:  
+> • Reveal real user pain  
+> • Inspire better ideas  
+> • Shape testable concepts  
 > • Examine before you build
 >
-> Try it free 👉 https://davidma1973simu.github.io/eureka-lite-en/
+> Try it free 👉 <https://davidma1973simu.github.io/eureka-lite-en/>
 >
 > #Innovation #Startup #ProductDesign #AI
 
@@ -75,16 +75,16 @@ Use these posts with the assets in `assets/screenshots/`.
 >
 > Meet **Eureka Lite** — a free, browser-based innovation workspace that takes you from "we think we know the problem" to "we validated the concept" using the proven RISE method.
 >
-> 🔍 Reveal — understand users and pain points
-> 💡 Inspire — reframe problems and generate ideas
-> 🎯 Shape — build testable minimum concepts
+> 🔍 Reveal — understand users and pain points  
+> 💡 Inspire — reframe problems and generate ideas  
+> 🎯 Shape — build testable minimum concepts  
 > 📋 Exam — validate with real tests and scoring
 >
 > An AI assistant is built into every step to help you brainstorm, critique your thinking, and research facts. Plus, your work stays on your device — no signup required.
 >
 > Whether you're a founder, product manager, educator, or consultant, Eureka Lite makes innovation feel less chaotic and more doable.
 >
-> Try it now: https://davidma1973simu.github.io/eureka-lite-en/
+> Try it now: <https://davidma1973simu.github.io/eureka-lite-en/>
 >
 > #EurekaLite #Innovation #DesignThinking #ProductManagement #StartupTools #AI
 
@@ -98,7 +98,7 @@ Use these posts with the assets in `assets/screenshots/`.
 
 > From insight → validated innovation. 🚀
 >
-> Eureka Lite is your AI-powered innovation teammate.
+> Eureka Lite is your AI-powered innovation teammate.  
 > Built around RISE: Reveal. Inspire. Shape. Exam.
 >
 > Perfect for founders, product teams, educators, and consultants who want structure without the chaos.
@@ -124,3 +124,4 @@ Use this as a headline anywhere:
 Or:
 
 > **"Eureka Lite: the innovation workspace that gives you structure, an AI teammate, and a one-page story of your idea."**
+

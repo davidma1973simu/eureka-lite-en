@@ -277,19 +277,19 @@ class EurekaLite {
           <div class="category-list">
             <button class="category-item ${AppState.selectedCategory === 'product' ? 'selected' : ''}" data-category="product">
               <span class="category-icon">🛠️</span>
-              <span class="category-text">产品创新</span>
+              <span class="category-text">Product Innovation</span>
             </button>
             <button class="category-item ${AppState.selectedCategory === 'service' ? 'selected' : ''}" data-category="service">
               <span class="category-icon">🎨</span>
-              <span class="category-text">服务体验</span>
+              <span class="category-text">Service Experience</span>
             </button>
             <button class="category-item ${AppState.selectedCategory === 'problem' ? 'selected' : ''}" data-category="problem">
               <span class="category-icon">🔍</span>
-              <span class="category-text">复杂问题</span>
+              <span class="category-text">Complex Problem</span>
             </button>
             <button class="category-item ${AppState.selectedCategory === 'explore' ? 'selected' : ''}" data-category="explore">
               <span class="category-icon">💡</span>
-              <span class="category-text">探索验证</span>
+              <span class="category-text">Explore & Validate</span>
             </button>
             <button class="category-item ${AppState.selectedCategory === 'quick' ? 'selected' : ''}" data-category="quick">
               <span class="category-icon">⚡</span>
@@ -418,7 +418,7 @@ class EurekaLite {
       : `<div class="home-projects-empty">还没有项目，开始你的第一个 RISE 练习吧
           <div style="margin-top: var(--space-md); display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
             <button class="btn btn-primary" id="homeStartBtn">立即开始</button>
-            <button class="btn btn-secondary" id="homeExampleBtn">📋 加载示例项目</button>
+            <button class="btn btn-secondary" id="homeExampleBtn">📋 Load example project</button>
           </div>
         </div>`;
     return `
@@ -426,7 +426,7 @@ class EurekaLite {
         <div class="home-projects-head">
           <h2 class="home-projects-title">我的项目</h2>
           <div style="display:flex;gap:10px;align-items:center">
-            <button class="home-projects-more" id="homeExampleBtnTop" style="color:#fff;background:#E07A2F;border:1px solid #E07A2F;border-radius:20px;padding:4px 16px;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 2px 8px rgba(224,122,47,0.3)">📋 体验示例项目</button>
+            <button class="home-projects-more" id="homeExampleBtnTop" style="color:#fff;background:#E07A2F;border:1px solid #E07A2F;border-radius:20px;padding:4px 16px;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 2px 8px rgba(224,122,47,0.3)">📚 Try the example project</button>
             <button class="home-projects-more" id="homeProjectsMore">查看全部 ›</button>
           </div>
         </div>
@@ -667,38 +667,38 @@ class EurekaLite {
   showAIRecommendation() {
     // Encouraging quotes (≤15 chars)
     const encouragements = [
-      '你的创意改变世界！',
-      '创新从今天开始！',
-      '每个想法都有价值！',
-      '勇敢迈出第一步！',
-      '灵感就在你身边！',
-      '大胆去想去做！',
-      '今天会有新突破！',
-      '好创意值得被看见！'
+      'Your idea can change the world!',
+      'Innovation starts today!',
+      'Every idea has value!',
+      'Take the first brave step!',
+      'Inspiration is all around you!',
+      'Dare to think and do!',
+      'Today brings a new breakthrough!',
+      'Great ideas deserve to be seen!'
     ];
 
     // Design thinking tips (≤15 chars)
     const designTips = [
-      '从用户视角出发',
-      '多问几个为什么',
-      '观察用户的痛点',
-      '用原型快速验证',
-      '不要急于下结论',
-      '跨界寻找灵感',
-      '聚焦核心问题',
-      '小步快跑迭代',
-      '先发散再收敛',
-      '倾听用户故事'
+      'Start from the user’s view',
+      'Ask why a few more times',
+      'Observe the user’s pain points',
+      'Validate quickly with prototypes',
+      'Do not jump to conclusions',
+      'Find inspiration across fields',
+      'Focus on the core problem',
+      'Iterate in small steps',
+      'Diverge first, then converge',
+      'Listen to user stories'
     ];
 
     // Example ideas for inspiration
     const examples = [
-      { text: '设计一个能自动提醒喝水的智能杯子', category: 'product' },
-      { text: '为社区老人提供上门陪伴服务', category: 'service' },
-      { text: '解决学生课堂参与度低的问题', category: 'problem' },
-      { text: '验证游戏化学习是否能提升成绩', category: 'explore' },
-      { text: '为上班族设计一款午休颈枕', category: 'product' },
-      { text: '优化医院挂号排队等候体验', category: 'service' }
+      { text: 'Design a smart cup that auto-reminds you to drink water', category: 'product' },
+      { text: 'Offer home companion services for elderly community members', category: 'service' },
+      { text: 'Solve low classroom engagement among students', category: 'problem' },
+      { text: 'Test whether gamified learning improves grades', category: 'explore' },
+      { text: 'Design a lunch-break neck pillow for office workers', category: 'product' },
+      { text: 'Improve the hospital registration queuing experience', category: 'service' }
     ];
 
     const randomEncouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
@@ -710,7 +710,7 @@ class EurekaLite {
     modal.innerHTML = `
       <div class="modal" style="max-width: 420px;">
         <div class="modal-header">
-          <span class="modal-title">⚡ 给我的一天注入活力</span>
+          <span class="modal-title">⚡ Spark energy into my day</span>
           <button class="ai-panel-close" id="energyClose">✕</button>
         </div>
         <div class="modal-body">
@@ -726,16 +726,16 @@ class EurekaLite {
 
           <!-- Example -->
           <div style="margin-bottom: var(--space-md);">
-            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-sm);">参考示例：</div>
+            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-sm);">Reference example:</div>
             <div id="energyExample" style="padding: var(--space-md); background: rgba(224,122,47,0.08); border: 1px solid rgba(224,122,47,0.4); border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition-fast);" data-example="${randomExample.text}" data-category="${randomExample.category}">
               <div style="font-size: var(--font-size-sm); color: var(--text-primary); margin-bottom: var(--space-xs);">${randomExample.text}</div>
-              <div style="font-size: var(--font-size-xs); color: var(--reveal-primary);">点击填入输入框 ↓</div>
+              <div style="font-size: var(--font-size-xs); color: var(--reveal-primary);">Click to fill the input ↓</div>
             </div>
           </div>
 
           <!-- Start button -->
           <button class="btn btn-primary" id="startEnergyBtn" style="width: 100%; background: var(--reveal-primary);">
-            开始填写
+            Start writing
           </button>
         </div>
       </div>
@@ -789,50 +789,50 @@ class EurekaLite {
     const categoryConfig = {
       product: {
         icon: '🛠️',
-        name: '产品创新',
+        name: 'Product Innovation',
         color: '#E07A2F',
-        prompt: '你期望为什么人群提供什么样的产品功能？',
-        placeholder: '例如：我想为大学生设计一款智能水杯，能够提醒喝水并记录饮水量',
+        prompt: 'What product features do you want to offer, and for whom?',
+        placeholder: 'e.g. I want to design a smart water bottle for college students that reminds them to drink and logs intake',
         examples: [
-          '为上班族设计一款便携式颈枕，能够根据颈椎曲线自动调节支撑',
-          '为老年人设计一款大字版智能手机，具备一键紧急呼叫功能',
-          '为健身爱好者设计一款智能跑鞋，能够实时分析步态并提供改善建议'
+          'Design a portable neck pillow for office workers that auto-adjusts support to cervical curvature',
+          'Design a large-font smartphone for the elderly with one-tap emergency call',
+          'Design a smart running shoe for fitness lovers that analyzes gait in real time and suggests improvements'
         ]
       },
       service: {
         icon: '🎨',
-        name: '服务体验',
+        name: 'Service Experience',
         color: '#7F77DD',
-        prompt: '你期望为什么人群提供什么样的服务体验？',
-        placeholder: '例如：我想为社区居民提供一种便捷的快递代收服务，让上班族不再为取快递而烦恼',
+        prompt: 'What service experience do you want to offer, and for whom?',
+        placeholder: 'e.g. I want to offer residents a convenient parcel-collection service so office workers stop worrying about pickup',
         examples: [
-          '为新手父母提供24小时在线育儿咨询服务，解决育儿焦虑',
-          '为独居老人提供定期上门陪伴和健康检查服务',
-          '为职场新人提供一对一的职业规划指导和简历优化服务'
+          'Offer 24/7 online parenting advice for new parents, easing parenting anxiety',
+          'Offer regular home companionship and health checks for seniors living alone',
+          'Offer one-on-one career planning and resume help for workplace newcomers'
         ]
       },
       problem: {
         icon: '🔍',
-        name: '复杂问题',
+        name: 'Complex Problem',
         color: '#0F6E56',
-        prompt: '你遇到了什么样的复杂问题？请描述问题的背景和现状。',
-        placeholder: '例如：我们公司在处理客户投诉时效率很低，需要优化内部协作流程',
+        prompt: 'What complex problem are you facing? Describe its background and current state.',
+        placeholder: 'e.g. Our company handles customer complaints inefficiently and needs to optimize internal collaboration',
         examples: [
-          '企业内部会议效率低下，经常超时且缺乏有效决策',
-          '学生课堂参与度不高，传统教学方式难以激发学习兴趣',
-          '社区垃圾分类执行困难，居民参与度低且分类不准确'
+          'Internal meetings are inefficient, often run over time and lack clear decisions',
+          'Students show low class engagement; traditional teaching fails to spark interest',
+          'Community waste sorting is hard to enforce; residents engage little and sort inaccurately'
         ]
       },
       explore: {
         icon: '💡',
-        name: '探索验证',
+        name: 'Explore & Validate',
         color: '#64748B',
-        prompt: '你想探索验证什么样的想法或假设？',
-        placeholder: '例如：我想验证一个假设——如果能够提前预知交通拥堵，人们的出行方式会不会改变',
+        prompt: 'What idea or hypothesis do you want to explore and validate?',
+        placeholder: 'e.g. I want to test this hypothesis: if traffic jams were predictable in advance, would people’s travel habits change',
         examples: [
-          '验证"游戏化学习"是否能提高学生的数学成绩',
-          '探索远程办公是否能提升团队创造力',
-          '验证个性化推荐是否能提升用户购买转化率'
+          'Test whether "gamified learning" improves students’ math scores',
+          'Explore whether remote work boosts team creativity',
+          'Test whether personalized recommendations lift purchase conversion'
         ]
       }
     };
@@ -854,11 +854,11 @@ class EurekaLite {
               ${config.prompt}
             </div>
             <div style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-md);">
-              描述你的想法，AI 将帮你优化为专业表述
+              Describe your idea; AI will help polish it into a professional statement
             </div>
           </div>
           <div style="margin-bottom: var(--space-md);">
-            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-sm);">参考示例：</div>
+            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-sm);">Reference example:</div>
             ${config.examples.map(ex => `
               <div class="category-example" style="padding: var(--space-sm); background: ${config.color}12; border: 1px solid ${config.color}55; border-radius: var(--radius-sm); margin-bottom: var(--space-xs); font-size: var(--font-size-sm); color: var(--text-primary); cursor: pointer; transition: all var(--transition-fast);" data-example="${ex}">
                 ${ex}
@@ -866,7 +866,7 @@ class EurekaLite {
             `).join('')}
           </div>
           <button class="btn btn-primary" id="catModalStart" style="width: 100%; background: ${config.color};">
-            开始填写
+            Start writing
           </button>
         </div>
       </div>
@@ -1068,151 +1068,146 @@ class EurekaLite {
    * 【R6】加载示例项目：基于 MOMOS 完整四阶段数据，供新手照学
    */
   loadExampleProject() {
-    // 去重：如果已存在示例项目（通过 isExample 标记，或标题以"示例："开头），直接打开不再重复创建
+    // Dedup: if an example project already exists (flagged isExample, or title starts with "Example:"), open it instead of recreating
     const all = window.EurekaStorage.getProjects();
-    const existing = all.find(p => p.isExample) || all.find(p => (p.title || '').startsWith('示例：'));
+    const existing = all.find(p => p.isExample) || all.find(p => (p.title || '').startsWith('Example:'));
     if (existing) {
-      // 如果老示例没 isExample 标记，升级它
       if (!existing.isExample) {
         window.EurekaStorage.updateProject(existing.id, { isExample: true });
         existing.isExample = true;
       }
-      // 兼容旧示例：将 HMW 维度键标准化为 4 维模型，
-      // 否则 Inspire 的 HMW 屏渲染会崩溃，导致无法从 Reveal 跳转到 Inspire
       this.normalizeExampleHmw(existing.id);
       AppState.currentProjectId = existing.id;
-      this.showToast('已为您打开示例项目（避免重复创建）');
+      this.showToast('Example project opened (not recreated to avoid duplicates)');
       this.showPanorama(existing);
       return;
     }
 
-    const sceneContent = `【目标用户】25-35岁职场知识工作者（产品经理/设计师/自由职业者/管理者）
-【场景描述】每天在工作中需要处理大量碎片信息（会议纪要、灵感想法、待办事项、项目反馈等），这些信息散布在微信、飞书、邮件、白板、备忘录等多个工具中。用户经常"记得有过这个想法/信息，但找不到了"，导致重复讨论、决策遗漏、思路断层。`;
+    const sceneContent = `Target user: 25-35 knowledge workers (PMs / designers / freelancers / managers)\nScenario: Every workday they handle lots of fragmented info (meeting notes, ideas, todos, project feedback) scattered across WeChat, Feishu, email, whiteboards and memos. They often "remember having an idea or some info, but cannot find it", causing repeated discussions, missed decisions and broken threads.`;
 
     const journeyCards = [
-      { stage: '晨会', challenge: '讨论时想起一个相关数据/结论，但找不到来源', think: '我记得看过，但……在哪来着', feel: '尴尬 + 焦虑', do: '先跳过去，会后翻遍各个工具找', discovery: '信息的跨工具分散是最大的生产力杀手', isKeyFinding: true },
-      { stage: '灵感时刻', challenge: '突然有一个好想法，但没法快速记下来', think: '先记在微信上/给自己发个消息', feel: '担心流失', do: '随手记在随便一个地方', discovery: '记录越随意，找回越困难', isKeyFinding: true },
-      { stage: '项目复盘', challenge: '需要回顾项目关键决策和讨论过程', think: '当时大家的讨论记录去哪了', feel: '无力感', do: '翻遍各个聊天记录和文档', discovery: '信息需要按主题/项目自动归档，而非按工具', isKeyFinding: true },
-      { stage: '协同时', challenge: '同事提到一个之前讨论过的方案，但自己忘了细节', think: '我们当时为什么选A不选B来着', feel: '不确定', do: '再讨论一次，浪费团队时间', discovery: '决策背后的推理过程比结论更有价值', isKeyFinding: false },
-      { stage: '个人复盘', challenge: '每周回顾自己做了哪些输出、有什么成长', think: '我这一周到底完成了什么', feel: '模糊', do: '翻日历/项目管理的多个入口', discovery: '个人知识管理需要"自动聚合"而非"手动整理"', isKeyFinding: true }
+      { stage: 'Morning standup', challenge: 'Recalls a related data point or conclusion during discussion but cannot find the source', think: 'I think I saw it, but... where was it?', feel: 'Awkward + anxious', do: 'Skip it, then dig through every tool after the meeting', discovery: 'Cross-tool fragmentation is the biggest productivity killer', isKeyFinding: true },
+      { stage: 'Eureka moment', challenge: 'A great idea hits, but there is no quick way to capture it', think: 'Jot it on WeChat / send myself a message', feel: 'Afraid it will slip away', do: 'Scribble it somewhere random', discovery: 'The more casual the capture, the harder to retrieve', isKeyFinding: true },
+      { stage: 'Project retro', challenge: 'Needs to review key decisions and discussions', think: 'Where did everyone’s discussion notes go?', feel: 'Helpless', do: 'Scour every chat and doc', discovery: 'Info should auto-archive by topic/project, not by tool', isKeyFinding: true },
+      { stage: 'Collaborating', challenge: 'A colleague mentions a previously discussed plan, but you forgot the details', think: 'Why did we pick A over B again?', feel: 'Unsure', do: 'Re-discuss, wasting the team’s time', discovery: 'The reasoning behind a decision is more valuable than the conclusion', isKeyFinding: false },
+      { stage: 'Personal retro', challenge: 'Weekly review of what you produced and how you grew', think: 'What did I actually accomplish this week?', feel: 'Vague', do: 'Flip through calendar / multiple PM entries', discovery: 'Personal knowledge needs "auto-aggregation", not "manual organizing"', isKeyFinding: true }
     ];
 
     const project = window.EurekaStorage.addProject({
-      title: '示例：MOMOS — 智能碎片信息聚合与知识管理',
+      title: 'Example: MOMOS — Smart fragmented-info aggregation & knowledge management',
       category: 'product',
-      description: '一个帮知识工作者自动聚合散落各处的碎片信息，按主题/项目智能归档的知识管理工具（完整四阶段示例，仅供查看学习，不可修改）',
+      description: 'A knowledge-management tool that auto-aggregates scattered fragmented info for knowledge workers and archives it by topic/project (full 4-stage example; view/learn only, not editable)',
       stage: 'reveal',
       currentScreen: 1,
       isExample: true
     });
     const id = project.id;
 
-    // —— Reveal 阶段 ——
+    // —— Reveal stage ——
     window.EurekaStorage.updateCard(id, 'scene', { content: sceneContent });
     window.EurekaStorage.updateCard(id, 'journey', { content: JSON.stringify(journeyCards) });
     window.EurekaStorage.updateCard(id, 'projectBriefing', { content: JSON.stringify({
-      targetUser: '25-35岁职场知识工作者（产品经理/设计师/管理者），使用多个工具处理碎片信息',
-      scene: '信息散布在微信/飞书/邮件/备忘录/白板等多个工具，导致查找困难、重复讨论、决策遗漏',
-      insight: '用户的痛点不是"信息太少"，而是"信息太多太散"——真正缺失的不是记录工具，而是自动聚合与主题归档'
+      targetUser: '25-35 knowledge workers (PMs / designers / managers) using multiple tools for fragmented info',
+      scene: 'Info is scattered across WeChat / Feishu / email / memos / whiteboards, causing hard retrieval, repeated discussion and missed decisions',
+      insight: 'The user’s pain is not "too little info" but "too much and too scattered" — what is missing is not a capture tool but auto-aggregation and topic-based archiving'
     }) });
     window.EurekaStorage.updateCard(id, 'businessGoal', { content: JSON.stringify({
-      goal: '做一款能自动跨工具聚合碎片信息、按主题/项目智能归档、且支持快速回顾与检索的知识管理工具',
-      consensus: '知识工作者为"节省翻找时间"有明显的付费意愿，Notion/飞书文档的普及已教育了市场'
+      goal: 'Build a tool that auto-aggregates fragmented info across tools, archives it intelligently by topic/project, and supports fast review and search',
+      consensus: 'Knowledge workers clearly pay to "save search time"; Notion/Feishu Docs have already educated the market'
     }) });
-    // 注意：findInsight 不在这里预置数据，R3 会严格从 R2 旅程地图的「关键发现」自动生成，
-    // 避免示例项目出现与 R2 不一致的多余 FIND 标签页。
+    // Note: findInsight is not pre-filled here; R3 strictly generates FIND tabs from R2 journey "key findings",
+    // avoiding extra FIND tabs in the example that are inconsistent with R2.
 
-    // —— Inspire 阶段 ——
+    // —— Inspire stage ——
     window.EurekaStorage.updateCard(id, 'hmw', { content: JSON.stringify({
       dimensions: {
         amplify: [
-          { id: 'hmw1', text: '我们如何让信息的记录与归档变得无感，让知识自然沉淀？' },
-          { id: 'hmw3', text: '我们如何在用户需要某条信息时，让它以零成本的方式自动出现？' }
+          { id: 'hmw1', text: 'How might we make capturing and archiving info feel effortless, so knowledge settles naturally?' },
+          { id: 'hmw3', text: 'How might we make a piece of info appear at zero cost exactly when the user needs it?' }
         ],
         remove: [
-          { id: 'hmw2', text: '我们如何让知识工作者不再"记得有过，但找不到"？' }
+          { id: 'hmw2', text: 'How might we free knowledge workers from "I remember having it, but cannot find it"?' }
         ],
         flip: [
-          { id: 'hmw4', text: '我们如何在不自研底层存储的情况下，通过集成已有工具实现跨平台信息聚合？' }
+          { id: 'hmw4', text: 'How might we integrate existing tools (without building our own storage) to aggregate cross-platform info?' }
         ],
         diverge: [
-          { id: 'hmw5', text: '如果信息能像"第二大脑"一样主动推送相关上下文，工作会变成什么样？' }
+          { id: 'hmw5', text: 'If info could proactively push relevant context like a "second brain", what would work become?' }
         ]
       },
       selectedIds: ['hmw2', 'hmw3']
     }) });
     window.EurekaStorage.updateCard(id, 'ideas', { content: JSON.stringify([
-      { id: 'idea1', title: 'MOMOS 信息中台：浏览器插件+微信bot+飞书bot，一键转发自动归档', description: '通过插件和聊天机器人在各端捕获信息，AI 自动提取主题标签并归档，无需打开 App' },
-      { id: 'idea2', title: '智能周报回顾：每周自动生成"信息地图"，展示重要主题和关联', description: '基于本周捕获信息，用 AI 生成主题脉络图、关键决策点、待办进展摘要' },
-      { id: 'idea3', title: '主题卡片搜索：用自然语言即可搜到之前记过的任何内容', description: '支持模糊语义搜索，"上次提到的那个关于用户增长的方案"即可搜到，无需精确关键词' }
+      { id: 'idea1', title: 'MOMOS info hub: browser extension + WeChat bot + Feishu bot, one-tap forward to auto-archive', description: 'Capture info across clients via extensions and chatbots; AI auto-tags topics and archives, no need to open the App' },
+      { id: 'idea2', title: 'Smart weekly recap: auto-generate an "info map" each week showing key topics and links', description: 'From this week’s captured info, AI builds a topic map, key decision points and a todo-progress summary' },
+      { id: 'idea3', title: 'Topic-card search: find anything previously saved with natural language', description: 'Supports fuzzy semantic search; "that plan about user growth we mentioned" finds it without exact keywords' }
     ]) });
 
-    // —— Shape 阶段 ——
+    // —— Shape stage ——
     window.EurekaStorage.updateCard(id, 'shapeSummary', { content: JSON.stringify({
       concept: {
-        oneLiner: 'MOMOS：一个让知识工作者不再"找东西"的智能信息聚合器——你只管记录，我们管整理与检索',
+        oneLiner: 'MOMOS: a smart info aggregator that lets knowledge workers stop "looking for things" — you just capture, we organize and retrieve',
         features: [
-          '浏览器一键转发插件（Chrome/Edge）',
-          '微信/飞书 Bot 转发归档',
-          'AI 自动提取主题标签与摘要',
-          '自然语言语义搜索',
-          '每周"信息地图"智能回顾',
-          '主题卡片式浏览与关联推荐'
+          'One-tap browser forward extension (Chrome/Edge)',
+          'WeChat / Feishu bot forward & archive',
+          'AI auto topic-tagging and summarization',
+          'Natural-language semantic search',
+          'Weekly "info map" smart recap',
+          'Topic-card browsing with related recommendations'
         ],
-        characteristics: ['无感记录（无需打开 App）', 'AI 自动整理（零手动）', '跨工具聚合（不做新工具，连接现有工具）', '隐私优先（本地+可选云同步）'],
-        boundaries: ['不做聊天工具（不替代微信/飞书）', '不做文档编辑器（不替代 Notion/飞书文档）', '首版仅支持文本类信息转发，不支持文件'] ,
-        feasibility: '浏览器侧栏 + Bot 方案可在不开发新 App 的情况下快速验证MVP'
+        characteristics: ['Effortless capture (no App to open)', 'AI auto-organizing (zero manual work)', 'Cross-tool aggregation (connects existing tools, builds none)', 'Privacy-first (local + optional cloud sync)'],
+        boundaries: ['Not a chat tool (does not replace WeChat/Feishu)', 'Not a doc editor (does not replace Notion/Feishu Docs)', 'First version supports text forwarding only, no files'],
+        feasibility: 'Browser sidebar + bot approach can validate the MVP quickly without building a new App'
       },
       storyboard: [
-        { title: '安装插件', desc: '用户安装 MOMOS 浏览器插件，授权连接微信 Bot 和飞书 Bot' },
-        { title: '日常捕获', desc: '开会时看到一个有价值的观点，选中文字按快捷键 → 自动发送到 MOMOS，AI 打标签归档' },
-        { title: '微信转发', desc: '在微信看到一篇文章，转发给 MOMOS Bot → 自动提取摘要并归类到对应主题' },
-        { title: '回顾查找', desc: '项目复盘时，在 MOMOS 搜索"用户分层 决策依据" → 瞬间找到 3 个月前讨论的截图和结论' },
-        { title: '信息地图', desc: '周日收到智能回顾推送，本周捕获 42 条信息，自动归纳为 5 个主题，附带关联图谱' },
-        { title: '决策回溯', desc: '每次项目决策时，MOMOS 自动推送相关历史信息，帮助做更全面的判断' }
+        { title: 'Install extension', desc: 'User installs the MOMOS browser extension and authorizes the WeChat bot and Feishu bot' },
+        { title: 'Daily capture', desc: 'Sees a valuable point in a meeting, selects text and hits a shortcut -> auto-sent to MOMOS, AI tags and archives' },
+        { title: 'WeChat forward', desc: 'Forwards an article in WeChat to the MOMOS bot -> auto summary and classification into the right topic' },
+        { title: 'Review & find', desc: 'During a project retro, searches MOMOS for "user segmentation decision basis" -> instantly finds a screenshot and conclusion from 3 months ago' },
+        { title: 'Info map', desc: 'Sunday gets a smart recap push: 42 items captured this week, auto-grouped into 5 topics with a relation graph' },
+        { title: 'Decision trace', desc: 'Each project decision auto-pushes related history, helping make more complete judgments' }
       ]
     }) });
 
-    // —— Exam 阶段 ——
+    // —— Exam stage ——
     window.EurekaStorage.updateCard(id, 'examSummary', { content: JSON.stringify({
       testPlan: {
-        purpose: '验证"一键转发自动归档"是否能真正减少信息查找耗时',
-        duration: '14天',
-        participants: '8人（产品经理3人、设计师2人、管理者3人）',
-        method: '前7天不使用 MOMOS，记录每日"找信息"耗时；后7天使用 MOMOS，对比变化'
+        purpose: 'Validate whether "one-tap forward + auto-archive" truly cuts time spent finding info',
+        duration: '14 days',
+        participants: '8 people (3 PMs, 2 designers, 3 managers)',
+        method: 'First 7 days without MOMOS, log daily "info-finding" time; next 7 days with MOMOS, compare the change'
       },
       testReport: {
-        effectiveValue: '7/8 测试者日均"找信息"耗时从 23 分钟降至 4 分钟，降低 83%；"信息安全感"评分从 5.2 增至 8.7',
-        invalidValue: '1 人认为 AI 标签不够精准，部分内容归类到错误主题，需要手动调整',
-        newProblems: '浏览器插件在部分企业内网环境下无法安装；Bot 转发偶尔有延迟',
-        newOpportunities: '有 2 名测试者提出"希望能共享团队信息地图"，表明团队协作版本有需求空间'
+        effectiveValue: '7/8 testers cut daily "info-finding" time from 23 to 4 minutes (-83%); "info security" score rose from 5.2 to 8.7',
+        invalidValue: '1 tester felt AI tags were imprecise; some items landed in wrong topics and needed manual fix',
+        newProblems: 'The browser extension cannot install in some corporate intranets; bot forwarding occasionally lags',
+        newOpportunities: '2 testers asked to "share a team info map", showing demand for a team version'
       },
       elevator: {
-        pitch: 'MOMOS 让知识工作者在 4 秒内找到任何之前记过的信息——不用翻聊天记录、不用找文档、不用回忆在哪存的。内测显示日均"找信息"耗时从 23 分钟降至 4 分钟。',
+        pitch: 'MOMOS lets knowledge workers find any previously saved info in 4 seconds — no scrolling chats, no hunting docs, no recalling where it was stored. Internal test cut daily "info-finding" time from 23 to 4 minutes.',
         iteration: [
-          { category: '产品', actions: ['打磨 AI 标签准确率', '支持企业内网部署插件', '增加团队信息地图功能'] },
-          { category: '增长', actions: ['产品经理/设计师社群内测推广', '发布"信息找人"效率对比工具', '与飞书/Notion 社区合作推广'] },
-          { category: '商业', actions: ['个人版免费（基础功能） + Pro 智能分析订阅', '团队版按席位收费', '企业版支持私有化部署'] }
+          { category: 'Product', actions: ['Improve AI tag accuracy', 'Support intranet-deployable extension', 'Add team info-map feature'] },
+          { category: 'Growth', actions: ['Beta promote in PM/designer communities', 'Ship an "info-finds-you" efficiency comparer', 'Partner with Feishu/Notion communities'] },
+          { category: 'Business', actions: ['Free personal tier (core features) + Pro smart-analysis subscription', 'Team tier per seat', 'Enterprise private deployment'] }
         ]
       }
     }) });
     window.EurekaStorage.updateCard(id, 'examFourDimEval', { content: JSON.stringify({
       scores: { userValue: 5, businessValue: 4, feasibility: 4, innovation: 4 },
       reasons: {
-        userValue: '直击知识工作者的高频痛点，"找东西"时间减少 83% 的体验提升非常显著',
-        businessValue: '个人版免费引流 + Pro/团队版收费模式清晰；企业私有化部署有溢价空间',
-        feasibility: '浏览器插件+Bot MVP 可在 4 周内完成，无需开发新 App',
-        innovation: '"无感记录 + AI 自动归档 + 多维回顾"三合一的方案差异化明显'
+        userValue: 'Hits knowledge workers’ frequent pain; -83% "finding time" is a very noticeable gain',
+        businessValue: 'Free personal tier drives acquisition; Pro/team tiers are clear; enterprise private deployment has premium room',
+        feasibility: 'Browser extension + bot MVP can ship in 4 weeks without a new App',
+        innovation: 'The trio of "effortless capture + AI auto-archive + multi-dimensional recap" is clearly differentiated'
       }
     }) });
 
-    // 取回最新项目（含全部卡片），直接展示完整全景图供"一键体验"
+    // Reload the latest project (with all cards) and show the full panorama for one-tap experience
     AppState.currentProjectId = id;
     const saved = window.EurekaStorage.getProject(id);
-    this.showToast('已加载 MOMOS 示例项目，完整四阶段数据就位，可直接查看全景图～');
+    this.showToast('MOMOS example project loaded with full 4-stage data ready; view the panorama directly ~');
     this.showPanorama(saved);
   }
-
   /**
    * 兼容旧示例项目：将 HMW 维度键归一到标准 4 维（amplify/remove/flip/diverge）。
    * 旧示例曾使用 user/scenario/ecosystem 等键，会导致 Inspire 的 HMW 屏渲染崩溃，
@@ -1268,14 +1263,14 @@ class EurekaLite {
     modal.innerHTML = `
       <div class="modal" style="max-width: 460px;">
         <div class="modal-header">
-          <span class="modal-title">🧩 智能梳理你的输入（本地）</span>
+          <span class="modal-title">🧩 Smart structuring of your input (local)</span>
           <button class="ai-panel-close" id="analysisClose">✕</button>
         </div>
         <div class="modal-body">
 
           <!-- Step 1: Understanding -->
           <div style="margin-bottom: var(--space-md);">
-            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-xs);">📝 我理解你想要：</div>
+            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-xs);">📝 I understand you want:</div>
             <div style="padding: var(--space-sm) var(--space-md); background: var(--bg-hover); border-radius: var(--radius-md); font-size: var(--font-size-sm); color: var(--text-primary); line-height: 1.6;">
               ${this.escapeHtml(originalInput)}
             </div>
@@ -1283,7 +1278,7 @@ class EurekaLite {
 
           <!-- Step 2: Classification -->
           <div style="margin-bottom: var(--space-md);">
-            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-xs);">🏷️ 我把它归类为：</div>
+            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-xs);">🏷️ I classified it as:</div>
             <div style="display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-sm) var(--space-md); background: ${config.color}15; border: 1px solid ${config.color}40; border-radius: var(--radius-md);">
               <span style="font-size: 20px;">${config.icon}</span>
               <span style="font-weight: 600; color: ${config.color};">${categoryName}</span>
@@ -1292,17 +1287,17 @@ class EurekaLite {
 
           <!-- Step 3: Rewritten -->
           <div style="margin-bottom: var(--space-lg);">
-            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-xs);">✨ 我帮你优化为专业表述：</div>
+            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-xs);">✨ I polished it into a professional statement:</div>
             <div id="rewrittenText" style="padding: var(--space-md); background: rgba(224, 122, 47, 0.08); border: 1px solid rgba(224, 122, 47, 0.25); border-radius: var(--radius-md); font-size: var(--font-size-base); color: var(--text-primary); line-height: 1.6; min-height: 48px;">
               ${this.escapeHtml(result.rewritten)}
             </div>
-            <button class="btn btn-ghost btn-sm" id="editRewrittenBtn" style="margin-top: var(--space-xs); font-size: 12px;">✏️ 编辑这段表述</button>
+            <button class="btn btn-ghost btn-sm" id="editRewrittenBtn" style="margin-top: var(--space-xs); font-size: 12px;">✏️ Edit this statement</button>
           </div>
 
           <!-- Action Buttons -->
           <div style="display: flex; gap: var(--space-sm);">
-            <button class="btn btn-secondary" id="cancelAnalysis" style="flex: 1;">修改输入</button>
-            <button class="btn btn-primary" id="confirmAnalysis" style="flex: 1; background: ${config.color};">确认使用</button>
+            <button class="btn btn-secondary" id="cancelAnalysis" style="flex: 1;">Edit input</button>
+            <button class="btn btn-primary" id="confirmAnalysis" style="flex: 1; background: ${config.color};">Confirm & use</button>
           </div>
         </div>
       </div>
@@ -1487,7 +1482,7 @@ class EurekaLite {
 
       case 'service':
         if (target && feature) {
-          return `我要为${target}提供一种${feature}的服务体验`;
+          return `我要为${target}提供一种${feature}的Service Experience`;
         } else if (target) {
           return `我要为${target}提供${action}`;
         }
@@ -1501,9 +1496,9 @@ class EurekaLite {
 
       case 'explore':
         if (target) {
-          return `我要探索验证${target}是否${action}`;
+          return `我要Explore & Validate${target}是否${action}`;
         }
-        return `我要探索验证：${action}`;
+        return `我要Explore & Validate：${action}`;
 
       default:
         return text;
@@ -1525,10 +1520,10 @@ class EurekaLite {
       return names[category] || category;
     }
     const names = {
-      product: '产品创新',
-      service: '服务体验',
-      problem: '复杂问题',
-      explore: '探索验证',
+      product: 'Product Innovation',
+      service: 'Service Experience',
+      problem: 'Complex Problem',
+      explore: 'Explore & Validate',
       quick: '快速开始'
     };
     return names[category] || category;
@@ -1814,7 +1809,7 @@ class EurekaLite {
         <div class="pro-unlock-hero">🎉</div>
         <h2 class="pro-unlock-title">恭喜解锁 Eureka Pro！</h2>
         <p class="pro-unlock-body">你已完成 2 个完整的 RISE 创新项目，累计获得 <b>${points}</b> 积分。</p>
-        <p class="pro-unlock-body">感谢你持续的参与和实践——从模糊想法到可验证方案，每一步都在沉淀真正的产品创新能力。</p>
+        <p class="pro-unlock-body">感谢你持续的参与和实践——从模糊想法到可验证方案，每一步都在沉淀真正的Product Innovation能力。</p>
         <div class="pro-unlock-actions">
           <button class="btn btn-secondary" id="proUnlockClose">稍后再说</button>
           <a class="btn btn-primary" id="proUnlockGo" href="${EUREKA_PRO_URL}" target="_blank" rel="noopener" style="background:#E07A2F !important;color:#fff !important;border:none;box-shadow:0 2px 8px rgba(224,122,47,0.35)">🚀 进入 Eureka Pro</a>
@@ -2077,11 +2072,11 @@ class EurekaLite {
             project
           );
           if (prefill?.content) {
-            // 有原文则显示 diff 对比，无原文则直接填入预览
+            // 有Original则显示 diff 对比，无Original则直接填入预览
             if (userInput && userInput.trim().length >= 5) {
               this.showPrefillDiff(userInput, prefill);
             } else {
-              this.showPrefillDiff('（空白，AI 基于项目上下文生成初稿）', prefill);
+              this.showPrefillDiff('(blank, AI generated a draft from the project context)', prefill);
             }
           } else {
             this.showToast('暂无生成建议，请补充更多项目信息');
@@ -2359,22 +2354,22 @@ class EurekaLite {
     modal.innerHTML = `
       <div class="modal" style="max-width: 500px;">
         <div class="modal-header">
-          <span class="modal-title">✨ 规范化改写预览</span>
+          <span class="modal-title">✨ Normalization rewrite preview</span>
           <button class="ai-panel-close">✕</button>
         </div>
         <div class="modal-body">
           <div style="margin-bottom: var(--space-md);">
-            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-xs);">原文</div>
+            <div style="font-size: var(--font-size-xs); color: var(--text-muted); margin-bottom: var(--space-xs);">Original</div>
             <div style="padding: var(--space-sm); background: var(--bg-hover); border-radius: var(--radius-sm); font-size: var(--font-size-sm); color: var(--text-secondary);">${this.escapeHtml(original)}</div>
           </div>
           <div style="text-align: center; margin: var(--space-sm) 0; color: var(--text-muted);">↓</div>
           <div style="margin-bottom: var(--space-md);">
-            <div style="font-size: var(--font-size-xs); color: var(--reveal-primary); margin-bottom: var(--space-xs);">${prefill.title || '改写后'}</div>
+            <div style="font-size: var(--font-size-xs); color: var(--reveal-primary); margin-bottom: var(--space-xs);">${prefill.title || 'After rewrite'}</div>
             <div style="padding: var(--space-md); background: rgba(231, 76, 60, 0.05); border: 1px solid rgba(231, 76, 60, 0.2); border-radius: var(--radius-md); font-size: var(--font-size-sm); white-space: pre-wrap;">${this.escapeHtml(prefill.content)}</div>
           </div>
           <div style="display: flex; gap: var(--space-sm);">
-            <button class="btn btn-secondary" id="prefillCancel" style="flex: 1;">保持原文</button>
-            <button class="btn btn-primary" id="prefillApply" style="flex: 1; background: var(--reveal-primary);">应用改写</button>
+            <button class="btn btn-secondary" id="prefillCancel" style="flex: 1;">Keep original</button>
+            <button class="btn btn-primary" id="prefillApply" style="flex: 1; background: var(--reveal-primary);">Apply rewrite</button>
           </div>
         </div>
       </div>
@@ -2425,13 +2420,13 @@ class EurekaLite {
     modal.innerHTML = `
       <div class="modal">
         <div class="modal-header">
-          <span class="modal-title">💡 填写建议</span>
+          <span class="modal-title">💡 Writing suggestions</span>
           <button class="ai-panel-close">✕</button>
         </div>
         <div class="modal-body">
           ${userInput && userInput.length > 10 ? `
             <div style="margin-bottom: var(--space-md); padding: var(--space-sm); background: var(--bg-hover); border-radius: var(--radius-sm); font-size: var(--font-size-xs); color: var(--text-muted);">
-              基于您的内容：
+              Based on your content:
               <div style="color: var(--text-secondary); margin-top: var(--space-xs);">"${userInput.substring(0, 50)}${userInput.length > 50 ? '...' : ''}"</div>
             </div>
           ` : ''}
@@ -2441,7 +2436,7 @@ class EurekaLite {
           ${hint ? `<p style="margin-top: var(--space-md); color: var(--text-secondary); font-size: var(--font-size-sm);">${hint}</p>` : ''}
           <div style="margin-top: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--border-color);">
             <button class="btn btn-secondary btn-sm" id="prefillBtn" style="width: 100%;">
-              ✨ 规范化改写
+              ✨ Normalize & rewrite
             </button>
           </div>
         </div>
@@ -2468,7 +2463,7 @@ class EurekaLite {
         <span style="font-size: var(--font-size-xs); padding: 2px 8px; background: var(--reveal-primary); color: white; border-radius: var(--radius-sm);">${ex.type}</span>
         <h4 style="margin: var(--space-sm) 0; font-size: var(--font-size-base);">${ex.title}</h4>
         <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-bottom: var(--space-xs);">${ex.description}</p>
-        <p style="font-size: var(--font-size-xs); color: var(--text-muted);">来源：${ex.source}</p>
+        <p style="font-size: var(--font-size-xs); color: var(--text-muted);">Source:${ex.source}</p>
       </div>
     `).join('');
 
@@ -2477,13 +2472,13 @@ class EurekaLite {
     modal.innerHTML = `
       <div class="modal" style="max-height: 70vh; overflow-y: auto;">
         <div class="modal-header">
-          <span class="modal-title">📚 参考案例</span>
+          <span class="modal-title">📚 Reference cases</span>
           <button class="ai-panel-close">✕</button>
         </div>
         <div class="modal-body">
           ${examplesHtml}
           <p style="margin-top: var(--space-md); color: var(--text-secondary); font-size: var(--font-size-xs);">
-            仅供参考，启发思路
+            For reference only, to spark ideas
           </p>
         </div>
       </div>
@@ -2899,15 +2894,15 @@ class EurekaLite {
       reveal: [
         {
           title: 'R1 描述你的场景',
-          subtitle: '描述一个具体的用户场景或挑战',
+          subtitle: 'Describe a concrete user scenario或挑战',
           dialogue: true,
-          hint: '越具体越好，可以描述一个真实发生过的场景'
+          hint: 'The more specific, the better，可以描述一个真实发生过的场景'
         },
         {
           title: 'R2 探索用户旅程',
           subtitle: '从用户视角走一遍完整流程',
           journey: true,
-          hint: '标注关键触点和可能的体验断裂点'
+          hint: 'Mark the key touchpoints和可能的体验断裂点'
         },
         {
           title: 'R3 洞察用户痛点',
@@ -3124,7 +3119,7 @@ class EurekaLite {
               <label class="input-label">${I18N.t('r1.targetUserLabel', '👤 目标用户是谁？')}</label>
               <input type="text" class="input" id="targetUserInput" placeholder="${I18N.t('r1.targetUserPh', '例如：25-35岁的上班族、大学生、新手妈妈...')}" />
               <button class="ai-prefill-btn" id="aiPrefillTargetUser" data-field="targetUser">
-                <span>${I18N.t('ai.quick.prefill', '🧩 智能预填（本地）')}</span>
+                <span>${I18N.t('ai.quick.prefill', '🧩 智能预填(local)')}</span>
               </button>
             </div>
 
@@ -3132,7 +3127,7 @@ class EurekaLite {
               <label class="input-label">${I18N.t('r1.sceneLabel', '📍 在什么场景下使用？')}</label>
               <textarea class="input textarea" id="sceneDescInput" placeholder="${I18N.t('r1.scenePh', '例如：在通勤路上，用户经常因为忘记带水杯而口渴...')}" rows="3"></textarea>
               <button class="ai-prefill-btn" id="aiPrefillSceneDesc" data-field="sceneDesc">
-                <span>${I18N.t('ai.quick.prefill', '🧩 智能预填（本地）')}</span>
+                <span>${I18N.t('ai.quick.prefill', '🧩 智能预填(local)')}</span>
               </button>
             </div>
           </div>
@@ -3982,7 +3977,7 @@ class EurekaLite {
         ">${item.type}</div>
         <h4 class="nco-card-title">${item.title}</h4>
         <p class="nco-card-desc">${item.description}</p>
-        <div class="nco-card-source">来源：${item.source}</div>
+        <div class="nco-card-source">Source:${item.source}</div>
       </div>
     `).join('');
   }
@@ -4166,7 +4161,7 @@ class EurekaLite {
         <span class="insp-card-type" style="background:${color}">${esc(card.type)}</span>
         <h4 class="insp-card-title">${esc(card.title)}</h4>
         <p class="insp-card-desc">${esc(card.description)}</p>
-        <div class="insp-card-source">来源：${esc(card.source)}</div>
+        <div class="insp-card-source">Source:${esc(card.source)}</div>
         ${star}
       </div>`;
   }
@@ -4289,7 +4284,7 @@ class EurekaLite {
       <div class="screen-content animate-fade-in-up">
         <h2 class="screen-title">I3 生成创意</h2>
         <p class="screen-subtitle">基于最佳 HMW 与已收藏灵感，做"强制连接"</p>
-        <div class="screen-hint"><span class="hint-icon">💡</span><span>把 HMW 问题与灵感卡片交叉组合，产生大量创意；先求量，再求质。</span></div>
+        <div class="screen-hint"><span class="hint-icon">💡</span><span>把 HMW 问题与灵感卡片交叉组合，产生大量创意；Quantity first, then quality。</span></div>
         <div class="inspire-context-bar">
           <div class="inspire-context-title">🎯 已选最佳 HMW（${hmws.length}/2）</div>
           <div class="inspire-context-list">${hmwHtml}</div>
@@ -4771,7 +4766,18 @@ class EurekaLite {
             </div>
             <div class="hmw-pov-field">
               <label class="hmw-pov-label">洞察 ${pov.from?.insight ? '<span class="hmw-from-reveal">来自 Reveal</span>' : ''}</label>
-              <input type="text" class="hmw-pov-input" id="hmwPovInsight" placeholder="来自 FIND 的核心洞察" value="${this.escapeHtml(pov.insight)}" />
+              ${pov.insightList && pov.insightList.length > 1 ? `
+                <div class="hmw-pov-insight-list" style="margin-bottom:8px;padding:8px 10px;background:rgba(127,119,221,0.08);border-radius:8px;font-size:13px;line-height:1.6;">
+                  ${pov.insightList.map((it, i) => `
+                    <div class="hmw-pov-insight-item" style="margin-bottom:6px;">
+                      <strong>${i + 1}.</strong> ${it.sourceFinding ? `<span style="color:#7F77DD;font-weight:500;">[${this.escapeHtml(it.sourceFinding)}]</span> ` : ''}${this.escapeHtml(it.insight)}
+                    </div>
+                  `).join('')}
+                </div>
+                <textarea class="hmw-pov-input" id="hmwPovInsight" placeholder="来自 FIND 的核心洞察" rows="3">${this.escapeHtml(pov.insight)}</textarea>
+              ` : `
+                <input type="text" class="hmw-pov-input" id="hmwPovInsight" placeholder="来自 FIND 的核心洞察" value="${this.escapeHtml(pov.insight)}" />
+              `}
             </div>
             <div class="hmw-pov-field full-width">
               <label class="hmw-pov-label">目标 ${pov.from?.goal ? '<span class="hmw-from-reveal">来自 Reveal</span>' : ''}</label>
@@ -4922,7 +4928,7 @@ class EurekaLite {
    * Extract POV data from Reveal stage outputs
    */
   extractPovFromProject(project) {
-    const pov = { targetUser: '', sceneChallenge: '', userProblem: '', insight: '', goal: '', from: {} };
+    const pov = { targetUser: '', sceneChallenge: '', userProblem: '', insight: '', goal: '', from: {}, insightList: [] };
 
     // Try project briefing first
     if (project?.cards?.projectBriefing) {
@@ -4963,37 +4969,42 @@ class EurekaLite {
       } catch (e) {}
     }
 
-    // Extract insight from FIND distill — 多级 fallback（含 AI 输出字段）
-    if (!pov.insight && project?.cards?.findInsight) {
+    // Extract insight from FIND distill — aggregate ALL findings' insights
+    if (project?.cards?.findInsight) {
       try {
         let raw = project.cards.findInsight;
         if (typeof raw === 'object' && raw !== null && raw.content) raw = raw.content;
         const findData = typeof raw === 'string' ? JSON.parse(raw) : raw;
         if (Array.isArray(findData.findings)) {
-          const first = findData.findings.find(f => f.distill?.trim());
-          if (first) { pov.insight = first.distill; pov.from.insight = true; }
-          else {
-            // fallback: 取 distillOutput（AI 生成的 D 步输出，优先于用户输入）
-            const withDistillOut = findData.findings.find(f => f.distillOutput?.trim());
-            if (withDistillOut) { pov.insight = withDistillOut.distillOutput; pov.from.insight = true; }
-            else {
-              const withNeed = findData.findings.find(f => f.needOutput?.trim());
-              if (withNeed) { pov.insight = withNeed.needOutput; pov.from.insight = true; }
-              else {
-                const withInterpret = findData.findings.find(f => f.interpretOutput?.trim());
-                if (withInterpret) { pov.insight = withInterpret.interpretOutput; pov.from.insight = true; }
-                // 最后尝试 need（用户输入的 N 步）
-                else {
-                  const withNeedInput = findData.findings.find(f => f.need?.trim());
-                  if (withNeedInput) { pov.insight = withNeedInput.need; pov.from.insight = true; }
-                }
-              }
+          const collected = [];
+          findData.findings.forEach(f => {
+            const source = (f.sourceFinding || f.fact || '').trim();
+            let insight = '';
+            if (f.distill?.trim()) insight = f.distill.trim();
+            else if (f.distillOutput?.trim()) insight = f.distillOutput.trim();
+            else if (f.needOutput?.trim()) insight = f.needOutput.trim();
+            else if (f.interpretOutput?.trim()) insight = f.interpretOutput.trim();
+            else if (f.need?.trim()) insight = f.need.trim();
+            if (insight) collected.push({ sourceFinding: source, insight });
+          });
+          if (collected.length > 0) {
+            pov.insightList = collected;
+            if (collected.length === 1) {
+              pov.insight = collected[0].insight;
+            } else {
+              pov.insight = collected.map((it, i) => {
+                const prefix = it.sourceFinding ? `【${it.sourceFinding}】` : `Insight ${i + 1}`;
+                return `${i + 1}. ${prefix} ${it.insight}`;
+              }).join('\n\n');
             }
+            pov.from.insight = true;
           }
         } else if (findData.distillOutput || findData.distill) {
           pov.insight = findData.distillOutput || findData.distill; pov.from.insight = true;
+          pov.insightList = [{ sourceFinding: '', insight: pov.insight }];
         } else if (findData.needOutput || findData.need) {
           pov.insight = findData.needOutput || findData.need; pov.from.insight = true;
+          pov.insightList = [{ sourceFinding: '', insight: pov.insight }];
         }
       } catch (e) {}
     }
@@ -5074,6 +5085,11 @@ class EurekaLite {
           : (typeof bg?.consensus === 'string' && bg.consensus.trim()) ? bg.consensus.trim() : '';
         if (g) { pov.goal = g; pov.from.goal = true; }
       } catch (e) {}
+    }
+
+    // Normalize insightList so downstream can always iterate
+    if (pov.insight && (!pov.insightList || pov.insightList.length === 0)) {
+      pov.insightList = [{ sourceFinding: '', insight: pov.insight }];
     }
 
     return pov;
@@ -5307,7 +5323,7 @@ class EurekaLite {
         if (prefill) {
           input.value = prefill;
           input.dispatchEvent(new Event('input'));
-          this.showToast('✨ 已智能预填（本地），你可以编辑修订');
+          this.showToast('✨ 已智能预填(local)，你可以编辑修订');
         }
       }
     });
@@ -5322,7 +5338,7 @@ class EurekaLite {
         if (prefill) {
           input.value = prefill;
           input.dispatchEvent(new Event('input'));
-          this.showToast('✨ 已智能预填（本地），你可以编辑修订');
+          this.showToast('✨ 已智能预填(local)，你可以编辑修订');
         }
       }
     });

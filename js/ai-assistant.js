@@ -55,7 +55,7 @@ const AIAssistant = {
     // Extract pain point (痛点)
     const painPatterns = [
       /痛点[是为是]?(.+?)[，,。]/,
-      /问题是(.+?)[，,。]/,
+      /Problem是(.+?)[，,。]/,
       /(.+?)困难[，,。]/,
       /(忘记|无法|不能|不会|很难).{0,20}[，,。]/
     ];
@@ -68,7 +68,7 @@ const AIAssistant = {
     }
 
     // Extract product/service mentioned
-    const productMatch = text.match(/(智能|智能硬件|APP|应用|产品|服务|网站|平台)(.+?)[，,。]/);
+    const productMatch = text.match(/(智能|智能硬件|APP|应用|Product|Service|网站|平台)(.+?)[，,。]/);
     if (productMatch) {
       elements.product = productMatch[2] || productMatch[0];
     }
@@ -115,9 +115,9 @@ const AIAssistant = {
       lines.push('【痛点/挑战】获取饮品的途径不够便捷');
     }
 
-    // 如果有产品提及
+    // 如果有Product提及
     if (elements.product) {
-      lines.push(`【产品/服务】${elements.product}`);
+      lines.push(`【Product/Service】${elements.product}`);
     }
 
     // 行为描述
@@ -129,13 +129,13 @@ const AIAssistant = {
     if (lines.length < 2) {
       // 如果提取不到足够信息，返回基于原文的优化版本
       return {
-        title: '场景描述（优化版）',
+        title: 'Scenario description（优化版)',
         content: this.normalizeText(userInput)
       };
     }
 
     return {
-      title: '场景描述（规范化改写）',
+      title: 'Scenario description（规范化改写)',
       content: lines.join('\n')
     };
   },
@@ -247,8 +247,8 @@ const AIAssistant = {
       // Category-based defaults
       const userDefaults = {
         product: '18-35岁的目标用户群体',
-        service: '需要便捷服务的中青年用户',
-        problem: '受该问题困扰的目标人群',
+        service: '需要便捷Service的中青年用户',
+        problem: '受该Problem困扰的目标人群',
         explore: '对该领域感兴趣的早期用户'
       };
       return userDefaults[category] || '目标用户群体';
@@ -279,15 +279,15 @@ const AIAssistant = {
       if (hasStudent) return '大学生在课余时间需要管理多项任务：课程作业、社团活动、兼职工作等。现有的工具过于复杂或功能单一，难以高效整合所有事务。';
       if (hasOffice) return '上班族在通勤和工作中，需要处理大量碎片化信息：邮件、消息、待办事项。信息分散在不同平台，难以统一管理，经常遗漏重要事项。';
       if (hasHealth) return '注重健康的人群希望养成规律的运动和饮食习惯，但缺乏有效的监督和提醒机制。独自坚持容易放弃，需要外部激励和同伴支持。';
-      if (hasElder) return '老年人独自在家时，子女担心他们的安全和生活状况。现有的沟通方式（电话、视频）不够及时，无法实时了解老人的状态。';
+      if (hasElder) return '老年人独自在家时，子女担心他们的安全和生活状况。现有的沟通方式（电话、视频)不够及时，无法实时了解老人的状态。';
       if (hasChild) return '新手父母在孩子成长过程中，需要记录喂养、睡眠、疫苗接种等信息。纸质记录容易丢失，现有App操作复杂，长辈不会使用。';
-      if (hasPet) return '上班族白天外出工作时，担心独自在家的宠物：是否饿了、有没有捣乱、情绪如何。无法实时了解宠物状态，回家后才发现问题。';
+      if (hasPet) return '上班族白天外出工作时，担心独自在家的宠物：是否饿了、有没有捣乱、情绪如何。无法实时了解宠物状态，回家后才发现Problem。';
 
       // Category-based defaults
       const sceneDefaults = {
         product: '用户在日常生活中遇到的不便，现有解决方案无法满足其特定需求，导致效率低下或体验不佳。',
-        service: '用户在需要服务时，发现流程繁琐、等待时间长、服务质量不稳定，整体体验令人失望。',
-        problem: '该问题影响的人群广泛，现有解决方法效果有限，用户迫切需要更高效、更便捷的解决方案。',
+        service: '用户在需要Service时，发现流程繁琐、等待时间长、Service质量不稳定，整体体验令人失望。',
+        problem: '该Problem影响的人群广泛，现有解决方法效果有限，用户迫切需要更高效、更便捷的解决方案。',
         explore: '该方向目前缺乏充分的用户验证，需要深入了解目标群体的真实需求和使用习惯。'
       };
       return sceneDefaults[category] || '用户在相关场景下遇到的具体挑战和需求。';
@@ -318,12 +318,12 @@ const AIAssistant = {
       steps.push('【触点2】开始寻找解决方案');
       steps.push('【触点3】评估选项');
       steps.push('【触点4】做出选择');
-      steps.push('【触点5】使用产品/服务');
+      steps.push('【触点5】使用Product/Service');
       steps.push('【触点6】产生后续行为');
     }
 
     return {
-      title: '用户旅程（规范化）',
+      title: 'User journey（规范化)',
       content: steps.join('\n')
     };
   },
@@ -346,7 +346,7 @@ const AIAssistant = {
     findings.push('【发现3】现有解决方案在[此处补充具体断裂点]存在优化空间');
 
     return {
-      title: '关键发现（规范化）',
+      title: '关键发现（规范化)',
       content: findings.join('\n')
     };
   },
@@ -377,7 +377,7 @@ const AIAssistant = {
     find.push('【Design 设计机会】智能提醒 + 便捷取水 + 社交激励 的组合方案');
 
     return {
-      title: 'FIND 洞察（规范化）',
+      title: 'FIND 洞察（规范化)',
       content: find.join('\n')
     };
   },
@@ -400,7 +400,7 @@ const AIAssistant = {
     ];
 
     return {
-      title: 'HMW 问题（规范化）',
+      title: 'HMW Problem（规范化)',
       content: hmws.join('\n')
     };
   },
@@ -446,7 +446,7 @@ const AIAssistant = {
         } else if (screen === 2) {
           // Journey - suggest structure
           suggestions.push('✓ 基于您的场景，建议按触点顺序描述');
-          suggestions.push('✓ 标注关键决策点和情绪变化');
+          suggestions.push('✓ Mark key decision points and emotional shifts');
           suggestions.push('✓ 标记可能的体验断裂点');
         } else if (screen === 3) {
           // Key findings
@@ -488,7 +488,7 @@ const AIAssistant = {
       'reveal-4': ['明确目标用户', '未满足的需求是什么', '情感层面的痛点'],
       'reveal-5': ['涉及哪些利益相关方', '商业价值假设', '与业务目标的关联'],
       'inspire-1': ['用"我们如何帮助..."开头', '明确目标用户和场景', '描述期望的结果'],
-      'inspire-3': ['先求量，再求质', '允许疯狂的想法', '组合多个灵感来源'],
+      'inspire-3': ['先求量，再求质', 'Allow wild ideas', 'Combine multiple inspiration sources'],
     };
 
     const key = `${stage}-${screen}`;
@@ -509,7 +509,7 @@ const AIAssistant = {
               return '💡 提示：请明确描述"谁"在使用';
             }
             if (!analysis.elements.scene) {
-              return '💡 提示：请补充"什么情况下"使用';
+              return '💡 提示：请Add the situation in which it is used';
             }
             if (!analysis.elements.pain) {
               return '💡 提示：请描述遇到了什么困难';
@@ -545,7 +545,7 @@ const AIAssistant = {
       'reveal-4': '用户真正想要的是什么？',
       'reveal-5': '这个发现对公司意味着什么？',
       'inspire-1': '"我们如何帮助忙碌的用户，在没有时间研究时，能够快速做出明智决定？"',
-      'inspire-2': '哪个领域已经解决了类似问题？',
+      'inspire-2': '哪个领域已经解决了类似Problem？',
       'inspire-3': '先列出10个想法，再筛选',
       'inspire-4': '哪个想法最能打动你？',
       'inspire-5': '给这个想法起个名字',
@@ -569,21 +569,21 @@ const AIAssistant = {
         return [
           {
             type: 'New',
-            title: '行为追踪与提醒',
-            description: '通过传感器追踪行为，自动触发提醒（如智能水杯记录饮水量）',
-            source: '健康科技'
+            title: 'Behavior tracking & reminders',
+            description: 'Use sensors to track behavior and auto-trigger reminders (e.g. a smart bottle logs water intake)',
+            source: 'Health tech'
           },
           {
             type: 'Cool',
-            title: '游戏化激励',
-            description: '将健康行为转化为积分、徽章、排行榜，让喝水变得有趣味',
-            source: '健康App'
+            title: 'Gamified incentives',
+            description: 'Turn health behavior into points, badges and leaderboards to make drinking water fun',
+            source: 'Health App'
           },
           {
             type: 'Outsider',
-            title: '社交传染',
-            description: '让朋友、同学互相提醒、互相激励，形成健康的社交氛围',
-            source: '微信运动'
+            title: 'Social contagion',
+            description: 'Let friends and classmates remind and motivate each other, building a healthy social vibe',
+            source: 'WeChat Steps'
           }
         ];
       }
@@ -593,21 +593,21 @@ const AIAssistant = {
         return [
           {
             type: 'New',
-            title: '场景化微服务',
-            description: '针对碎片化场景的轻量级服务（如课间快速完成的微任务）',
-            source: '教育科技'
+            title: 'Contextual micro-services',
+            description: 'Lightweight services for fragmented moments (e.g. micro-tasks finished between classes)',
+            source: 'EdTech'
           },
           {
             type: 'Cool',
-            title: '同伴效应',
-            description: '利用学生之间的相互影响，创造正向的学习/生活习惯',
+            title: 'Peer effect',
+            description: 'Leverage peer influence among students to build positive study/habit routines',
             source: 'Study Together'
           },
           {
             type: 'Outsider',
-            title: '错峰设计',
-            description: '在用户不需要主动行动时提供服务，减少意志力消耗',
-            source: '智能家居'
+            title: 'Off-peak design',
+            description: 'Serve users when they need not act, cutting willpower drain',
+            source: 'Smart home'
           }
         ];
       }
@@ -617,68 +617,68 @@ const AIAssistant = {
         return [
           {
             type: 'New',
-            title: '情境感知自动化',
-            description: '根据用户状态自动触发服务（如进入办公室自动开启待办）',
-            source: '智能办公'
+            title: 'Context-aware automation',
+            description: 'Auto-trigger services from user state (e.g. open to-dos on entering the office)',
+            source: 'Smart office'
           },
           {
             type: 'Cool',
-            title: '微打断设计',
-            description: '通过极小的打断（如震动、闪光）传递关键信息',
-            source: '可穿戴设备'
+            title: 'Micro-interruption design',
+            description: 'Deliver key info through tiny interruptions (vibration, flash)',
+            source: 'Wearable devices'
           },
           {
             type: 'Outsider',
-            title: '无意识交互',
-            description: '用户无需主动操作，系统自动完成（如自动存档、同步）',
+            title: 'Frictionless interaction',
+            description: 'No active action needed; the system does it (auto-save, sync)',
             source: 'iCloud'
           }
         ];
       }
 
       // Generic product related
-      if (category === 'product' || text.includes('产品') || text.includes('硬件')) {
+      if (category === 'product' || text.includes('Product') || text.includes('硬件')) {
         return [
           {
             type: 'New',
-            title: '订阅制思维',
-            description: '从一次性购买转向持续服务订阅，创造持续价值',
-            source: 'SaaS行业'
+            title: 'Subscription mindset',
+            description: 'Shift from one-off purchase to ongoing subscription, creating continuous value',
+            source: 'SaaS industry'
           },
           {
             type: 'Cool',
-            title: '游戏化反馈',
-            description: '让用户行为获得即时、愉悦的反馈，提升参与度',
+            title: 'Gamified feedback',
+            description: 'Give users instant, joyful feedback on their actions to lift engagement',
             source: 'Duolingo'
           },
           {
             type: 'Outsider',
-            title: '反向定制',
-            description: '让用户参与产品定义过程，提升认同感',
+            title: 'Reverse customization',
+            description: 'Let users join product definition, boosting a sense of ownership',
             source: '乐高Ideas'
           }
         ];
       }
 
       // Generic service related
-      if (category === 'service' || text.includes('服务')) {
+      if (category === 'service' || text.includes('Service')) {
         return [
           {
             type: 'New',
-            title: '情境感知服务',
-            description: '根据用户当前状态调整服务内容',
+            title: '情境感知Service',
+            description: '根据用户当前状态调整Service内容',
             source: '酒店行业'
           },
           {
             type: 'Cool',
-            title: '惊喜元素',
-            description: '在预期之外创造超预期体验',
-            source: '迪士尼'
+            title: 'Delightful surprises',
+            description: 'Create above-expectation moments beyond the anticipated',
+            source: 'Disney'
           },
           {
             type: 'Outsider',
-            title: '社区驱动',
-            description: '让用户互相服务、互相帮助',
+            title: 'Community-driven',
+            description: 'Let users serve and help one another',
             source: 'Airbnb社区'
           }
         ];
@@ -700,9 +700,9 @@ const AIAssistant = {
         },
         {
           type: 'Outsider',
-          title: '极端用户',
-          description: '关注极端用户的极端需求，往往能发现真正机会',
-          source: '设计思维'
+          title: 'Extreme users',
+          description: 'Watch extreme users’ extreme needs — that is where real opportunities hide',
+          source: 'Design thinking'
         }
       ];
     };
@@ -825,10 +825,10 @@ Output only the final POV statement, with no prefix:`,
       const sp = stepPrompts[stepKey];
       if (sp) {
         const ctxLines = [];
-        if (context?.targetUser) ctxLines.push(`【项目真实目标用户】${context.targetUser}`);
-        if (context?.sceneDesc) ctxLines.push(`【项目真实场景】${context.sceneDesc}`);
-        if (context?.scene) ctxLines.push(`【项目场景摘要】${context.scene}`);
-        if (context?.finding && context.finding !== (userInput || '').trim()) ctxLines.push(`【原始关键发现】${context.finding}`);
+        if (context?.targetUser) ctxLines.push(`[Project real target user] ${context.targetUser}`);
+        if (context?.sceneDesc) ctxLines.push(`[Project real scenario] ${context.sceneDesc}`);
+        if (context?.scene) ctxLines.push(`[Project scenario summary] ${context.scene}`);
+        if (context?.finding && context.finding !== (userInput || '').trim()) ctxLines.push(`[Original key finding] ${context.finding}`);
         const prompt =
           `${ctxLines.join('\n')}\n\n${sp.guide}`;
         console.log(`[FIND-AI] Calling DeepSeek for step=${stepKey}, prompt length=${prompt.length}`);
@@ -1039,8 +1039,8 @@ Output only the final POV statement, with no prefix:`,
         let raw = project.cards.scene;
         if (typeof raw === 'object' && raw !== null && raw.content) raw = raw.content;
         const content = typeof raw === 'string' ? raw : '';
-        const targetMatch = content.match(/【目标用户】(.+?)(?=\n【场景描述】|$)/s);
-        const sceneMatch = content.match(/【场景描述】(.+?)$/s);
+        const targetMatch = content.match(/【目标用户】(.+?)(?=\n【Scenario description】|$)/s);
+        const sceneMatch = content.match(/【Scenario description】(.+?)$/s);
         if (targetMatch) sceneData.targetUser = targetMatch[1].trim();
         if (sceneMatch) sceneData.sceneDesc = sceneMatch[1].trim();
       } catch (e) {}
@@ -1100,11 +1100,11 @@ Output only the final POV statement, with no prefix:`,
       const scene = sceneData.sceneDesc || '';
       const projectName = project?.title || project?.originalTitle || '本项目';
 
-      // 构建项目上下文摘要（关键：让 AI 紧扣实际项目主题）
+      // 构建项目上下文摘要（关键：让 AI 紧扣实际项目主题)
       const ctxParts = [
         `【项目名称】${projectName}`,
         `【目标用户】${targetUser}`,
-        `【场景描述】${scene}`,
+        `【Scenario description】${scene}`,
         `【核心事实】${fact}`,
         `【FIND洞察】${insight}`
       ];
@@ -1147,7 +1147,7 @@ Return JSON directly, no markdown code blocks.`;
       }
     }
 
-    // ---- fallback：基于实际项目数据（不再用关键词猜测领域） ----
+    // ---- fallback：基于实际项目数据（不再用关键词猜测领域) ----
     await new Promise(resolve => setTimeout(resolve, 800));
 
     const sceneData2 = this._getSceneData(project);
@@ -1161,13 +1161,13 @@ Return JSON directly, no markdown code blocks.`;
     let coreProblem2 = '';
     const sourceText2 = fact2 || insight2;
     if (sourceText2) {
-      const pm1 = sourceText2.match(/(?:面临|遇到|存在|导致|造成)(.+?)(?:问题|困难|挑战|痛点|不便)/)
+      const pm1 = sourceText2.match(/(?:面临|遇到|存在|导致|造成)(.+?)(?:Problem|困难|挑战|痛点|不便)/)
         || sourceText2.match(/(?:无法|不能|很难|不容易)(.+?)(?:，|,|。|$)/)
         || sourceText2.match(/(?:花费|消耗|浪费|花了)(.+?)(?:时间|精力|金钱)/);
       if (pm1) coreProblem2 = pm1[1] || pm1[0];
     }
     if (!coreProblem2 && insight2) {
-      const pm2 = insight2.match(/需要「(.+?)」/) || insight2.match(/需要(.+?)，因为/);
+      const pm2 = insight2.match(/需要"(.+?)"/) || insight2.match(/需要(.+?)，因为/);
       if (pm2) coreProblem2 = pm2[1];
     }
 
@@ -1195,7 +1195,7 @@ Return JSON directly, no markdown code blocks.`;
   },
 
   // ==========================================================================
-  // ==================  DeepSeek 真实 AI 能力层（含模板回退）  ==================
+  // ==================  DeepSeek 真实 AI 能力层（含模板回退)  ==================
   // ==========================================================================
 
   /** 是否具备真实 AI 能力 */
@@ -1220,11 +1220,11 @@ Return JSON directly, no markdown code blocks.`;
    * 从 project 构建供 LLM 使用的上下文摘要
    */
   _buildProjectContext(project) {
-    if (!project) return '（暂无项目上下文）';
+    if (!project) return '(no project context yet)';
     const lines = [];
-    lines.push(`项目名称：${project.title || project.originalTitle || '未命名'}`);
-    const catMap = { product: '产品', service: '服务', problem: '问题', explore: '探索' };
-    lines.push(`创新类型：${catMap[project.category] || project.category || '未知'}`);
+    lines.push(`Project name: ${project.title || project.originalTitle || '未命名'}`);
+    const catMap = { product: 'Product', service: 'Service', problem: 'Problem', explore: 'Exploration' };
+    lines.push(`Innovation type: ${catMap[project.category] || project.category || '未知'}`);
 
     const cards = project.cards || {};
     const pick = (raw) => {
@@ -1235,110 +1235,110 @@ Return JSON directly, no markdown code blocks.`;
 
     // 场景
     const scene = pick(cards.scene);
-    if (scene) lines.push(`【场景/用户】${scene.slice(0, 300)}`);
-    // 用户旅程
+    if (scene) lines.push(`[Scenario / User] ${scene.slice(0, 300)}`);
+    // User journey
     const journey = pick(cards.journey);
-    if (journey) lines.push(`【用户旅程】${journey.slice(0, 300)}`);
+    if (journey) lines.push(`[User journey] ${journey.slice(0, 300)}`);
     // FIND 洞察
     const find = this._getFindData(project);
     if (find && (find.distill || find.need || find.fact)) {
-      lines.push(`【核心洞察】${(find.distill || find.need || find.fact || '').toString().slice(0, 200)}`);
+      lines.push(`[Core insight] ${(find.distill || find.need || find.fact || '').toString().slice(0, 200)}`);
     }
     // HMW / 最佳创意
     const hmw = pick(cards.hmw);
-    if (hmw) lines.push(`【HMW/创新机遇】${hmw.slice(0, 200)}`);
+    if (hmw) lines.push(`[HMW / Innovation opportunity] ${hmw.slice(0, 200)}`);
     const bestIdea = pick(cards.bestIdea) || pick(cards.ideaConfirm) || pick(cards.ideas);
-    if (bestIdea) lines.push(`【选定创意】${bestIdea.slice(0, 200)}`);
-    // Shape 已有产出（供 Exam 阶段参考）
+    if (bestIdea) lines.push(`[Selected idea] ${bestIdea.slice(0, 200)}`);
+    // Shape 已有产出（供 Exam 阶段参考)
     const fourDim = pick(cards.fourDimensions);
-    if (fourDim) lines.push(`【四维拷问结论】${fourDim.slice(0, 200)}`);
+    if (fourDim) lines.push(`[Four-dimension challenge conclusion] ${fourDim.slice(0, 200)}`);
     const minConcept = pick(cards.minConcept);
-    if (minConcept) lines.push(`【最小概念方案】${minConcept.slice(0, 200)}`);
+    if (minConcept) lines.push(`[Minimum concept solution] ${minConcept.slice(0, 200)}`);
     const storyboard = pick(cards.storyboard);
-    if (storyboard) lines.push(`【体验故事板】${storyboard.slice(0, 200)}`);
+    if (storyboard) lines.push(`[Experience storyboard] ${storyboard.slice(0, 200)}`);
 
     return lines.join('\n');
   },
 
   /**
-   * 各阶段各屏的 AI 引导定义（草稿生成 + 建议）
+   * 各阶段各屏的 AI 引导定义（草稿生成 + 建议)
    * key: `${stage}-${screen}`
    */
   _screenBrief(stage, screen) {
     const briefs = {
       // ---------- Reveal ----------
       'reveal-1': {
-        label: '场景描述',
-        draft: '基于项目上下文，写出一段具体的用户场景。必须包含【目标用户】【使用场景】【痛点/挑战】三个要素，每项一行，用【】标注。总字数150字内，聚焦一个真实、具体的痛点时刻。',
-        tips: ['明确"谁"在使用', '补充"什么情况下"使用', '描述遇到的具体困难']
+        label: 'Scenario description',
+        draft: 'Based on the project context, write one concrete user scenario. It must include three elements — [Target user] [Usage scenario] [Pain point / challenge] — one per line, tagged with []. Keep it under 150 characters and focus on one real, specific painful moment.',
+        tips: ['Clarify who is using it', 'Add the situation in which it is used', 'Describe the specific difficulty encountered']
       },
       'reveal-2': {
-        label: '用户旅程',
-        draft: '基于场景，梳理用户完整旅程。按【触点N】逐步列出关键步骤（5-7步），并用【断裂点】标注体验中断/流失的环节。每行一个触点。',
-        tips: ['从第一次接触到使用后', '标注关键决策点和情绪变化', '找出体验断裂点']
+        label: 'User journey',
+        draft: 'From the scenario, map the user’s full journey. List the key steps by [Touchpoint N] (5-7 steps), and flag drop-off / broken moments with [Breakpoint]. One touchpoint per line.',
+        tips: ['From first contact through post-use', 'Mark key decision points and emotional shifts', 'Find the experience breakpoints']
       },
       'reveal-5': {
-        label: '项目简报',
-        draft: '汇总项目简报，包含：目标用户、核心场景、关键洞察、利益相关方、商业假设 五个小节。每节2-3句，结构清晰。',
-        tips: ['汇总各阶段资产', '突出最独特的洞察', '关联商业价值']
+        label: 'Project brief',
+        draft: 'Summarize the project brief in five sections: target user, core scenario, key insight, stakeholders, business assumptions. 2-3 clear sentences each.',
+        tips: ['Consolidate assets from each stage', 'Highlight the most distinctive insight', 'Link to business value']
       },
       // ---------- Inspire ----------
       'inspire-3': {
-        label: '创意生成',
-        draft: '基于 HMW 与洞察，快速生成 8 条差异化创意点子，每条一行、编号、20字内。先求量再求质，允许大胆想法。',
-        tips: ['先求量再求质', '允许疯狂的想法', '组合多个灵感来源']
+        label: 'Idea generation',
+        draft: 'From the HMW and insight, quickly generate 8 differentiated ideas — one per line, numbered, under 20 words. Quantity before quality; bold ideas welcome.',
+        tips: ['Quantity before quality', 'Allow wild ideas', 'Combine multiple inspiration sources']
       },
       'inspire-4': {
-        label: '筛选最佳创意',
-        draft: '从候选创意中，按"用户价值/可行性/商业潜力"三维快速点评，推荐 1 个最佳创意并说明理由（100字内）。',
-        tips: ['考虑可行性', '衡量用户价值', '评估商业潜力']
+        label: 'Select the best idea',
+        draft: 'From the candidates, quickly rate on three axes — user value / feasibility / business potential — and recommend 1 best idea with a reason (under 100 words).',
+        tips: ['Consider feasibility', 'Weigh user value', 'Assess business potential']
       },
       'inspire-5': {
-        label: '确认最佳创意',
-        draft: '为选定创意起一个响亮的名字，并用一句话（30字内）说清它的核心价值主张。格式：【创意名称】xxx\\n【一句话价值】xxx',
-        tips: ['起个好记的名字', '一句话说清价值', '说明为何值得深入']
+        label: 'Confirm the best idea',
+        draft: '为选定创意起一个响亮的名字，并用一句话（30字内)说清它的核心价值主张。格式：【创意名称】xxx\\n【一句话价值】xxx',
+        tips: ['Pick a memorable name', 'State the value in one line', 'Explain why it is worth pursuing']
       },
       // ---------- Shape ----------
       'shape-1': {
-        label: '四维拷问',
-        draft: '对选定创意从四个维度做诚实拷问，每个维度给出"现状判断 + 关键风险 + 应对建议"，每维度2-3句：\n【期望度 Desirability】用户是否真的想要？\n【可行性 Feasibility】技术/资源能否实现？\n【存续度 Viability】商业上能否持续？\n【顺应度 Adaptability】是否顺应趋势与生态？',
-        tips: ['每个维度都要诚实回答', '暴露真实风险而非自我安慰', '给出可操作的应对建议']
+        label: 'Four-dimension challenge',
+        draft: 'Honestly challenge the chosen idea across four dimensions; for each give "current state + key risk + mitigation", 2-3 sentences:\n[Desirability] Do users truly want it?\n[Feasibility] Can tech/resources deliver it?\n[Viability] Is it commercially sustainable?\n[Adaptability] Does it fit trends and ecosystem?',
+        tips: ['Answer each dimension honestly', 'Expose real risks, not self-comfort', 'Give actionable mitigations']
       },
       'shape-2': {
-        label: '最小概念方案（MVP）',
-        draft: '定义最小可行方案，输出：\n【一句话定义】用一句话描述 MVP\n【核心功能】做什么（3条以内，聚焦最关键价值）\n【明确不做】暂不做什么（2-3条，划清边界）\n【第一用户】最先服务谁',
-        tips: ['聚焦最关键的核心价值', '明确划定边界：做什么、不做什么', '越小越聚焦越好']
+        label: 'Minimum concept (MVP)',
+        draft: 'Define the minimum viable solution, output:\n[One-liner] describe the MVP in one sentence\n[Core features] what it does (<=3, focus on key value)\n[Explicit non-goals] what it won’t do yet (2-3, set boundaries)\n[First user] who it serves first',
+        tips: ['Focus on the most critical core value', 'Set clear boundaries: what to do and what not', 'Smaller and more focused is better']
       },
       'shape-3': {
-        label: '用户体验故事板',
-        draft: '用六格故事板讲一个完整的用户体验故事，每格一句话（含用户情绪）：\n1.认识（如何知道）\n2.尝试（第一次用）\n3.使用（日常使用）\n4.顿悟（Aha 时刻）\n5.成长（持续价值）\n6.传播（推荐他人）',
-        tips: ['从用户视角讲述', '每格包含场景、动机、情绪', '突出 Aha 顿悟时刻']
+        label: 'User experience storyboard',
+        draft: 'Tell a full user-experience story in a 6-panel storyboard, one sentence each (with user emotion):\n1. Aware (how they learn of it)\n2. Try (first use)\n3. Use (daily use)\n4. Aha (the aha moment)\n5. Grow (ongoing value)\n6. Share (recommend to others)',
+        tips: ['Tell it from the user’s view', 'Each panel has scene, motive, emotion', 'Highlight the aha moment']
       },
       // ---------- Exam ----------
       'exam-1': {
-        label: '搭建原型',
-        draft: '设计一个最简可用原型方案，输出：\n【要验证的核心假设】最关键、最想验证的一条\n【原型形式】纸面/点击原型/绿野仙踪/落地页等，并说明为何选它\n【核心体验路径】用户能走通的最短路径（3-5步）\n【搭建成本】预估投入',
-        tips: ['最简可用即可，不求完美', '聚焦验证最核心的假设', '越快做出来越好']
+        label: 'Build a prototype',
+        draft: 'Design the simplest usable prototype, output:\n[Core hypothesis to validate] the single most important one\n[Prototype form] paper / clickable / Wizard-of-Oz / landing page, and why\n[Core experience path] the shortest path users can complete (3-5 steps)\n[Build cost] estimated effort',
+        tips: ['Simplest usable is enough; not perfect', 'Focus on validating the core hypothesis', 'The faster the better']
       },
       'exam-2': {
-        label: '执行测试',
-        draft: '制定一份轻量测试计划，输出：\n【目标测试用户】画像与在哪找到他们\n【样本量】建议人数\n【任务脚本】让用户完成的关键任务\n【观察指标】要记录什么（行为/卡点/表情/原话）\n【避免引导】如何保持中立不诱导',
-        tips: ['找真实目标用户', '不要引导，让用户自然探索', '重点观察行为而非只听意见']
+        label: 'Run the test',
+        draft: 'Draft a lightweight test plan, output:\n[Target testers] persona and where to find them\n[Sample size] suggested number\n[Task script] key tasks for users to complete\n[Observation metrics] what to record (behavior / friction / expression / verbatim)\n[Avoid leading] how to stay neutral and not induce',
+        tips: ['Find real target users', 'Do not lead; let users explore naturally', 'Observe behavior, not just opinions']
       },
       'exam-3': {
-        label: '测试报告',
-        draft: '基于测试整理结构化报告：\n【成功点】哪些验证成立\n【第一失败点】最严重的问题\n【意外发现】没预料到的洞察\n【假设结论】原假设成立/证伪/待定\n【用户原话】1-2句有代表性的引用',
-        tips: ['诚实记录，不自我欺骗', '区分事实与解读', '关注第一失败点']
+        label: 'Test report',
+        draft: 'Structure the test into a report:\n[What worked] validations that held\n[Top failure] the most serious problem\n[Surprise] unexpected insight\n[Hypothesis verdict] original hypothesis confirmed / falsified / pending\n[User verbatim] 1-2 representative quotes',
+        tips: ['Record honestly, no self-deception', 'Separate facts from interpretation', 'Focus on the first failure point']
       },
       'exam-4': {
-        label: '四维度评价',
-        draft: '基于测试结果，对方案做四维度评分与依据（每维度打分 1-5 并给1句依据）：\n【期望度】用户是否想要\n【可行性】能否实现\n【存续度】能否持续盈利\n【顺应度】是否顺应趋势\n最后给出综合判断。',
-        tips: ['用事实和数据支撑评分', '不回避低分维度', '综合判断要明确']
+        label: 'Four-dimension evaluation',
+        draft: 'From test results, score the solution on four dimensions with a one-line rationale each (1-5):\n[Desirability] do users want it\n[Feasibility] can it be built\n[Viability] can it profit sustainably\n[Adaptability] does it fit the trend\nThen give an overall verdict.',
+        tips: ['Back scores with facts and data', 'Do not dodge low-score dimensions', 'Make the overall verdict clear']
       },
       'exam-5': {
-        label: '电梯演讲 & 迭代计划',
-        draft: '输出两部分：\n【电梯演讲】30秒/60字内向投资人讲清"为谁解决什么、凭什么、有多大机会"\n【迭代计划】下一步 3 条具体行动（含负责事项与验证目标），按优先级排序',
-        tips: ['浓缩精华，突出差异化', '行动计划要具体可执行', '明确下一个验证目标']
+        label: 'Elevator pitch & iteration plan',
+        draft: 'Output two parts:\n[Elevator pitch] in 30s / 60 words tell investors who/what/why/how big the opportunity is\n[Iteration plan] next 3 concrete actions (with owner and validation goal), prioritized',
+        tips: ['Distill the essence, highlight differentiation', 'Make the action plan concrete and executable', 'State the next validation goal']
       }
     };
     return briefs[`${stage}-${screen}`] || null;
@@ -1359,13 +1359,13 @@ Return JSON directly, no markdown code blocks.`;
 
     const projectCtx = this._buildProjectContext(project);
     const userPart = (userInput && userInput.trim().length > 3)
-      ? `\n\n用户当前已写的草稿（请在此基础上优化提升，不要完全推翻）：\n${userInput.trim()}`
-      : '\n\n用户尚未填写，请基于项目上下文直接生成一份高质量初稿。';
+      ? `\n\nThe user’s current draft (improve and elevate it; do not discard it entirely):\n${userInput.trim()}`
+      : '\n\nThe user has not filled anything; generate a high-quality draft directly from the project context.';
 
     const prompt =
-      `【项目上下文】\n${projectCtx}\n\n` +
-      `【当前任务】${brief.label}\n${brief.draft}${userPart}\n\n` +
-      `请直接输出该任务的内容本身，不要加标题前缀、不要解释。`;
+      `[Project context] \n${projectCtx}\n\n` +
+      `[Current task] ${brief.label}\n${brief.draft}${userPart}\n\n` +
+      `Output only the task content itself, with no title prefix and no explanation.`;
 
     try {
       const content = await window.AIService.complete(prompt, {
@@ -1374,7 +1374,7 @@ Return JSON directly, no markdown code blocks.`;
         maxTokens: 900
       });
       if (content && content.trim()) {
-        return { title: `${brief.label}（AI 生成，可编辑）`, content: content.trim() };
+        return { title: `${brief.label}（AI 生成，可编辑)`, content: content.trim() };
       }
     } catch (e) {
       console.warn('[AI] generatePrefillContentAI fallback:', e.message);
@@ -1395,13 +1395,13 @@ Return JSON directly, no markdown code blocks.`;
 
     const projectCtx = this._buildProjectContext(project);
     const userPart = (userInput && userInput.trim().length > 3)
-      ? `用户已写内容：\n${userInput.trim()}`
-      : '用户尚未填写内容。';
+      ? `User-written content: \n${userInput.trim()}`
+      : 'The user has not written anything yet.';
 
     const prompt =
-      `【项目上下文】\n${projectCtx}\n\n【当前任务】${brief.label}\n${brief.draft}\n\n${userPart}\n\n` +
-      `请针对"用户如何把这一屏写得更好"给出 3-4 条具体、可操作的建议。` +
-      `以 JSON 返回：{"suggestions": ["建议1", "建议2", "建议3"]}，每条建议 25 字内，以"✓ "开头。`;
+      `[Project context] \n${projectCtx}\n\n[Current task] ${brief.label}\n${brief.draft}\n\n${userPart}\n\n` +
+      `Give 3-4 concrete, actionable suggestions on how the user can write this screen better.` +
+      `Return JSON: {"suggestions": ["suggestion1","suggestion2","suggestion3"]}, each under 25 words, prefixed with "✓ ".`;
 
     try {
       const obj = await window.AIService.completeJSON(prompt, {
@@ -1421,84 +1421,84 @@ Return JSON directly, no markdown code blocks.`;
   },
 
   /**
-   * 获取 NCO 灵感卡片池（每类 perType 张）。
+   * 获取 NCO 灵感卡片池（每类 perType 张)。
    * 优先根据项目上下文关键词匹配更相关的灵感；否则用通用默认池。
    * @param {string} category - 项目类别
-   * @param {string} contextText - 项目上下文文本（标题/场景/洞察等）
-   * @param {number} perType - 每类返回的数量（默认 3 → 共 9 张）
+   * @param {string} contextText - 项目上下文文本（标题/场景/洞察等)
+   * @param {number} perType - 每类返回的数量（默认 3 → 共 9 张)
    * @returns {Array<{type,title,description,source}>}
    */
   getNcoInspirations(category, contextText = '', perType = 3) {
     const text = (contextText || '').toLowerCase();
 
-    // ---- 各领域的灵感池（每类 3 张）----
+    // ---- 各领域的灵感池（每类 3 张)----
     const pools = {
       health: {
         New: [
-          { title: '行为追踪与提醒', description: '通过传感器追踪行为，自动触发提醒（如智能水杯记录饮水量）', source: '健康科技' },
-          { title: '自适应饮水计划', description: '根据天气、运动量动态推算个人所需水量，主动推送提醒', source: '可穿戴设备' },
-          { title: '无感补水设计', description: '把补水融进日常动作，让用户在无意识中完成（如雾化吸入）', source: '材料创新' }
+          { title: 'Behavior tracking & reminders', description: 'Use sensors to track behavior and auto-trigger reminders (e.g. a smart bottle logs water intake)', source: 'Health tech' },
+          { title: 'Adaptive hydration plan', description: 'Dynamically estimate personal water needs from weather and activity, proactively pushing reminders', source: 'Wearable devices' },
+          { title: 'Effortless hydration design', description: 'Weave hydration into daily motions so users do it unconsciously (e.g. mist inhalation)', source: 'Materials innovation' }
         ],
         Cool: [
-          { title: '游戏化激励', description: '将健康行为转化为积分、徽章、排行榜，让喝水变得有趣味', source: '健康App' },
-          { title: '可视化进度', description: '用光影、色彩实时展示当日健康进度，制造即时正反馈', source: '数据可视化' },
-          { title: '社交挑战赛', description: '发起 7 天喝水挑战，好友互相监督、PK 进度', source: '社群运营' }
+          { title: 'Gamified incentives', description: 'Turn health behavior into points, badges and leaderboards to make drinking water fun', source: 'Health App' },
+          { title: 'Visual progress', description: 'Show live daily health progress with light and color for instant positive feedback', source: 'Data visualization' },
+          { title: 'Social challenges', description: 'Launch a 7-day water challenge where friends monitor and compete on progress', source: 'Community ops' }
         ],
         Outsider: [
-          { title: '社交传染', description: '让朋友、同学互相提醒、互相激励，形成健康的社交氛围', source: '微信运动' },
-          { title: '环境暗示', description: '用灯光/音乐改变空间氛围，潜移默化引导健康行为', source: '环境心理学' },
-          { title: '反向激励', description: '未完成目标就向公益捐出小额资金，用"损失厌恶"促行动', source: '行为经济学' }
+          { title: 'Social contagion', description: 'Let friends and classmates remind and motivate each other, building a healthy social vibe', source: 'WeChat Steps' },
+          { title: 'Environmental cues', description: 'Shift the space mood with light/music to subtly nudge healthy behavior', source: 'Environmental psychology' },
+          { title: 'Reverse incentives', description: 'Donate a small amount to charity if goals are missed, using loss aversion to drive action', source: 'Behavioral economics' }
         ]
       },
       student: {
         New: [
-          { title: '场景化微服务', description: '针对碎片化场景的轻量级服务（如课间快速完成的微任务）', source: '教育科技' },
-          { title: '学习行为画像', description: '记录专注时段与效率，自动推荐最适合的学习节奏', source: '学习科学' },
-          { title: '错题自进化', description: '根据错题自动生成变式练习，薄弱点逐个击破', source: '自适应学习' }
+          { title: 'Contextual micro-services', description: 'Lightweight services for fragmented moments (e.g. micro-tasks finished between classes)', source: 'EdTech' },
+          { title: 'Learning-behavior profiling', description: 'Track focus periods and efficiency, auto-recommending the best study rhythm', source: 'Learning science' },
+          { title: 'Mistake-driven self-evolution', description: 'Auto-generate variant drills from mistakes, tackling weak spots one by one', source: 'Adaptive learning' }
         ],
         Cool: [
-          { title: '同伴效应', description: '利用学生之间的相互影响，创造正向的学习/生活习惯', source: 'Study Together' },
-          { title: '沉浸反馈', description: '用音效/动效把枯燥练习变成"通关"，提升心流体验', source: '游戏化设计' },
-          { title: '番茄直播', description: '公开自己的专注计时，用"被看见"维持自律', source: '直播学习' }
+          { title: 'Peer effect', description: 'Leverage peer influence among students to build positive study/habit routines', source: 'Study Together' },
+          { title: 'Immersive feedback', description: 'Turn dull drills into "level-ups" with sound/FX to boost flow', source: 'Gamification design' },
+          { title: 'Pomodoro livestream', description: 'Make focus timers public; being "seen" sustains self-discipline', source: 'Live-study' }
         ],
         Outsider: [
-          { title: '错峰设计', description: '在用户不需要主动行动时提供服务，减少意志力消耗', source: '智能家居' },
-          { title: '社群共学', description: '陌生人在线组队共学，互相 accountable', source: '互助社区' },
-          { title: '奖励代币', description: '把学习成果兑换成可消费权益，连接真实世界', source: '代币经济' }
+          { title: 'Off-peak design', description: 'Serve users when they need not act, cutting willpower drain', source: 'Smart home' },
+          { title: 'Community co-learning', description: 'Strangers team up online to study together and stay accountable', source: 'Mutual-aid community' },
+          { title: 'Reward tokens', description: 'Redeem learning results for real-world perks, bridging to the real world', source: 'Token economy' }
         ]
       },
       office: {
         New: [
-          { title: '情境感知自动化', description: '根据用户状态自动触发服务（如进入办公室自动开启待办）', source: '智能办公' },
-          { title: '语音即日程', description: '一句话生成任务、会议与提醒，免去手动录入', source: '语音助手' },
-          { title: '异步协作流', description: '把协作拆成可随时接续的微任务，降低同步成本', source: '协作工具' }
+          { title: 'Context-aware automation', description: 'Auto-trigger services from user state (e.g. open to-dos on entering the office)', source: 'Smart office' },
+          { title: 'Voice-to-schedule', description: 'Generate tasks, meetings and reminders from one sentence, no manual entry', source: 'Voice assistant' },
+          { title: 'Async collaboration flow', description: 'Split collaboration into resumable micro-tasks, lowering sync cost', source: 'Collaboration tools' }
         ],
         Cool: [
-          { title: '微打断设计', description: '通过极小的打断（如震动、闪光）传递关键信息', source: '可穿戴设备' },
-          { title: '专注结界', description: '一键进入"免打扰"模式，自动代答与延后非紧急事项', source: '深度工作' },
-          { title: '成就墙', description: '把完成的任务可视化成成长轨迹，强化成就感', source: '游戏化' }
+          { title: 'Micro-interruption design', description: 'Deliver key info through tiny interruptions (vibration, flash)', source: 'Wearable devices' },
+          { title: 'Focus bubble', description: 'One-tap "do-not-disturb" that auto-replies and defers non-urgent items', source: 'Deep work' },
+          { title: 'Achievement wall', description: 'Visualize finished tasks as a growth trail to reinforce achievement', source: 'Gamification' }
         ],
         Outsider: [
-          { title: '无意识交互', description: '用户无需主动操作，系统自动完成（如自动存档、同步）', source: 'iCloud' },
-          { title: '环境智能', description: '会议室自动识别人数与议题，提前备好设备与资料', source: '空间计算' },
-          { title: '决策外包', description: '把低价值决策交给规则引擎，用户只做关键判断', source: '自动化' }
+          { title: 'Frictionless interaction', description: 'No active action needed; the system does it (auto-save, sync)', source: 'iCloud' },
+          { title: 'Ambient intelligence', description: 'Meeting rooms auto-detect headcount and topic, prepping gear and docs', source: 'Spatial computing' },
+          { title: 'Decision outsourcing', description: 'Hand low-value decisions to a rules engine; users keep only key calls', source: '自动化' }
         ]
       },
       default: {
         New: [
-          { title: '订阅制思维', description: '从一次性购买转向持续服务订阅，创造持续价值', source: 'SaaS行业' },
-          { title: '场景化微服务', description: '把大需求拆成贴合具体场景的轻量服务', source: '服务设计' },
-          { title: '数据驱动自适应', description: '用行为数据动态优化体验，越用越懂用户', source: '增长黑客' }
+          { title: 'Subscription mindset', description: 'Shift from one-off purchase to ongoing subscription, creating continuous value', source: 'SaaS industry' },
+          { title: 'Contextual micro-services', description: 'Break big needs into scenario-fit lightweight services', source: 'Service design' },
+          { title: 'Data-driven adaptation', description: 'Use behavior data to refine experience, learning users the more they use it', source: 'Growth hacking' }
         ],
         Cool: [
-          { title: '游戏化反馈', description: '让用户行为获得即时、愉悦的反馈，提升参与度', source: 'Duolingo' },
-          { title: '惊喜元素', description: '在预期之外创造超预期体验', source: '迪士尼' },
-          { title: '沉浸叙事', description: '用故事线包裹产品流程，增强记忆点与情感', source: '体验设计' }
+          { title: 'Gamified feedback', description: 'Give users instant, joyful feedback on their actions to lift engagement', source: 'Duolingo' },
+          { title: 'Delightful surprises', description: 'Create above-expectation moments beyond the anticipated', source: 'Disney' },
+          { title: 'Immersive narrative', description: 'Wrap the product flow in a story line to strengthen memory hooks and emotion', source: 'Experience design' }
         ],
         Outsider: [
-          { title: '反向定制', description: '让用户参与产品定义过程，提升认同感', source: '乐高 Ideas' },
-          { title: '社区驱动', description: '让用户互相服务、互相帮助', source: 'Airbnb 社区' },
-          { title: '极端用户', description: '关注极端用户的极端需求，往往能发现真正机会', source: '设计思维' }
+          { title: 'Reverse customization', description: 'Let users join product definition, boosting a sense of ownership', source: 'LEGO Ideas' },
+          { title: 'Community-driven', description: 'Let users serve and help one another', source: 'Airbnb community' },
+          { title: 'Extreme users', description: 'Watch extreme users’ extreme needs — that is where real opportunities hide', source: 'Design thinking' }
         ]
       }
     };
@@ -1520,15 +1520,15 @@ Return JSON directly, no markdown code blocks.`;
   },
 
   /**
-   * 调用 DeepSeek 生成全新的 NCO 灵感卡片（刷新用）。
+   * 调用 DeepSeek 生成全新的 NCO 灵感卡片（刷新用)。
    * @returns {Promise<Array<{type,title,description,source}>>}
    */
   async generateNcoInspirationsAI(projectContext, perType = 3) {
-    const ctx = (projectContext || '').slice(0, 600) || '一个尚未明确主题的创新项目';
+    const ctx = (projectContext || '').slice(0, 600) || 'an innovation project whose theme is not yet defined';
     if (this._hasAI()) {
       const prompt =
         `项目背景：\n${ctx}\n\n` +
-        `请从 New（全新做法）、Cool（有趣炫酷）、Outsider（跨界借鉴）三个视角，各产出 ${perType} 张"灵感卡片"。\n` +
+        `From three lenses — New (fresh approach), Cool (fun & cool), Outsider (cross-domain borrow) — produce ${perType} 张"灵感卡片"。\n` +
         `每张卡片要具体、可启发创意，紧扣项目背景。\n` +
         `以 JSON 返回：{"New":[{"title":"","description":"","source":""}],"Cool":[...],"Outsider":[...]}。`;
       try {
@@ -1544,7 +1544,7 @@ Return JSON directly, no markdown code blocks.`;
                 type,
                 title: String(item.title),
                 description: String(item.description || ''),
-                source: String(item.source || 'AI 灵感')
+                source: String(item.source || 'AI inspiration')
               });
             }
           });
@@ -1554,33 +1554,33 @@ Return JSON directly, no markdown code blocks.`;
         console.warn('[AI] generateNcoInspirationsAI fallback:', e.message);
       }
     }
-    // 回退：静态池（根据上下文）
+    // 回退：静态池（根据上下文)
     return this.getNcoInspirations('', ctx, perType);
   },
 
   /**
-   * AI 强制连接（Forced Connection）：把 HMW 问题与灵感卡片交叉组合，生成创意。
+   * AI forced connection（Forced Connection)：把 HMW Problem与灵感卡片交叉组合，生成创意。
    * @param {Array<string>} hmwList - 已选的最佳 HMW 文本数组
    * @param {Array<{title,description,type}>} inspirationCards - 已收藏的灵感卡片
    * @param {string} projectContext - 项目上下文
    * @returns {Promise<Array<{title,description,source}>>}
    */
   async generateForcedConnectionIdeas(hmwList, inspirationCards, projectContext) {
-    const hmw = (hmwList && hmwList.length) ? hmwList : ['（未选定具体 HMW，请基于项目核心问题）'];
+    const hmw = (hmwList && hmwList.length) ? hmwList : ['(no specific HMW selected; base on the project’s core problem)'];
     const insp = (inspirationCards && inspirationCards.length) ? inspirationCards : [];
     const ctx = (projectContext || '').slice(0, 500) || '';
 
     const hmwText = hmw.map((h, i) => `${i + 1}. ${h}`).join('\n');
     const inspText = insp.length
       ? insp.map((c, i) => `${i + 1}. [${c.type}] ${c.title} —— ${c.description}`).join('\n')
-      : '（暂无收藏的灵感卡片，请基于 HMW 自行发散）';
+      : '(no saved inspiration cards; diverge from the HMW yourself)';
 
     if (this._hasAI()) {
       const prompt =
-        `【项目背景】\n${ctx}\n\n` +
-        `【最佳 HMW 问题】\n${hmwText}\n\n` +
-        `【灵感卡片】\n${inspText}\n\n` +
-        `请用"强制连接(Forced Connection)"创新思维：把上述 HMW 问题与灵感卡片进行跨领域交叉组合，` +
+        `[Project background] \n${ctx}\n\n` +
+        `[Best HMW questions] \n${hmwText}\n\n` +
+        `[Inspiration cards] \n${inspText}\n\n` +
+        `请用"强制连接(Forced Connection)"创新思维：把上述 HMW Problem与灵感卡片进行跨领域交叉组合，` +
         `产生 4-6 个具体、新颖、可落地的创意方案。每个创意要说明它连接了哪个 HMW 与哪些灵感。\n` +
         `以 JSON 返回：{"ideas":[{"title":"创意名","description":"一句话说明创意 + 来源标注(连接了 HMW? 与灵感?)","source":"来源标注"}]}`;
       try {
@@ -1593,7 +1593,7 @@ Return JSON directly, no markdown code blocks.`;
             .map(x => ({
               title: String(x.title),
               description: String(x.description || ''),
-              source: String(x.source || 'AI 强制连接')
+              source: String(x.source || 'AI forced connection')
             }));
           if (ideas.length) return ideas;
         }
@@ -1609,20 +1609,20 @@ Return JSON directly, no markdown code blocks.`;
 
   _localForcedConnection(hmw, insp, ctx) {
     const ideas = [];
-    const hmwBase = hmw[0] || '解决核心问题';
+    const hmwBase = hmw[0] || 'solve the core problem';
     const picks = insp.slice(0, 3);
     if (picks.length === 0) {
       return [
-        { title: '最小可行性实验', description: `围绕「${hmwBase}」，先做一个 1 周的小实验验证最风险的假设。`, source: '本地回退' },
-        { title: '用户共创工作坊', description: `邀请目标用户一起针对「${hmwBase}」头脑风暴，把用户变成共创者。`, source: '本地回退' }
+        { title: 'Minimum viable experiment', description: `Around “${hmwBase}”, run a 1-week small experiment to validate the riskiest assumption.`, source: 'local fallback' },
+        { title: 'User co-creation workshop', description: `Invite target users to brainstorm on “${hmwBase}”, turning users into co-creators.`, source: 'local fallback' }
       ];
     }
     picks.forEach((c, i) => {
       const other = picks[(i + 1) % picks.length];
       ideas.push({
         title: `${c.title} × ${hmwBase.slice(0, 12)}`,
-        description: `把「${c.title}」(来自${c.type}灵感) 与 HMW「${hmwBase}」强制连接：借鉴「${c.description}」，并融合「${other.title}」的思路，形成差异化方案。`,
-        source: `连接 ${c.type}灵感 + HMW`
+        description: `Connect “${c.title}” (from ${c.type} inspiration) with HMW “${hmwBase}” via forced connection: borrow “${c.description}", and blend in "${other.title}” to form a differentiated solution.`,
+        source: `Connect ${c.type} inspiration + HMW`
       });
     });
     return ideas.slice(0, 5);
@@ -1636,8 +1636,8 @@ Return JSON directly, no markdown code blocks.`;
     const ctx = (projectContext || '').slice(0, 400) || '';
     if (this._hasAI()) {
       const prompt =
-        `【项目背景】${ctx}\n【创意】标题：${idea.title}\n描述：${idea.description}\n\n` +
-        `请从四个维度为这个创意打分（各 1-5 的整数）：可行性(feasibility)、用户价值(userValue)、商业价值(businessValue)、创新程度(innovation)。\n` +
+        `[Project background] ${ctx}\n【创意】标题：${idea.title}\n描述：${idea.description}\n\n` +
+        `请从四个维度为这个创意打分（各 1-5 的整数)：可行性(feasibility)、用户价值(userValue)、商业价值(businessValue)、创新程度(innovation)。\n` +
         `以 JSON 返回：{"feasibility":n,"userValue":n,"businessValue":n,"innovation":n}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
@@ -1663,20 +1663,20 @@ Return JSON directly, no markdown code blocks.`;
   },
 
   /**
-   * 四维拷问：基于最佳创意，生成 用户/商业/技术/生态 四个维度的拷问问题。
+   * Four-dimension challenge：基于最佳创意，生成 用户/商业/技术/生态 四个维度的拷问Problem。
    * @returns {Promise<{user:Array,{q:string,a:string},business:...,technical:...,ecosystem:...}>}
    */
   async generateShapeQuestions(bestIdea, userProblem, briefText) {
     const ideaTitle = (bestIdea && bestIdea.title) || '我们的核心创意';
     const ideaDesc = (bestIdea && bestIdea.description) || '';
-    const problem = (userProblem || '').slice(0, 200) || '目标用户的核心问题';
+    const problem = (userProblem || '').slice(0, 200) || '目标用户的核心Problem';
     const brief = (briefText || '').slice(0, 800);
 
     if (this._hasAI()) {
       const prompt =
-        `【项目简报】${brief}\n【用户问题】${problem}\n【最佳创意】${ideaTitle} ${ideaDesc}\n\n` +
+        `[Project brief] ${brief}\n[User problem] ${problem}\n[Best idea] ${ideaTitle} ${ideaDesc}\n\n` +
         `请从 用户(User) / 商业(Business) / 技术(Technical) / 生态(Ecosystem) 四个维度，` +
-        `各提出 2-3 个针对该创意的尖锐拷问问题（每题一句，聚焦风险、假设与可行性）。\n` +
+        `各提出 2-3 个针对该创意的尖锐拷问Problem（每题一句，聚焦风险、假设与可行性)。\n` +
         `以 JSON 返回：{"user":[{"q":"","a":""}],"business":[{"q":"","a":""}],"technical":[{"q":"","a":""}],"ecosystem":[{"q":"","a":""}]}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
@@ -1701,20 +1701,20 @@ Return JSON directly, no markdown code blocks.`;
   _shapeQuestionsTemplate(ideaTitle, problem) {
     return {
       user: [
-        { q: `这个方案真正解决的，是「${problem}」还是我们自以为的问题？`, a: '' },
-        { q: `目标用户是否愿意为「${ideaTitle}」改变现有习惯？`, a: '' }
+        { q: `Does this solution truly solve “${problem}”, or the problem we only imagine?`, a: '' },
+        { q: `Would the target user change existing habits for “${ideaTitle}”?`, a: '' }
       ],
       business: [
-        { q: `「${ideaTitle}」靠什么挣钱？单位经济模型是否成立？`, a: '' },
-        { q: `如果大厂明天抄走这个创意，我们的护城河在哪？`, a: '' }
+        { q: `"${ideaTitle}” make money? Does the unit economics hold?`, a: '' },
+        { q: `If a big company copies this idea tomorrow, where is our moat?`, a: '' }
       ],
       technical: [
-        { q: `最小可行版本(MVP)能否在 2 周内用现有技术搭出来？`, a: '' },
-        { q: `最可能出现的技术风险或依赖是什么？`, a: '' }
+        { q: `Can a minimum viable version (MVP) be built with current tech within 2 weeks?`, a: '' },
+        { q: `What are the most likely technical risks or dependencies?`, a: '' }
       ],
       ecosystem: [
-        { q: `这个方案会触动哪些利益相关方，谁会反对？`, a: '' },
-        { q: `它是否符合行业监管 / 平台规则？`, a: '' }
+        { q: `Which stakeholders does this touch, and who would object?`, a: '' },
+        { q: `Does it comply with industry regulation / platform rules?`, a: '' }
       ]
     };
   },
@@ -1724,11 +1724,11 @@ Return JSON directly, no markdown code blocks.`;
    * @returns {Promise<{oneLiner:string,features:string[],characteristics:string[],boundaries:string[]}>}
    */
   async generateMinConcept(contextText) {
-    const ctx = (contextText || '').slice(0, 1500) || '（暂无上下文）';
+    const ctx = (contextText || '').slice(0, 1500) || '(no context yet)';
     if (this._hasAI()) {
       const prompt =
-        `【上下文】${ctx}\n\n请基于以上内容，给出一个最小可行概念方案(MVP)。\n` +
-        `要求：一句话定义(oneLiner)；3-5 个功能与特性(features)；2-3 个产品特性(characteristics)；2-4 条明确"不做什么"的边界(boundaries)。\n` +
+        `[Context] ${ctx}\n\n请基于以上内容，给出一个最小可行概念方案(MVP)。\n` +
+        `要求：一句话定义(oneLiner)；3-5 个功能与特性(features)；2-3 个Product特性(characteristics)；2-4 条明确"不做什么"的边界(boundaries)。\n` +
         `以 JSON 返回：{"oneLiner":"","features":[""],"characteristics":[""],"boundaries":[""]}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
@@ -1748,33 +1748,33 @@ Return JSON directly, no markdown code blocks.`;
       }
     }
     return {
-      oneLiner: '一个聚焦核心价值的轻量方案（请基于上下文补充一句话定义）。',
-      features: ['核心功能 A', '核心功能 B', '辅助功能 C'],
-      characteristics: ['易上手', '可快速验证'],
-      boundaries: ['暂不做平台级扩展', '暂不支持多端同步']
+      oneLiner: 'A lightweight solution focused on core value (add a one-line definition from the context).',
+      features: ['Core feature A', 'Core feature B', 'Aux feature C'],
+      characteristics: ['Easy to start', 'Quick to validate'],
+      boundaries: ['No platform-level expansion for now', 'No multi-device sync yet']
     };
   },
 
   /**
-   * 用户体验故事板：基于概念方案生成 6 卡描述。
+   * User experience storyboard：基于概念方案生成 6 卡描述。
    * @returns {Promise<{cards:Array<{key,title,desc}>}>}
    */
   async generateStoryboard(conceptText) {
-    const ctx = (conceptText || '').slice(0, 1500) || '（暂无概念方案）';
+    const ctx = (conceptText || '').slice(0, 1500) || '(no concept yet)';
     const themes = [
-      { key: 'problem', title: '用户面对的问题' },
-      { key: 'opportunity', title: '我们的创新机遇' },
-      { key: 'contact', title: '用户接触新的概念方案' },
-      { key: 'usage', title: '用户使用新方案解决问题' },
-      { key: 'outcome', title: '用户得到的结果' },
-      { key: 'feeling', title: '用户的感受和表达' }
+      { key: 'problem', title: 'The user’s problem' },
+      { key: 'opportunity', title: 'Our innovation opportunity' },
+      { key: 'contact', title: 'User meets the new concept' },
+      { key: 'usage', title: 'User applies the new solution' },
+      { key: 'outcome', title: 'The result the user gets' },
+      { key: 'feeling', title: 'The user’s feeling & expression' }
     ];
     if (this._hasAI()) {
       const prompt =
-        `【概念方案】${ctx}\n\n请用 6 个固定场景讲述用户故事，顺序与标题固定为：` +
+        `[Concept] ${ctx}\n\nTell the user story in 6 fixed scenes, in this fixed order and titles: ` +
         themes.map(t => t.title).join(' / ') + `\n` +
-        `每个场景写 1-2 句用户视角的描述。\n` +
-        `以 JSON 返回：{"cards":[{"key":"problem","title":"用户面对的问题","desc":""}, ... 共 6 个，key 与标题必须严格对应]}`;
+        `Write 1-2 user-perspective sentences per scene.\n` +
+        `Return JSON: {"cards":[{"key":"problem","title":"The user’s problem","desc":""}, ... exactly 6, key and title must match exactly]}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
           system: this._systemPersona(), temperature: 0.8, maxTokens: 900
@@ -1797,7 +1797,7 @@ Return JSON directly, no markdown code blocks.`;
       cards: themes.map(t => ({
         key: t.key,
         title: t.title,
-        desc: `（请描述用户在此刻的经历：${t.title}）`
+        desc: `(Describe the user’s experience at this moment: ${t.title})`
       }))
     };
   },
@@ -1807,10 +1807,10 @@ Return JSON directly, no markdown code blocks.`;
    * @returns {Promise<{purpose:string,scenario:string,hypotheses:string[],userValue:string}>}
    */
   async generateExamTestPlan(contextText) {
-    const ctx = (contextText || '').slice(0, 1500) || '（暂无上下文）';
+    const ctx = (contextText || '').slice(0, 1500) || '(no context yet)';
     if (this._hasAI()) {
       const prompt =
-        `【上下文】${ctx}\n\n为这个方案设计一份轻量测试计划。\n` +
+        `[Context] ${ctx}\n\n为这个方案设计一份轻量测试计划。\n` +
         `以 JSON 返回：{"purpose":"测试目的","scenario":"测试场景(含找谁测)","hypotheses":["假设1","假设2"],"userValue":"用户价值"}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
@@ -1829,23 +1829,23 @@ Return JSON directly, no markdown code blocks.`;
       }
     }
     return {
-      purpose: '验证用户是否愿意在真实场景中使用我们的核心方案解决其问题。',
-      scenario: '邀请 5-8 位目标用户，在贴近真实的场景中进行无引导试用观察。',
-      hypotheses: ['用户能在 1 分钟内理解核心价值', '用户愿意完成关键动作'],
-      userValue: '为用户节省了时间 / 降低了不确定性。'
+      purpose: 'Validate whether users are willing to use our core solution to solve their problem in a real scenario.',
+      scenario: 'Invite 5-8 target users for unguided trial observation in a near-real scenario.',
+      hypotheses: ['Users grasp the core value within 1 minute', 'Users are willing to complete the key action'],
+      userValue: 'Saves users time / reduces uncertainty.'
     };
   },
 
   /**
-   * 测试报告：基于测试计划+观察生成 4 类内容。
+   * Test report：基于测试计划+观察生成 4 类内容。
    * @returns {Promise<{effectiveValue:string,invalidValue:string,newProblems:string,newOpportunities:string}>}
    */
   async generateExamTestReport(contextText) {
-    const ctx = (contextText || '').slice(0, 1500) || '（暂无上下文）';
+    const ctx = (contextText || '').slice(0, 1500) || '(no context yet)';
     if (this._hasAI()) {
       const prompt =
-        `【测试计划与观察】${ctx}\n\n请基于观察撰写测试报告，诚实不自我欺骗。\n` +
-        `以 JSON 返回：{"effectiveValue":"验证有效的价值","invalidValue":"错误/无效的价值","newProblems":"新发现的问题","newOpportunities":"新机会/信息"}`;
+        `[Test plan & observations] ${ctx}\n\n请基于观察撰写Test report，诚实不自我欺骗。\n` +
+        `以 JSON 返回：{"effectiveValue":"验证有效的价值","invalidValue":"错误/无效的价值","newProblems":"新发现的Problem","newOpportunities":"新机会/信息"}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
           system: this._systemPersona(), temperature: 0.6, maxTokens: 900
@@ -1863,10 +1863,10 @@ Return JSON directly, no markdown code blocks.`;
       }
     }
     return {
-      effectiveValue: '（请填写验证有效的价值）',
-      invalidValue: '（请填写被证伪的假设）',
-      newProblems: '（请填写新发现的问题）',
-      newOpportunities: '（请填写意外正向发现）'
+      effectiveValue: '(Fill in the value that was validated)',
+      invalidValue: '(Fill in the hypothesis that was falsified)',
+      newProblems: '(Fill in the newly found problems)',
+      newOpportunities: '(Fill in the unexpected positive finding)'
     };
   },
 
@@ -1875,11 +1875,11 @@ Return JSON directly, no markdown code blocks.`;
    * @returns {Promise<{pitch:string}>}
    */
   async generateElevatorPitch(contextText) {
-    const ctx = (contextText || '').slice(0, 1200) || '（暂无上下文）';
+    const ctx = (contextText || '').slice(0, 1200) || '(no context yet)';
     if (this._hasAI()) {
       const prompt =
-        `【上下文】${ctx}\n\n写一段 30 秒电梯演讲，套用结构：` +
-        `我们为【目标用户】提供了【方案】，解决了【问题】，带来【价值】。\n` +
+        `[Context] ${ctx}\n\n写一段 30 秒电梯演讲，套用结构：` +
+        `We provide [solution] for [target user], solving [problem] and delivering [value].\n` +
         `以 JSON 返回：{"pitch":""}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
@@ -1890,19 +1890,19 @@ Return JSON directly, no markdown code blocks.`;
         console.warn('[AI] generateElevatorPitch fallback:', e.message);
       }
     }
-    return { pitch: '我们为【目标用户】提供了【方案】，解决了【问题】，带来【价值】。' };
+    return { pitch: 'We provide [solution] for [target user], solving [problem] and delivering [value].' };
   },
 
   async generateExamFourDimEval(contextText) {
-    const ctx = (contextText || '').slice(0, 1500) || '（暂无上下文）';
+    const ctx = (contextText || '').slice(0, 1500) || '(no context yet)';
     if (this._hasAI()) {
       const prompt =
-        `【上下文】${ctx}\n\n基于以下创新项目的概念方案与测试发现，对方案做四维评估（每项 1-5 分，并给出一句依据）：\n` +
+        `[Context] ${ctx}\n\n基于以下创新项目的概念方案与测试发现，对方案做四维评估（每项 1-5 分，并给出一句依据)：\n` +
         `- 用户价值 User Value\n- 商业价值 Business Value\n- 技术可行性 Feasibility\n- 创新程度 Innovation\n\n` +
         `请只返回 JSON：{"scores":{"userValue":<1-5>,"businessValue":<1-5>,"feasibility":<1-5>,"innovation":<1-5>},"reasons":{"userValue":"","businessValue":"","feasibility":"","innovation":""}}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
-          system: '你是严格的创新项目评审专家，基于事实与数据打分，避免夸大。只输出 JSON。',
+          system: 'You are a strict innovation-project reviewer. Score on facts and data, avoid exaggeration. Output JSON only.',
           temperature: 0.3, maxTokens: 800
         });
         if (obj && obj.scores) {
@@ -1928,25 +1928,25 @@ Return JSON directly, no markdown code blocks.`;
   _modeSystem(mode) {
     const prompts = {
       brainstorm: [
-        '你是 Eureka Lite 的「发散师」，任务是帮助用户开阔思路、探寻更多可能性。',
-        '你永远不否定用户的任何想法，只说"对，还有呢？"。',
-        '基于用户当前所处阶段（RISE）和已填写内容，提出 3-4 条发散性的建议或引导问题。',
-        '每条建议以 ✅ 开头，一句话（25 字内）。',
-        '最终以一个🌱 行动提示结尾。'
+        'You are Eureka Lite’s "Divergence coach", helping users broaden thinking and explore more possibilities.',
+        'You never reject any idea; you only say "Yes, and what else?".',
+        'Based on the user’s current stage (RISE) and what they’ve filled, propose 3-4 divergent suggestions or guiding questions.',
+        'Each suggestion starts with ✅, one sentence (under 25 words).',
+        'End with a 🌱 action prompt.'
       ].join(' '),
       critique: [
-        '你是 Eureka Lite 的「批判师」，任务是帮助用户识别盲点和风险。',
-        '你不是在打击用户，而是像投资人一样诚恳地质疑：这个假设成立吗？还有什么风险？',
-        '基于用户当前阶段和已填写内容，提出 3-4 条尖锐但建设性的挑战。',
-        '每条挑战以 ⚠️ 开头，一句话（25 字内）。',
-        '最终以一个📌 关键风险总结结尾。'
+        'You are Eureka Lite’s "Critique coach", helping users spot blind spots and risks.',
+        'You are not putting the user down; you question sincerely like an investor: does this assumption hold? what other risks?',
+        'Based on the user’s stage and input, raise 3-4 sharp but constructive challenges.',
+        'Each challenge starts with ⚠️, one sentence (under 25 words).',
+        'End with a 📌 key-risk summary.'
       ].join(' '),
       research: [
-        '你是 Eureka Lite 的「分析师」，任务是帮助用户补充事实依据。',
-        '基于用户当前阶段和已填写内容，指出需要验证的假设和获取数据的方向。',
-        '提出 3-4 条调研/数据/事实类的建议。',
-        '每条建议以 🔎 开头，一句话（25 字内）。',
-        '最终以一个📊 建议验证清单结尾。'
+        'You are Eureka Lite’s "Analyst", helping users gather factual grounding.',
+        'Based on the user’s stage and input, point out assumptions to validate and where to get data.',
+        'Propose 3-4 research / data / fact-based suggestions.',
+        'Each suggestion starts with 🔎, one sentence (under 25 words).',
+        'End with a 📊 suggested validation checklist.'
       ].join(' ')
     };
     return prompts[mode] || prompts.brainstorm;
@@ -1955,9 +1955,9 @@ Return JSON directly, no markdown code blocks.`;
   /** 根据模式和当前上下文生成 AI 回复 */
   async generateAIModeResponse(mode, contextText, userInput) {
     const system = this._modeSystem(mode);
-    const ctx = (contextText || '').slice(0, 800) || '用户正在使用 Eureka Lite 进行创新项目';
+    const ctx = (contextText || '').slice(0, 800) || 'The user is running an innovation project in Eureka Lite';
     const userPart = (userInput || '').trim().slice(0, 200);
-    const prompt = `【项目上下文】${ctx}\n${userPart ? '【用户输入】' + userPart + '\n' : ''}\n请根据你的角色给出回应。`;
+    const prompt = `[Project context] ${ctx}\n${userPart ? '[User input] ' + userPart + '\n' : ''}\nPlease respond according to your role.`;
     if (this._hasAI()) {
       try {
         const r = await window.AIService.complete(prompt, { system, temperature: 0.7, maxTokens: 400 });
@@ -1968,9 +1968,9 @@ Return JSON directly, no markdown code blocks.`;
     }
     // 无 AI 时的回退模板
     const fallbacks = {
-      brainstorm: '✅ 想想用户在这个场景下还有没有被忽略的需求？\n✅ 有没有其他行业的类似解决方案可以借鉴？\n✅ 如果资源不限，你会怎么做？\n✅ 用户的真正动机是什么？\n🌱 试试从"为什么用户会这样做"开始思考。',
-      critique: '⚠️ 你的方案解决了用户愿意付费的问题吗？\n⚠️ 有没有数据支持你的假设？\n⚠️ 如果竞品复制你的方案，你的壁垒是什么？\n📌 关键风险：假设未经验证。',
-      research: '🔎 该领域有哪些成功的商业案例？\n🔎 目标用户群体有多大？\n🔎 现有解决方案为什么不够好？\n📊 建议先做 5 个竞品分析。'
+      brainstorm: '✅ Think: are there overlooked needs in this scenario?\n✅ Are there similar solutions in other industries to borrow from?\n✅ If resources were unlimited, what would you do?\n✅ What is the user’s real motivation?\n🌱 Try starting from "why does the user behave this way".',
+      critique: '⚠️ Does your solution address a problem users will pay for?\n⚠️ Is there data supporting your assumption?\n⚠️ If competitors copy your solution, what is your moat?\n📌 Key risk: assumption unvalidated.',
+      research: '🔎 What successful business cases exist in this field?\n🔎 How large is the target user group?\n🔎 Why are existing solutions not good enough?\n📊 Suggest starting with 5 competitor analyses.'
     };
     return fallbacks[mode] || fallbacks.brainstorm;
   }
