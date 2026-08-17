@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 980" font-family="'PingFang SC','Microsoft YaHei','Hiragino Sans GB',sans-serif">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#4F46E5" flood-opacity="0.12"/></filter>
+  </defs>
+  <rect x="0" y="0" width="760" height="980" fill="#EDEFF8"/>
+  <rect x="22" y="22" width="716" height="936" rx="20" fill="#FFFFFF" filter="url(#sh)"/>
+  <rect x="22" y="22" width="716" height="48" rx="20" fill="#F4F5FB"/>
+  <rect x="22" y="54" width="716" height="16" fill="#F4F5FB"/>
+  <circle cx="50" cy="46" r="6" fill="#FF5F57"/><circle cx="72" cy="46" r="6" fill="#FEBC2E"/><circle cx="94" cy="46" r="6" fill="#28C840"/>
+  <text x="150" y="50" font-size="12" fill="#9AA0B4">eureka-lite · 构建 Shape</text>
+
+  <g transform="translate(0,70)">
+    <circle cx="64" cy="36" r="18" fill="url(#brand)"/><text x="64" y="42" font-size="18" fill="#fff" text-anchor="middle">✦</text>
+    <text x="94" y="43" font-size="20" font-weight="700" fill="#1F2233">Eureka Lite</text>
+    <rect x="614" y="20" width="108" height="32" rx="16" fill="url(#brand)"/><text x="668" y="40" font-size="13" fill="#fff" text-anchor="middle">⚙ AI 助手</text>
+  </g>
+
+  <g transform="translate(48,140)">
+    <rect width="160" height="30" rx="15" fill="#E8EAF6"/><text x="80" y="20" font-size="12" fill="#9AA0B4" text-anchor="middle">① 揭示</text>
+    <rect x="172" width="160" height="30" rx="15" fill="#E8EAF6"/><text x="252" y="20" font-size="12" fill="#9AA0B4" text-anchor="middle">② 启发</text>
+    <rect x="344" width="160" height="30" rx="15" fill="url(#brand)"/><text x="424" y="20" font-size="12" fill="#fff" text-anchor="middle">③ 构建</text>
+    <rect x="516" width="160" height="30" rx="15" fill="#E8EAF6"/><text x="596" y="20" font-size="12" fill="#9AA0B4" text-anchor="middle">④ 验证</text>
+  </g>
+
+  <text x="48" y="200" font-size="17" font-weight="800" fill="#1F2233">最小概念 · Minimum Concept</text>
+  <text x="48" y="224" font-size="12.5" fill="#6B7280">把创意收成一句话方案 + 三张汇总卡，整体感一目了然</text>
+
+  <!-- card features -->
+  <g transform="translate(48,244)">
+    <rect width="340" height="220" rx="16" fill="#fff" stroke="#E6E8F4"/>
+    <rect x="0" y="0" width="340" height="44" rx="16" fill="#EEF0FF"/>
+    <rect x="0" y="22" width="340" height="22" fill="#EEF0FF"/>
+    <text x="20" y="29" font-size="14" font-weight="700" fill="#1F2233">⚙ 功能 Features</text>
+    <rect x="262" y="11" width="58" height="22" rx="11" fill="#4F46E5"/><text x="291" y="26" font-size="11" fill="#fff" text-anchor="middle">3 条</text>
+    <text x="20" y="76" font-size="12.5" fill="#374151">· 提醒喝水的智能杯盖</text>
+    <text x="20" y="104" font-size="12.5" fill="#374151">· 温感进度环显示喝水量</text>
+    <text x="20" y="132" font-size="12.5" fill="#374151">· App 打卡与好友同步</text>
+    <rect x="20" y="156" width="120" height="28" rx="14" fill="#F4F1FF"/><text x="80" y="175" font-size="11.5" fill="#7C3AED" text-anchor="middle">＋ 加一行</text>
+    <rect x="150" y="156" width="70" height="28" rx="14" fill="#F4F1FF"/><text x="185" y="175" font-size="11.5" fill="#7C3AED" text-anchor="middle">清空</text>
+  </g>
+
+  <!-- card characteristics -->
+  <g transform="translate(404,244)">
+    <rect width="340" height="220" rx="16" fill="#fff" stroke="#E6E8F4"/>
+    <rect x="0" y="0" width="340" height="44" rx="16" fill="#EEF0FF"/>
+    <rect x="0" y="22" width="340" height="22" fill="#EEF0FF"/>
+    <text x="20" y="29" font-size="14" font-weight="700" fill="#1F2233">✨ 特性 Characteristics</text>
+    <rect x="264" y="11" width="58" height="22" rx="11" fill="#4F46E5"/><text x="293" y="26" font-size="11" fill="#fff" text-anchor="middle">3 条</text>
+    <text x="20" y="76" font-size="12.5" fill="#374151">· 极简，不打扰</text>
+    <text x="20" y="104" font-size="12.5" fill="#374151">· 随身，不占地</text>
+    <text x="20" y="132" font-size="12.5" fill="#374151">· 低功耗，续航久</text>
+    <rect x="20" y="156" width="120" height="28" rx="14" fill="#F4F1FF"/><text x="80" y="175" font-size="11.5" fill="#7C3AED" text-anchor="middle">＋ 加一行</text>
+    <rect x="150" y="156" width="70" height="28" rx="14" fill="#F4F1FF"/><text x="185" y="175" font-size="11.5" fill="#7C3AED" text-anchor="middle">清空</text>
+  </g>
+
+  <!-- card boundary full width -->
+  <g transform="translate(48,480)">
+    <rect width="696" height="150" rx="16" fill="#fff" stroke="#E6E8F4"/>
+    <rect x="0" y="0" width="696" height="44" rx="16" fill="#FFF1EC"/>
+    <rect x="0" y="22" width="696" height="22" fill="#FFF1EC"/>
+    <text x="20" y="29" font-size="14" font-weight="700" fill="#B45309">🚧 边界 Boundaries</text>
+    <rect x="618" y="11" width="58" height="22" rx="11" fill="#EA580C"/><text x="647" y="26" font-size="11" fill="#fff" text-anchor="middle">3 条</text>
+    <text x="20" y="78" font-size="12.5" fill="#374151">· 不做医疗诊断，只做提醒与记录</text>
+    <text x="20" y="104" font-size="12.5" fill="#374151">· 不替代水杯本身，先做外接杯盖</text>
+    <text x="20" y="130" font-size="12.5" fill="#374151">· 首版只做「提醒 + 记录」，不做社交商城</text>
+  </g>
+
+  <g transform="translate(48,652)">
+    <rect width="696" height="48" rx="14" fill="#F4F1FF"/>
+    <text x="22" y="30" font-size="12" fill="#5B21B6">💡 边界写清楚，方案才不会越做越大、最后啥都做不成</text>
+  </g>
+
+  <rect x="48" y="868" width="200" height="40" rx="20" fill="url(#brand)"/>
+  <text x="148" y="893" font-size="14" fill="#fff" text-anchor="middle">✨ AI 生成概念卡</text>
+</svg>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eureka Lite · 小红书风格介绍</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'PingFang SC','Microsoft YaHei','Hiragino Sans GB',sans-serif;
+    background: #f2f3f5;
+    color: #1f2233;
+    display: flex;
+    justify-content: center;
+    padding: 24px 12px 60px;
+  }
+  .phone {
+    width: 100%;
+    max-width: 430px;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(79,70,229,.18);
+  }
+  .topbar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-bottom: 1px solid #f0f0f3;
+    position: sticky; top: 0; background: #fff; z-index: 5;
+  }
+  .topbar .back { font-size: 20px; color: #333; }
+  .topbar .ttl { font-size: 15px; font-weight: 600; }
+  .topbar .share { margin-left: auto; font-size: 18px; color: #555; }
+  .author { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg,#4F46E5,#7C3AED);
+    color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px;
+    flex: 0 0 auto;
+  }
+  .author .name { font-size: 14px; font-weight: 600; }
+  .author .sub { font-size: 11px; color: #9aa0b4; margin-top: 2px; }
+  .author .follow {
+    margin-left: auto; background: #ff2e4d; color: #fff; border: none;
+    padding: 6px 16px; border-radius: 16px; font-size: 13px; font-weight: 600;
+  }
+  .cover { width: 100%; display: block; border-bottom: 1px solid #f3f3f6; }
+  .body { padding: 14px 16px 8px; }
+  .body h1 { font-size: 19px; font-weight: 800; line-height: 1.4; margin-bottom: 10px; }
+  .body p { font-size: 15px; line-height: 1.85; margin: 8px 0; color: #2c2f3a; }
+  .body .hl { color: #4F46E5; font-weight: 700; }
+  .body .sec { font-weight: 700; margin-top: 14px; }
+  .shot { width: 100%; border-radius: 14px; margin: 12px 0; border: 1px solid #eee; display: block; }
+  .cap { font-size: 12px; color: #9aa0b4; text-align: center; margin: -6px 0 10px; }
+  .tags { padding: 4px 16px 10px; }
+  .tags span { display: inline-block; color: #4F46E5; font-size: 13px; margin: 4px 8px 0 0; }
+  .bar {
+    display: flex; gap: 18px; padding: 12px 16px; border-top: 1px solid #f0f0f3;
+    color: #555; font-size: 13px; position: sticky; bottom: 0; background: #fff;
+  }
+  .bar .it { display: flex; align-items: center; gap: 5px; }
+  .bar .save { color: #ff2e4d; font-weight: 600; }
+  .note { text-align:center; font-size:11px; color:#b6bccb; padding:10px 0 2px; }
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="topbar">
+      <span class="back">‹</span>
+      <span class="ttl">笔记</span>
+      <span class="share">⤴</span>
+    </div>
+
+    <div class="author">
+      <div class="avatar">✦</div>
+      <div>
+        <div class="name">Eureka Lite 官方</div>
+        <div class="sub">轻量 AI 创新工作台</div>
+      </div>
+      <button class="follow">关注</button>
+    </div>
+
+    <img class="cover" src="assets/screenshots/shot-home.png" alt="Eureka Lite 首页" />
+
+    <div class="body">
+      <h1>挖到宝了！打工人也能用的「创新方法论」神器，免费还免注册 🚀</h1>
+
+      <p>宝子们，今天必须按头安利一个我最近在用的宝藏工具——<span class="hl">Eureka Lite</span> 🫶</p>
+      <p>不知道你们有没有这种时刻：脑子里有个点子，兴奋得不行，但真要落地，就卡在「然后呢？」「这真的有人需要吗？」😵‍💫 以前我会在空白文档前发呆一整天。直到遇到它👇</p>
+
+      <p class="sec">✨ 它是什么？</p>
+      <p>一个跑在浏览器里的「轻量 AI 创新工作台」。不用下载、不用注册，打开网页就能用，数据还只存在你自己的浏览器里，隐私安全感拉满 🔒</p>
+
+      <p class="sec">🧭 它把「创新」拆成了 4 步（RISE 法）</p>
+      <p>🔍 <span class="hl">揭示 Reveal</span>：先搞清用户到底痛在哪<br/>
+         💡 <span class="hl">启发 Inspire</span>：换个角度提问，让 AI 帮你头脑风暴、挑刺、查资料<br/>
+         🎯 <span class="hl">构建 Shape</span>：把创意收成一张「最小概念卡」，功能 / 特性 / 边界一目了然<br/>
+         📋 <span class="hl">验证 Exam</span>：动手小测试 + 电梯演讲，验证过再开做</p>
+
+      <img class="shot" src="assets/screenshots/shot-inspire.png" alt="AI 助手陪跑" />
+      <div class="cap">每一步都有 AI 陪跑：头脑风暴 / 批判 / 查资料</div>
+
+      <p>最戳我的是——<span class="hl">每一步都有 AI 陪跑</span> 🤖 三种模式：帮我头脑风暴 / 帮我批判 / 帮我查资料。卡壳了就叫它，比自己硬想快十倍。</p>
+
+      <img class="shot" src="assets/screenshots/shot-shape.png" alt="最小概念三张卡" />
+      <div class="cap">最小概念：功能 / 特性 / 边界 三张汇总卡</div>
+
+      <p class="sec">🎁 第一次用也不慌</p>
+      <p>内置了一个完整示例项目「MOMOS 智能补水杯」，跟着走一遍，整套流程秒懂。走完还能生成一张<span class="hl">「项目全景图」</span>，发给老板、投资人、队友都够用 ✅</p>
+
+      <img class="shot" src="assets/screenshots/shot-panorama.png" alt="项目全景图" />
+      <div class="cap">一页看懂整个项目 · 项目全景图</div>
+
+      <p class="sec">💡 适合谁？</p>
+      <p>· 想验证点子的创业者<br/>
+         · 要做用户研究的产物经理<br/>
+         · 教设计思维的老师<br/>
+         · 带工作坊的咨询师<br/>
+         · 以及每一个「我有个想法但不知道怎么开始」的打工人</p>
+
+      <p>免费、本地、隐私友好，这种良心工具真的不多了 🙏</p>
+      <p>👉 链接放评论区 / 直接搜 Eureka Lite 就能用<br/>用过的小伙伴来评论区聊聊，你最想拿它验证什么点子？👇</p>
+    </div>
+
+    <div class="tags">
+      <span>#创新方法</span><span>#产品设计</span><span>#AI工具</span><span>#效率神器</span>
+      <span>#产品经理</span><span>#创业</span><span>#设计思维</span><span>#打工人必备</span>
+      <span>#免费工具</span><span>#EurekaLite</span>
+    </div>
+
+    <div class="bar">
+      <span class="it">♡ 1.2k</span>
+      <span class="it">💬 236</span>
+      <span class="it save">⭐ 收藏</span>
+      <span class="it">↗ 分享</span>
+    </div>
+    <div class="note">提示：在浏览器里对页面截图即可保存为小红书长图；图片为 SVG，可导出 PNG 后上传。</div>
+  </div>
+</body>
+</html>
