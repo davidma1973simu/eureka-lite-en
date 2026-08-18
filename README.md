@@ -5,7 +5,7 @@
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-davidma1973simu.github.io%2Feureka--lite--en-4F46E5)](https://davidma1973simu.github.io/eureka-lite-en/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-![Eureka Lite Home](assets/screenshots/home.png)
+![Eureka Lite — real product home](assets/screenshots/real-home.png)
 
 ## What is Eureka Lite?
 

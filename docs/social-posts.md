@@ -1,17 +1,17 @@
 # Eureka Lite — Social Media Posts
 
-Use these posts with the assets in `assets/screenshots/`.
+Use these posts with the assets in `assets/screenshots/`. **All images are real, browser-rendered screenshots of the live product** (no mockups or illustrations).
 
-- `home.png` — product home + AI assistant
-- `module.png` — guided RISE workspace
-- `panorama.svg` — full project panorama
-- `social-card.png` — promotional share card
+- `real-home.png` — real product home + AI assistant
+- `real-shape-2.png` — real S2 minimum-concept 3-card workspace
+- `real-panorama.png` — real full project panorama (one-pager)
+- `real-inspire-2.png` — real Inspire ideas board
 
 ---
 
 ## 1. LinkedIn
 
-**Suggested image:** `social-card.png`
+**Suggested image:** `real-panorama.png`
 
 **Post copy:**
 
@@ -35,7 +35,7 @@ Use these posts with the assets in `assets/screenshots/`.
 
 ## 2. Twitter / X
 
-**Suggested image:** `social-card.png`
+**Suggested image:** `real-panorama.png`
 
 **Post copy:**
 
@@ -67,7 +67,7 @@ Use these posts with the assets in `assets/screenshots/`.
 
 ## 3. Facebook
 
-**Suggested image:** `home.png`
+**Suggested image:** `real-home.png`
 
 **Post copy:**
 
@@ -92,7 +92,7 @@ Use these posts with the assets in `assets/screenshots/`.
 
 ## 4. Instagram
 
-**Suggested image:** `social-card.png` (square-friendly, bold colors)
+**Suggested image:** `real-panorama.png` (square-friendly, bold colors)
 
 **Caption copy:**
 

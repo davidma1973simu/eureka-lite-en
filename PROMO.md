@@ -71,25 +71,27 @@ A product manager uses the four-dimension evaluation and elevator pitch screens 
 
 ## 5. Screenshots
 
+> All screenshots below are **real, browser-rendered captures of the live product** (no mockups or illustrations).
+
 ### Home & AI Assistant
 A clean entry point with categories and a built-in AI teammate.
 
-![Eureka Lite Home](assets/screenshots/home.png)
+![Eureka Lite — real product home](assets/screenshots/real-home.png)
 
 ### Guided module workspace
 Each RISE stage gives you a focused form, examples, and AI help.
 
-![Eureka Lite Module](assets/screenshots/module.png)
+![Eureka Lite — real S2 minimum-concept workspace (3 summary cards)](assets/screenshots/real-shape-2.png)
 
 ### Project Panorama
 See the full innovation journey on one page.
 
-![Eureka Lite Panorama](assets/screenshots/panorama.svg)
+![Eureka Lite — real project panorama (full RISE on one page)](assets/screenshots/real-panorama.png)
 
 ### Share card
 Use this visual for social posts, pitch decks, or landing pages.
 
-![Eureka Lite Share Card](assets/screenshots/social-card.png)
+![Eureka Lite — real project panorama (also good as a social share visual)](assets/screenshots/real-panorama.png)
 
 ---
 
