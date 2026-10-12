@@ -210,10 +210,10 @@ class EurekaLite {
           <!-- Quick actions -->
           <div class="ai-suggestion-section">
             <div class="ai-suggestion-section-title">${T('ai.quickActions', '快捷操作')}</div>
-            <button class="ai-suggestion-btn" data-action="suggest">📝 ${T('ai.suggest', '给我填写建议')}</button>
             <button class="ai-suggestion-btn" data-action="example">📚 ${T('ai.example', '参考案例')}</button>
             <button class="ai-suggestion-btn" data-action="prefill" id="${prefillId}">✨ ${T('ai.prefill', '帮我预填')}</button>
             <button class="ai-suggestion-btn" data-action="feedback">💬 ${T('ai.feedback', '给我反馈')}</button>
+            <button class="ai-suggestion-btn" data-action="expert">🙋 ${T('ai.expert', '求助人类专家')}</button>
           </div>
         </div>
       </div>
@@ -268,7 +268,7 @@ class EurekaLite {
         ${aiBanner}
         <!-- Greeting -->
         <section class="home-greeting">
-          <h1 class="greeting-time">${greeting}${userName !== '朋友' ? '，' + userName : ''}</h1>
+          <h1 class="greeting-time">${greeting}${user?.name ? (I18N.getLang() === 'en' ? ', ' : '，') + userName : ''}</h1>
           <p class="greeting-sub">今天我能帮你做些什么？</p>
         </section>
 
@@ -2042,7 +2042,6 @@ class EurekaLite {
     const aiOn = !!(window.AIService && window.AIService.isReady());
 
     switch (action) {
-      case 'suggest':
       case 'feedback': {
         this.showLoadingToast(aiOn ? '🤖 DeepSeek 正在分析您的内容...' : '正在分析您的内容...');
         try {
@@ -2092,7 +2091,47 @@ class EurekaLite {
         }
         break;
       }
+      case 'expert': {
+        this.showExpertHelpModal();
+        break;
+      }
     }
+  }
+
+  /**
+   * Show the "Ask a human expert" modal (WeChat contact)
+   */
+  showExpertHelpModal() {
+    const existing = document.getElementById('expertHelpModal');
+    if (existing) existing.remove();
+    const modal = document.createElement('div');
+    modal.id = 'expertHelpModal';
+    modal.className = 'modal-overlay expert-help-modal';
+    modal.innerHTML = `
+      <div class="modal-box">
+        <button class="modal-close" id="expertHelpClose">✕</button>
+        <h3 class="modal-title">🙋 ${I18N.t('expert.title', '求助人类专家')}</h3>
+        <p class="modal-desc">${I18N.t('expert.desc', '遇到 AI 也解决不了的问题？直接联系主理人获取一对一辅导。')}</p>
+        <div class="expert-qr">
+          <img src="assets/wechat-qr.png" alt="WeChat QR" onerror="this.parentNode.classList.add('qr-missing')" />
+          <span class="expert-qr-hint">${I18N.t('expert.qrHint', '微信二维码（图片待补充）')}</span>
+        </div>
+        <div class="expert-wechat">
+          <span class="expert-wechat-label">${I18N.t('expert.wechat', '微信号')}</span>
+          <code id="expertWechatId">sim4wisdom</code>
+          <button class="btn btn-sm" id="copyWechatBtn">${I18N.t('expert.copy', '复制')}</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.classList.add('show');
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target.id === 'expertHelpClose') modal.remove();
+    });
+    const copyBtn = modal.querySelector('#copyWechatBtn');
+    copyBtn?.addEventListener('click', () => {
+      navigator.clipboard?.writeText('sim4wisdom');
+      this.showToast(I18N.t('expert.copied', '微信号已复制：sim4wisdom'));
+    });
   }
 
   /**
@@ -3271,12 +3310,17 @@ class EurekaLite {
 
         if (Array.isArray(saved.findings)) {
           // New format: multiple findings
-          findings = saved.findings;
+          // Ensure each finding carries a POV status (exactly one active, rest stashed)
+          findings = (saved.findings || []).map((f, i) => ({
+            ...f,
+            povStatus: f.povStatus || (i === 0 ? 'active' : 'stashed')
+          }));
           activeFindingIndex = saved.activeFindingIndex || 0;
         } else if (saved.fact !== undefined) {
           // Old format: migrate to new format
           findings = [{
             sourceFinding: '',
+            povStatus: 'active',
             fact: saved.fact || '',
             interpret: saved.interpret || '',
             need: saved.need || '',
@@ -3316,6 +3360,7 @@ class EurekaLite {
       } else {
         newFindings.push({
           sourceFinding: src,
+          povStatus: 'stashed',
           fact: src,
           interpret: '',
           need: '',
@@ -3340,6 +3385,11 @@ class EurekaLite {
       }
     }
     findings = newFindings;
+
+    // ★ Ensure exactly one active POV (the rest are stashed)
+    if (!findings.some(f => f.povStatus === 'active')) {
+      if (findings[0]) findings[0].povStatus = 'active';
+    }
 
     // 如果当前激活的标签页已被清理，回到第一个
     const stillActive = findings[activeFindingIndex];
@@ -3433,14 +3483,16 @@ class EurekaLite {
             ${findings.map((f, i) => {
               const isCompleted = (f.completedSteps || []).length === 4;
               const stepCount = (f.completedSteps || []).length;
+              const isActivePov = f.povStatus === 'active';
               const tabTextRaw = (f.sourceFinding || f.fact || f.need || f.distill || I18N.t('find.tabFallback', '发现') + (i + 1)).trim();
               const tabText = this.escapeHtml(tabTextRaw.substring(0, 30));
               const showEllipsis = tabTextRaw.length > 30 ? '...' : '';
               return `
-                <div class="find-tab ${i === activeFindingIndex ? 'active' : ''} ${isCompleted ? 'completed' : ''}"
-                     data-index="${i}" id="findTab_${i}">
+                <div class="find-tab ${i === activeFindingIndex ? 'active' : ''} ${isCompleted ? 'completed' : ''} ${isActivePov ? 'pov-active' : 'pov-stashed'}"
+                     data-index="${i}" data-povstatus="${f.povStatus || 'stashed'}" id="findTab_${i}">
                   <span class="find-tab-badge">${isCompleted ? '✓' : (stepCount || '〇')}</span>
                   <span class="find-tab-text">${tabText}${showEllipsis}</span>
+                  <span class="find-tab-pov">${isActivePov ? '★ ' + I18N.t('find.activePov', '主 POV') : '📦 ' + I18N.t('find.stashedPov', '暂存')}</span>
                 </div>
               `;
             }).join('')}
@@ -3455,6 +3507,15 @@ class EurekaLite {
         <!-- FIND Steps for Active Finding -->
         ${activeFinding ? `
         <div class="find-container" id="findContainer" data-active-index="${activeFindingIndex}">
+          <div class="pov-status-bar" id="povStatusBar">
+            <span class="pov-status-tag ${activeFinding.povStatus === 'active' ? 'is-active' : 'is-stashed'}">${activeFinding.povStatus === 'active' ? '★ ' + I18N.t('find.activePov', '主 POV') : '📦 ' + I18N.t('find.stashedPov', '暂存')}</span>
+            <span class="pov-status-hint">${I18N.t('find.povHint', '一次只推进一个主 POV；其余洞察暂存，可在 R5 项目简报中调用或继续')}</span>
+            ${findings.length > 1 ? `
+              <button class="btn btn-sm ${activeFinding.povStatus === 'active' ? 'btn-stash' : 'btn-promote'}" id="togglePovBtn" data-index="${activeFindingIndex}">
+                ${activeFinding.povStatus === 'active' ? I18N.t('find.stashThis', '📦 暂存此 POV') : '★ ' + I18N.t('find.promoteThis', '设为主 POV')}
+              </button>
+            ` : ''}
+          </div>
           ${steps.map((step, index) => {
             const isCompleted = completedSteps.includes(step.key);
             const isActive = index === 0 || completedSteps.includes(steps[index - 1]?.key);
@@ -3802,7 +3863,8 @@ class EurekaLite {
             if (f.distill && f.distill.trim()) {
               allDistills.push({
                 source: f.sourceFinding || '',
-                distill: f.distill
+                distill: f.distill,
+                povStatus: f.povStatus || 'stashed'
               });
             }
           });
@@ -3890,11 +3952,11 @@ class EurekaLite {
               ` : ''}
               ${allDistills.length > 0 ? `
               <div class="briefing-field-compact">
-                <label class="briefing-field-label">🔍 FIND 洞察 (${allDistills.length}) — 可直接编辑</label>
+                <label class="briefing-field-label">🔍 ${I18N.t('briefing.allPov', '全部 POV 清单')} (${allDistills.length}) — ★ ${I18N.t('briefing.primaryPov', '主 POV 进入下一阶段')} · 📦 ${I18N.t('briefing.stashedPov', '暂存可稍后调用')}</label>
                 <div class="briefing-mini-list">
                   ${allDistills.map((d, i) => `
-                    <div class="briefing-mini-item" style="border-left-color: var(--inspire-primary);">
-                      ${d.source ? `<span class="briefing-mini-stage">${this.escapeHtml(d.source.substring(0, 20))}${d.source.length > 20 ? '...' : ''}</span>` : ''}
+                    <div class="briefing-mini-item ${d.povStatus === 'active' ? 'pov-active' : 'pov-stashed'}" style="border-left-color: ${d.povStatus === 'active' ? 'var(--inspire-primary)' : '#B8B8C8'};">
+                      <span class="briefing-mini-stage">${d.povStatus === 'active' ? '★ ' + I18N.t('briefing.primary', '主 POV') : '📦 ' + I18N.t('briefing.stashed', '暂存')}${d.source ? ' · ' + this.escapeHtml(d.source.substring(0, 16)) : ''}</span>
                       <textarea class="briefing-mini-textarea" id="briefingDistill_${i}" rows="2">${this.escapeHtml(d.distill || '')}</textarea>
                     </div>
                   `).join('')}
@@ -4976,27 +5038,17 @@ class EurekaLite {
         if (typeof raw === 'object' && raw !== null && raw.content) raw = raw.content;
         const findData = typeof raw === 'string' ? JSON.parse(raw) : raw;
         if (Array.isArray(findData.findings)) {
-          const collected = [];
-          findData.findings.forEach(f => {
-            const source = (f.sourceFinding || f.fact || '').trim();
-            let insight = '';
-            if (f.distill?.trim()) insight = f.distill.trim();
-            else if (f.distillOutput?.trim()) insight = f.distillOutput.trim();
-            else if (f.needOutput?.trim()) insight = f.needOutput.trim();
-            else if (f.interpretOutput?.trim()) insight = f.interpretOutput.trim();
-            else if (f.need?.trim()) insight = f.need.trim();
-            if (insight) collected.push({ sourceFinding: source, insight });
-          });
-          if (collected.length > 0) {
-            pov.insightList = collected;
-            if (collected.length === 1) {
-              pov.insight = collected[0].insight;
-            } else {
-              pov.insight = collected.map((it, i) => {
-                const prefix = it.sourceFinding ? `【${it.sourceFinding}】` : `Insight ${i + 1}`;
-                return `${i + 1}. ${prefix} ${it.insight}`;
-              }).join('\n\n');
-            }
+          // ★ Only the active (primary) POV advances to the next stage; stashed POVs are kept for later
+          const active = findData.findings.find(f => f.povStatus === 'active') || findData.findings[0];
+          let insight = '';
+          if (active?.distill?.trim()) insight = active.distill.trim();
+          else if (active?.distillOutput?.trim()) insight = active.distillOutput.trim();
+          else if (active?.needOutput?.trim()) insight = active.needOutput.trim();
+          else if (active?.interpretOutput?.trim()) insight = active.interpretOutput.trim();
+          else if (active?.need?.trim()) insight = active.need.trim();
+          if (insight) {
+            pov.insight = insight;
+            pov.insightList = [{ sourceFinding: active.sourceFinding || '', insight }];
             pov.from.insight = true;
           }
         } else if (findData.distillOutput || findData.distill) {
@@ -6225,6 +6277,31 @@ class EurekaLite {
       });
     });
 
+    // ★ POV status toggle: promote current finding to primary POV or stash it
+    const toggleBtn = document.getElementById('togglePovBtn');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const idx = parseInt(toggleBtn.dataset.index) || 0;
+        const findings = this.getFindFindings();
+        if (!findings[idx]) return;
+        const makeActive = findings[idx].povStatus !== 'active';
+        if (makeActive && !confirm(I18N.t('find.promoteConfirm', '设为“主 POV”后，后续 Inspire / Shape 阶段将基于该洞察推进。确定切换？'))) {
+          return;
+        }
+        if (!makeActive && !confirm(I18N.t('find.stashConfirm', '将此 POV 暂存后，它将不会进入下一阶段。确定暂存？'))) {
+          return;
+        }
+        findings.forEach((f, i) => {
+          if (i === idx) f.povStatus = makeActive ? 'active' : 'stashed';
+          else if (makeActive) f.povStatus = 'stashed';
+        });
+        // Ensure exactly one active POV remains
+        if (!findings.some(f => f.povStatus === 'active')) findings[0].povStatus = 'active';
+        this.saveFindFindings(stage, AppState.currentScreen || 1, findings, idx);
+        this.renderModule('reveal');
+      });
+    }
+
     // Find step buttons
     document.querySelectorAll('.find-step-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
@@ -6500,6 +6577,17 @@ class EurekaLite {
 
     // Confirm button
     document.getElementById('confirmBriefingBtn')?.addEventListener('click', () => {
+      // ★ Remind about stashed POVs that are not yet completed
+      const findings = this.getFindFindings();
+      const stashed = (findings || []).filter(f => f.povStatus === 'stashed' && (f.completedSteps || []).length < 4);
+      if (stashed.length > 0) {
+        const go = confirm(I18N.t('briefing.stashedWarn', '还有 {n} 个暂存洞察尚未完成 FIND 分析。\n\n确定提交项目简报？\n（点“确定”直接提交；点“取消”返回 R3 继续完成）').replace('{n}', stashed.length));
+        if (!go) {
+          if (typeof this.goToScreen === 'function') this.goToScreen('reveal', 3);
+          else this.renderModule('reveal');
+          return;
+        }
+      }
       this.saveBriefingData(stage);
       this.showToast('✅ 项目简报已确认并提交');
       // Mark stage as complete
@@ -7994,6 +8082,15 @@ class EurekaLite {
       { key: 'outcome', title: 'The result users get' },
       { key: 'feeling', title: 'Users’ feelings & expression' }
     ];
+    // Built-in sample illustrations (auto-shown when no custom image is provided)
+    const STORYBOARD_SAMPLES = {
+      problem: 'assets/storyboard/scene-1-problem.png',
+      opportunity: 'assets/storyboard/scene-2-opportunity.png',
+      contact: 'assets/storyboard/scene-3-contact.png',
+      usage: 'assets/storyboard/scene-4-usage.png',
+      outcome: 'assets/storyboard/scene-5-outcome.png',
+      feeling: 'assets/storyboard/scene-6-feeling.png'
+    };
     let cards = [];
     const saved = this._readCardJSON('shapeStoryboard');
     if (saved && Array.isArray(saved.cards) && saved.cards.length === 6) cards = saved.cards;
@@ -8003,16 +8100,22 @@ class EurekaLite {
       <div class="screen-content animate-fade-in-up">
         <h2 class="screen-title">S3 User Experience Storyboard</h2>
         <p class="screen-subtitle">Based on the minimal concept plan, use 6 scenes to tell the user’s story</p>
-        <div class="screen-hint"><span class="hint-icon">💡</span><span>Click “✨ AI Generate Storyboard” to auto-create 6 scene descriptions. You can edit them freely. Paste an image URL from your <a href="https://concept-canvas-go.base44.app" target="_blank" rel="noopener">Base44 canvas</a> below each card.</span></div>
+        <div class="screen-hint"><span class="hint-icon">💡</span><span>Click “✨ AI Generate Storyboard” to auto-create 6 scene descriptions in first person. You can edit them freely. Paste an image URL from your <a href="https://concept-canvas-go.base44.app" target="_blank" rel="noopener">Base44 canvas</a> below each card to replace the sample illustration.</span></div>
         <button class="btn btn-ai" id="genStoryboardBtn">✨ AI Generate Storyboard</button>
         <div class="storyboard-grid">
-          ${cards.map((c, i) => `
+          ${cards.map((c, i) => {
+            const sample = STORYBOARD_SAMPLES[c.key];
+            const preview = c.image
+              ? `<img class="storyboard-img-preview" src="${this.escapeHtml(c.image)}" alt="Scene ${i + 1}" />`
+              : (sample ? `<div class="storyboard-img-sample-wrap"><img class="storyboard-img-preview" src="${sample}" alt="Scene ${i + 1} sample" /><span class="storyboard-sample-badge">${I18N.t('storyboard.sample', '示例配图')}</span></div>` : '<div class="storyboard-img-placeholder">🖼️ Image placeholder</div>');
+            return `
             <div class="storyboard-card" data-key="${c.key}">
               <div class="storyboard-card-head"><span class="storyboard-num">${i + 1}</span><span class="storyboard-title">${this.escapeHtml(c.title)}</span></div>
               <textarea class="input textarea storyboard-desc" data-key="${c.key}" rows="3" placeholder="Describe what the user experiences at this moment...">${this.escapeHtml(c.desc || '')}</textarea>
-              ${c.image ? `<img class="storyboard-img-preview" src="${this.escapeHtml(c.image)}" alt="Scene ${i + 1}" />` : '<div class="storyboard-img-placeholder">🖼️ Image placeholder</div>'}
+              ${preview}
               <input type="text" class="input storyboard-img-url" data-key="${c.key}" placeholder="Image URL (optional, e.g. from Base44)" value="${this.escapeHtml(c.image || '')}" />
-            </div>`).join('')}
+            </div>`;
+          }).join('')}
         </div>
         <button class="btn btn-secondary" id="saveStoryboardBtn">Save Storyboard</button>
       </div>`;

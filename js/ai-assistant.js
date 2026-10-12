@@ -967,69 +967,71 @@ Output only the final POV statement, with no prefix:`,
   },
 
   async generateStakeholders(project) {
-    await new Promise(resolve => setTimeout(resolve, 800));
-
-    const category = project?.category || 'product';
-    const title = project?.title || project?.originalTitle || '';
     const sceneData = this._getSceneData(project);
     const findData = this._getFindData(project);
-
-    // Extract topic from project context for contextual generation
-    const topic = title || sceneData.targetUser || '该创新方向';
+    const topic = project?.title || project?.originalTitle || sceneData.targetUser || 'this innovation direction';
     const scene = sceneData.sceneDesc || '';
-    const insight = findData.distill || findData.need || '';
+    const insight = findData.distill || findData.need || findData.distillOutput || findData.interpret || '';
 
-    // Generate contextual stakeholder needs based on project topic
-    const generateNeeds = (role) => {
-      const baseNeeds = {
-        'Business Leader': ['Strategic alignment', 'Input-output ratio', 'Execution feasibility', 'Speed and results'],
-        'Technology Expert': ['Technical feasibility', 'System integration', 'Scalability', 'Maintenance cost'],
-        'Partner': ['Shared value', 'Resource commitment', 'Risk sharing', 'Cooperation terms'],
-        'User Representative': ['Solves real pain points', 'Ease of use', 'Learning cost', 'Visible value']
-      };
-      return baseNeeds[role] || ['Core need 1', 'Core need 2', 'Core need 3', 'Core need 4'];
-    };
-
-    // Contextual stakeholder generation based on project type
-    let stakeholderConfigs = [];
-
-    if (category === 'product' || category === 'service') {
-      stakeholderConfigs = [
-        { icon: '👔', name: 'Business Leader', defaultScores: [4, 3, 3, 2] },
-        { icon: '🔧', name: 'Technology Expert', defaultScores: [3, 4, 3, 2] },
-        { icon: '🤝', name: 'Partner', defaultScores: [3, 3, 3, 3] },
-        { icon: '👤', name: 'User Representative', defaultScores: [4, 3, 2, 3] }
-      ];
-    } else if (category === 'problem') {
-      stakeholderConfigs = [
-        { icon: '😟', name: 'Problem Bearer', defaultScores: [4, 3, 3, 2] },
-        { icon: '💰', name: 'Decision/Resource Owner', defaultScores: [4, 3, 3, 2] },
-        { icon: '🧠', name: 'Execution Team', defaultScores: [3, 3, 3, 3] },
-        { icon: '📊', name: 'Affected Party', defaultScores: [3, 3, 3, 3] }
-      ];
-    } else {
-      stakeholderConfigs = [
-        { icon: '🔍', name: 'Explorer', defaultScores: [4, 3, 3, 2] },
-        { icon: '💰', name: 'Funder', defaultScores: [4, 3, 3, 2] },
-        { icon: '📊', name: 'Potential User', defaultScores: [3, 3, 3, 3] },
-        { icon: '🏢', name: 'Execution Team', defaultScores: [3, 3, 3, 3] }
-      ];
+    if (this._hasAI()) {
+      const prompt =
+        `You are a senior innovation consultant. Based on the project below, identify 4 key stakeholder groups ` +
+        `and, for each, 4 concrete needs that are SPECIFIC to THIS project (not generic boilerplate).\n\n` +
+        `Project topic: ${topic}\n` +
+        `Target users: ${sceneData.targetUser || 'unknown'}\n` +
+        `Scenario: ${scene}\n` +
+        `Key insight / POV: ${insight}\n\n` +
+        `Return JSON: {"stakeholders":[{"name":"role name","icon":"a single emoji","needs":[{"label":"specific need","score":0}]}]}\n` +
+        `where score is the stakeholder's importance (1-12, 12 = must satisfy). Provide exactly 4 stakeholders, 4 needs each.`;
+      try {
+        const obj = await window.AIService.completeJSON(prompt, {
+          system: this._systemPersona(), temperature: 0.6, maxTokens: 1300
+        });
+        if (obj && Array.isArray(obj.stakeholders) && obj.stakeholders.length) {
+          const stakeholders = obj.stakeholders.slice(0, 6).map(s => ({
+            name: s.name || 'Stakeholder',
+            icon: s.icon || '👤',
+            needs: (s.needs || []).slice(0, 4).map(n => ({ label: String(n.label || 'Need'), score: parseInt(n.score) || 3 }))
+          }));
+          return { stakeholders };
+        }
+      } catch (e) {
+        console.warn('[AI] generateStakeholders failed, using fallback:', e.message);
+      }
     }
+    // Local fallback with meaningful (non-generic) needs
+    return { stakeholders: this._fallbackStakeholders(topic, sceneData.targetUser) };
+  },
 
-    // Build stakeholders with 12-point needs
-    const stakeholders = stakeholderConfigs.map(config => {
-      const needs = generateNeeds(config.name).map((label, i) => ({
-        label,
-        score: config.defaultScores[i] || 3
-      }));
-      return {
-        name: config.name,
-        icon: config.icon,
-        needs
-      };
-    });
-
-    return { stakeholders };
+  _fallbackStakeholders(topic, targetUser) {
+    const t = topic || 'this innovation';
+    const u = targetUser || 'users';
+    return [
+      { icon: '👤', name: 'End ' + (u || 'Users'), needs: [
+        { label: `Does it truly solve ${u}'s core pain`, score: 4 },
+        { label: 'Easy to start, low learning cost', score: 3 },
+        { label: 'Visible value within first use', score: 3 },
+        { label: 'Trust & data privacy', score: 2 }
+      ] },
+      { icon: '💰', name: 'Funder / Decision Maker', needs: [
+        { label: `Clear return on investment for ${t}`, score: 4 },
+        { label: 'Strategic alignment', score: 3 },
+        { label: 'Execution feasibility & speed', score: 3 },
+        { label: 'Controllable risk', score: 2 }
+      ] },
+      { icon: '🧠', name: 'Delivery Team', needs: [
+        { label: 'Technically feasible', score: 3 },
+        { label: 'Clear scope & priorities', score: 3 },
+        { label: 'Reasonable workload', score: 2 },
+        { label: 'Room to iterate', score: 2 }
+      ] },
+      { icon: '🤝', name: 'Partners / Ecosystem', needs: [
+        { label: 'Shared value', score: 3 },
+        { label: 'Clear cooperation terms', score: 3 },
+        { label: 'Resource commitment', score: 2 },
+        { label: 'Low conflict of interest', score: 2 }
+      ] }
+    ];
   },
 
   _getSceneData(project) {
@@ -1774,9 +1776,14 @@ Return JSON directly, no markdown code blocks.`;
     if (this._hasAI()) {
       const prompt =
         `[Project context]\n${ctxText}\n\n` +
-        `Tell the user story in 6 fixed scenes, in this fixed order and titles: ` +
-        themes.map(t => t.title).join(' / ') + `\n` +
-        `Write 1-2 user-perspective sentences per scene. Use the provided project context.\n` +
+        `Write the user story as 6 fixed scenes, in this exact order and with these exact titles:\n` +
+        themes.map(t => t.title).join(' / ') + `\n\n` +
+        `Requirements (critical):\n` +
+        `- Write in FIRST PERSON from the user's perspective, each scene starting with "I".\n` +
+        `- Each scene: 2-3 sentences, concrete and scene-based (include when / where / what triggered the moment). NOT a vague narration.\n` +
+        `- In parenthesis at the end, note the user's emotion, e.g. (frustrated) (hopeful) (relieved).\n` +
+        `- Reference the actual concept features / functions from the project context (one-liner, features, characteristics).\n` +
+        `- Do NOT write a marketing summary; show a real moment in the user's life.\n\n` +
         `Return JSON: {"cards":[{"key":"problem","title":"The user’s problem","desc":""}, ... exactly 6, key and title must match exactly]}`;
       try {
         const obj = await window.AIService.completeJSON(prompt, {
@@ -1832,19 +1839,19 @@ Return JSON directly, no markdown code blocks.`;
     const goal = ctx.goal || 'the problem is finally under control';
     switch (key) {
       case 'problem':
-        return `${user} keeps facing ${problem}.${insight ? ` The real friction is that ${insight.toLowerCase().replace(/\.$/, '')}.` : ' There has to be a better way.'}`;
+        return `I keep facing ${problem}.${insight ? ` The real friction is that ${insight.toLowerCase().replace(/\.$/, '')}.` : ' There has to be a better way.'} (frustrated)`;
       case 'opportunity':
-        return `This is a chance to give ${user} a new approach that removes the usual friction and makes progress feel easy.`;
+        return `I see a chance to fix this with a new approach that removes the usual friction and makes progress feel easy. (hopeful)`;
       case 'contact':
-        return `${user} first learns about "${oneLiner}". It promises ${features}, which sounds like exactly what they need.`;
+        return `I first hear about "${oneLiner}". It promises ${features} — which sounds like exactly what I need. (curious)`;
       case 'usage':
-        return `They try it out: ${oneLiner} lets them ${features} in a single, intuitive flow.`;
+        return `I try it out: ${oneLiner} lets me ${features} in a single, intuitive flow. (focused)`;
       case 'outcome':
-        return `After using it, ${user} saves time and avoids hassle — ${goal.toLowerCase().replace(/\.$/, '')}.`;
+        return `After using it, I save time and avoid hassle — ${goal.toLowerCase().replace(/\.$/, '')}. (relieved)`;
       case 'feeling':
-        return `They feel relieved and confident, and tell a friend: "This is exactly what I needed."`;
+        return `I feel relieved and confident, and tell a friend: "This is exactly what I needed." (happy)`;
       default:
-        return `(Scene ${idx + 1}: describe the user’s experience here.)`;
+        return `(Scene ${idx + 1}: describe one real moment in your experience here.)`;
     }
   },
 

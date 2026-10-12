@@ -1156,7 +1156,30 @@
       'hmw.generated': 'Generated {n} items',
       'hmw.count': '{n} items',
       'nco.fav': 'Favorited {n} cards',
-      'nco.custom': '{n} custom cards'
+      'nco.custom': '{n} custom cards',
+
+      // ===== R3 multi-POV governance =====
+      'find.activePov': 'Primary POV',
+      'find.stashedPov': 'Stashed',
+      'find.povHint': 'Only one primary POV advances at a time; stashed insights can be recalled in the R5 briefing',
+      'find.stashThis': '📦 Stash this POV',
+      'find.promoteThis': '★ Set as primary POV',
+      'find.promoteConfirm': 'Setting this as the primary POV means later stages will build on this insight. Switch anyway?',
+      'find.stashConfirm': 'Stashing this POV means it will not advance to the next stage. Stash anyway?',
+      'briefing.allPov': 'All POV List',
+      'briefing.primaryPov': 'Primary POV advances to next stage',
+      'briefing.stashedPov': 'Stashed can be recalled later',
+      'briefing.primary': 'Primary POV',
+      'briefing.stashed': 'Stashed',
+      'briefing.stashedWarn': 'You have {n} stashed insight(s) not yet completed. Submit the briefing anyway? (OK = submit, Cancel = back to R3)',
+      'storyboard.sample': 'Sample illustration',
+      'ai.expert': 'Ask a human expert',
+      'expert.title': 'Ask a Human Expert',
+      'expert.desc': 'Stuck on something even AI can’t solve? Contact the creator for 1-on-1 guidance.',
+      'expert.qrHint': 'WeChat QR code (image to be added)',
+      'expert.wechat': 'WeChat ID',
+      'expert.copy': 'Copy',
+      'expert.copied': 'WeChat ID copied: sim4wisdom'
     }
   };
 
@@ -1454,6 +1477,7 @@
     '生成中...': 'Generating...',
     '暂无项目': 'No Projects',
     '开始你的第一个 RISE 练习吧': 'Start your first RISE practice',
+    '还没有项目，开始你的第一个 RISE 练习吧': 'No projects yet — start your first RISE practice',
     '未命名项目': 'Untitled Project',
     '触点 / 阶段': 'Touchpoint / Stage',
     '用户在想什么？': 'What is the user thinking?',
